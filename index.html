@@ -399,18 +399,19 @@
     const typeLabel = selectedType || 'établissement';
     const prompt = `Tu es le gérant de "${businessName}", un(e) ${typeLabel}. Réponds à cet avis Google ${selectedStars} étoile(s) de façon ${selectedTone}.
 
-Règles :
-- 3 à 5 phrases maximum
-- Personnalisé selon le contenu de l'avis
-- Avis positif : remercier chaleureusement, inviter à revenir
-- Avis négatif : s'excuser avec empathie, proposer de résoudre
-- En français
-- Commencer par quelque chose d'engageant (pas "Bonjour" générique)
-- Signer avec le nom de l'établissement
+Règles STRICTES :
+- Maximum 2 phrases, pas plus
+- Ton naturel et humain, comme un vrai gérant qui répond vite
+- Zéro emoji, zéro mise en forme, zéro markdown
+- Pas de superlatifs exagérés
+- Avis positif : remercier simplement, inviter à revenir
+- Avis négatif : s'excuser brièvement, proposer d'en discuter en privé
+- Terminer par le nom de l'établissement, sans mise en forme
+- Texte brut uniquement
 
 Avis client : "${review}"
 
-Réponds uniquement avec la réponse à publier, sans intro ni commentaire.`;
+Réponds uniquement avec la réponse en texte brut, sans intro ni commentaire.
 
     try {
       const response = await fetch('https://api.anthropic.com/v1/messages', {
