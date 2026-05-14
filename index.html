@@ -190,7 +190,10 @@
       </div>
       <div class="field">
         <label>Mot de passe</label>
-        <div style="position:relative;">   <input type="password" id="signup-password" placeholder="8 caractères minimum" style="width:100%; padding-right:44px;" />   <button type="button" onclick="togglePwd('signup-password',this)" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button> </div>
+        <div style="position:relative;">
+          <input type="password" id="signup-password" placeholder="8 caractères minimum" style="width:100%; padding-right:44px;" />
+          <button type="button" onclick="togglePwd('signup-password',this)" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button>
+        </div>
       </div>
       <div class="field">
         <label>Nom de votre établissement</label>
@@ -215,7 +218,10 @@
       </div>
       <div class="field">
         <label>Mot de passe</label>
-        <input type="password" id="login-password" placeholder="Votre mot de passe" />
+        <div style="position:relative;">
+          <input type="password" id="login-password" placeholder="Votre mot de passe" style="width:100%; padding-right:44px;" />
+          <button type="button" onclick="togglePwd('login-password',this)" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button>
+        </div>
       </div>
       <button class="btn btn-primary btn-full" onclick="doLogin()">Se connecter</button>
       <div class="auth-switch">Pas encore de compte ? <a onclick="showPage('signup')">Créer un compte</a></div>
@@ -323,6 +329,12 @@ let selectedStars = 5;
 let selectedTone = 'Chaleureux';
 let freeCount = 0;
 const FREE_LIMIT = 3;
+
+function togglePwd(id, btn) {
+  const input = document.getElementById(id);
+  if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+  else { input.type = 'password'; btn.textContent = '👁'; }
+}
 
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
