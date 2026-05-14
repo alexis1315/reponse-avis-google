@@ -230,6 +230,26 @@
   </div>
 </div>
 
+<!-- RESET PASSWORD -->
+<div id="page-reset" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Nouveau mot de passe</h2>
+      <p class="subtitle">Choisissez un nouveau mot de passe</p>
+      <div class="msg error" id="reset-error"></div>
+      <div class="msg success" id="reset-success"></div>
+      <div class="field">
+        <label>Nouveau mot de passe</label>
+        <div style="position:relative;">
+          <input type="password" id="reset-password" placeholder="8 caractères minimum" style="width:100%; padding-right:44px;" />
+          <button type="button" onclick="togglePwd('reset-password',this)" style="position:absolute; right:12px; top:50%; transform:translateY(-50%); background:none; border:none; color:var(--muted); cursor:pointer; font-size:16px;">👁</button>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doReset()">Changer le mot de passe</button>
+    </div>
+  </div>
+</div>
+
 <!-- FORGOT PASSWORD -->
 <div id="page-forgot" class="page">
   <div class="auth-wrap">
@@ -553,11 +573,35 @@ function copyReply() {
   });
 }
 
+async function doReset() {
+  const password = document.getElementById('reset-password').value.trim();
+  const errEl = document.getElementById('reset-error');
+  const sucEl = document.getElementById('reset-success');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!password || password.length < 8) { errEl.textContent = 'Le mot de passe doit faire au moins 8 caractères.'; errEl.style.display = 'block'; return; }
+
+  const { error } = await sb.auth.updateUser({ password });
+  if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+
+  sucEl.textContent = 'Mot de passe changé ! Redirection...';
+  sucEl.style.display = 'block';
+  setTimeout(() => showPage('login'), 2000);
+}
+
 // Check session on load
 sb.auth.getSession().then(({ data: { session } }) => {
   if (session) {
     currentUser = session.user;
     loadDashboard();
+  }
+});
+
+// Detect password reset token in URL
+sb.auth.onAuthStateChange((event, session) => {
+  if (event === 'PASSWORD_RECOVERY') {
+    showPage('reset');
   }
 });
 </script>
