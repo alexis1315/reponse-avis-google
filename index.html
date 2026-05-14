@@ -224,7 +224,26 @@
         </div>
       </div>
       <button class="btn btn-primary btn-full" onclick="doLogin()">Se connecter</button>
+      <div class="auth-switch">Mot de passe oublié ? <a onclick="showPage('forgot')">Réinitialiser</a></div>
       <div class="auth-switch">Pas encore de compte ? <a onclick="showPage('signup')">Créer un compte</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div id="page-forgot" class="page">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <h2>Mot de passe oublié</h2>
+      <p class="subtitle">On vous envoie un lien de réinitialisation</p>
+      <div class="msg error" id="forgot-error"></div>
+      <div class="msg success" id="forgot-success"></div>
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="forgot-email" placeholder="vous@exemple.com" />
+      </div>
+      <button class="btn btn-primary btn-full" onclick="doForgot()">Envoyer le lien</button>
+      <div class="auth-switch">Retour à la <a onclick="showPage('login')">connexion</a></div>
     </div>
   </div>
 </div>
@@ -353,6 +372,25 @@ function selectStar(btn, stars) {
   document.querySelectorAll('.star-pill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   selectedStars = stars;
+}
+
+async function doForgot() {
+  const email = document.getElementById('forgot-email').value.trim();
+  const errEl = document.getElementById('forgot-error');
+  const sucEl = document.getElementById('forgot-success');
+  errEl.style.display = 'none';
+  sucEl.style.display = 'none';
+
+  if (!email) { errEl.textContent = 'Entrez votre email.'; errEl.style.display = 'block'; return; }
+
+  const { error } = await sb.auth.resetPasswordForEmail(email, {
+    redirectTo: 'https://reponse-avis-google.vercel.app'
+  });
+
+  if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
+
+  sucEl.textContent = 'Email envoyé ! Vérifiez votre boîte mail pour réinitialiser votre mot de passe.';
+  sucEl.style.display = 'block';
 }
 
 async function doSignup() {
