@@ -212,17 +212,63 @@
       <p>Vos données restent confidentielles. Aucun avis n'est stocké sur nos serveurs.</p>
     </div>
   </div>
-  <div class="pricing">
-    <div class="price-card">
-      <div class="price">19€ <span>/ mois</span></div>
-      <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">Après 3 réponses gratuites</p>
-      <ul class="price-features">
-        <li>Réponses illimitées</li>
-        <li>Tous types d'établissements</li>
-        <li>Tons personnalisables</li>
-        <li>Nouvelles fonctionnalités incluses</li>
-      </ul>
-      <button class="btn btn-primary btn-full" onclick="showPage('login')">Se connecter</button>
+  <div style="max-width:900px; margin:2rem auto 6rem; padding:0 2rem;">
+    <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; color:#fff; text-align:center; margin-bottom:0.5rem;">Choisissez votre plan</h2>
+    <p style="color:var(--muted); text-align:center; margin-bottom:2.5rem; font-size:15px;">Commencez gratuitement, évoluez selon vos besoins</p>
+    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:20px;">
+      
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
+        <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.8rem;">Gratuit</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">0€</div>
+        <p style="color:var(--muted); font-size:13px; margin-bottom:1.5rem;">Pour découvrir</p>
+        <ul style="list-style:none; margin-bottom:1.5rem;">
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ 3 réponses/jour</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ 1 établissement</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted);">✓ Tous les tons</li>
+        </ul>
+        <button class="btn btn-ghost" style="width:100%; padding:12px;" onclick="showPage('signup')">Commencer</button>
+      </div>
+
+      <div style="background:var(--surface); border:2px solid var(--accent); border-radius:20px; padding:2rem; position:relative;">
+        <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px;">POPULAIRE</div>
+        <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-light); margin-bottom:0.8rem;">Starter</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">19€<span style="font-size:1rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+        <p style="color:var(--muted); font-size:13px; margin-bottom:1.5rem;">Pour les gérants actifs</p>
+        <ul style="list-style:none; margin-bottom:1.5rem;">
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ 20 réponses/jour</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ 3 établissements</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Instructions personnalisées</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted);">✓ Historique des réponses</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary" style="display:block; text-align:center; text-decoration:none; padding:12px; border-radius:10px;">S'abonner</a>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
+        <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); margin-bottom:0.8rem;">Pro</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">30€<span style="font-size:1rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+        <p style="color:var(--muted); font-size:13px; margin-bottom:1.5rem;">Pour les multi-établissements</p>
+        <ul style="list-style:none; margin-bottom:1.5rem;">
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ 50 réponses/jour</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Établissements illimités</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Instructions personnalisées</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted);">✓ Historique complet</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201" target="_blank" class="btn btn-ghost" style="display:block; text-align:center; text-decoration:none; padding:12px; border-radius:10px;">S'abonner</a>
+      </div>
+
+      <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
+        <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--success); margin-bottom:0.8rem;">Agence</div>
+        <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">59€<span style="font-size:1rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+        <p style="color:var(--muted); font-size:13px; margin-bottom:1.5rem;">Pour les agences</p>
+        <ul style="list-style:none; margin-bottom:1.5rem;">
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Réponses illimitées</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Établissements illimités</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted); border-bottom:1px solid var(--border);">✓ Accès prioritaire</li>
+          <li style="padding:7px 0; font-size:13px; color:var(--muted);">✓ Support dédié</li>
+        </ul>
+        <a href="https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202" target="_blank" class="btn btn-ghost" style="display:block; text-align:center; text-decoration:none; padding:12px; border-radius:10px;">S'abonner</a>
+      </div>
+
     </div>
   </div>
 </div>
@@ -324,7 +370,7 @@
   <div class="dashboard-layout">
 
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
       <div class="sidebar-user">
         <div class="sidebar-user-email" id="sidebar-email">—</div>
         <div class="sidebar-status">
