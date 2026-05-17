@@ -77,19 +77,30 @@
     .msg.success { background: rgba(76,175,125,0.1); border: 1px solid rgba(76,175,125,0.3); color: var(--success); }
 
     /* DASHBOARD */
-    .dashboard { max-width: 800px; margin: 0 auto; padding: 2.5rem 2rem; }
-    .dashboard-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
-    .dashboard-header h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; color: #fff; }
-    .status-bar { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 2rem; display: flex; align-items: center; gap: 12px; }
-    .status-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--success); box-shadow: 0 0 8px var(--success); }
-    .status-dot.inactive { background: var(--muted); box-shadow: none; }
-    .status-text { font-size: 14px; color: var(--muted); }
-    .status-text strong { color: var(--text); }
+    .dashboard-layout { display: flex; min-height: calc(100vh - 65px); }
 
-    /* TABS */
-    .tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; margin-bottom: 1.5rem; }
-    .tab { flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
-    .tab.active { background: var(--accent); color: #fff; }
+    /* SIDEBAR */
+    .sidebar { width: 240px; flex-shrink: 0; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem; display: flex; flex-direction: column; }
+    .sidebar-user { padding: 0.8rem 0.8rem 1.2rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+    .sidebar-user-email { font-size: 12px; color: var(--muted); margin-bottom: 8px; word-break: break-all; }
+    .sidebar-status { display: flex; align-items: center; gap: 8px; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--success); box-shadow: 0 0 6px var(--success); flex-shrink: 0; }
+    .status-dot.inactive { background: var(--muted); box-shadow: none; }
+    .status-text { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .status-text strong { color: var(--text); display: block; }
+
+    .sidebar-nav { flex: 1; }
+    .sidebar-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 0 0.8rem; margin-bottom: 6px; margin-top: 1rem; }
+    .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; width: 100%; text-align: left; }
+    .sidebar-item:hover { background: rgba(255,255,255,0.04); color: var(--text); }
+    .sidebar-item.active { background: rgba(91,106,247,0.15); color: var(--accent-light); }
+    .sidebar-item .icon { font-size: 16px; width: 20px; text-align: center; }
+    .sidebar-bottom { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
+
+    /* MAIN CONTENT */
+    .dashboard-main { flex: 1; padding: 2rem; overflow-y: auto; max-width: 760px; }
+    .dashboard-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 1.5rem; }
+
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
@@ -286,23 +297,44 @@
 
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
-  <div class="dashboard">
-    <div class="dashboard-header">
-      <h2>Mon tableau de bord</h2>
-      <button class="btn btn-danger" onclick="doLogout()">Déconnexion</button>
+  <div class="dashboard-layout">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-user">
+        <div class="sidebar-user-email" id="sidebar-email">—</div>
+        <div class="sidebar-status">
+          <div class="status-dot" id="status-dot"></div>
+          <div class="status-text" id="status-text">Chargement...</div>
+        </div>
+      </div>
+
+      <div class="sidebar-nav">
+        <div class="sidebar-label">Principal</div>
+        <button class="sidebar-item active" onclick="switchTab('generate', this)">
+          <span class="icon">✍️</span> Générer une réponse
+        </button>
+
+        <div class="sidebar-label">Intégrations</div>
+        <button class="sidebar-item" onclick="switchTab('google', this)">
+          <span class="icon">🔗</span> Connecter Google
+        </button>
+
+        <div class="sidebar-label">Paramètres</div>
+        <button class="sidebar-item" onclick="switchTab('account', this)">
+          <span class="icon">⚙️</span> Mon compte
+        </button>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="sidebar-item" onclick="doLogout()" style="color:var(--danger);">
+          <span class="icon">→</span> Déconnexion
+        </button>
+      </div>
     </div>
 
-    <div class="status-bar">
-      <div class="status-dot" id="status-dot"></div>
-      <div class="status-text" id="status-text">Chargement...</div>
-    </div>
-
-    <!-- TABS -->
-    <div class="tabs">
-      <button class="tab active" onclick="switchTab('generate')">✍️ Générer une réponse</button>
-      <button class="tab" onclick="switchTab('google')">🔗 Connecter Google</button>
-      <button class="tab" onclick="switchTab('account')">⚙️ Mon compte</button>
-    </div>
+    <!-- MAIN -->
+    <div class="dashboard-main">
 
     <!-- TAB: GENERATE -->
     <div id="tab-generate" class="tab-content active">
@@ -431,7 +463,8 @@
       </div>
     </div>
 
-  </div>
+    </div><!-- end dashboard-main -->
+  </div><!-- end dashboard-layout -->
 </div>
 
 <div class="toast" id="toast">✓ Copié !</div>
@@ -459,11 +492,11 @@ function showPage(page) {
   document.getElementById('page-' + page).classList.add('active');
 }
 
-function switchTab(tab) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+function switchTab(tab, btn) {
+  document.querySelectorAll('.sidebar-item').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
-  event.target.classList.add('active');
+  if (btn) btn.classList.add('active');
 }
 
 function selectPill(btn, group) {
@@ -550,8 +583,8 @@ function loadDashboard() {
   document.getElementById('dash-business').value = business;
   document.getElementById('nav-btns').innerHTML = `
     <span style="font-size:14px; color:var(--muted);">${currentUser.email}</span>
-    <button class="btn btn-danger" onclick="doLogout()">Déconnexion</button>
   `;
+  document.getElementById('sidebar-email').textContent = currentUser.email;
   updateDailyCounter();
 }
 
@@ -592,10 +625,10 @@ async function updateDailyCounter() {
   const text = document.getElementById('status-text');
   if (remaining > 0) {
     dot.className = 'status-dot';
-    text.innerHTML = `<strong>Compte actif</strong> — ${remaining} réponse(s) restante(s) aujourd'hui`;
+    text.innerHTML = `<strong>Compte actif</strong><span>${remaining} réponse(s) aujourd'hui</span>`;
   } else {
     dot.className = 'status-dot inactive';
-    text.innerHTML = `<strong>Limite atteinte</strong> — Revenez demain à minuit`;
+    text.innerHTML = `<strong>Limite atteinte</strong><span>Revenez à minuit</span>`;
   }
 }
 
