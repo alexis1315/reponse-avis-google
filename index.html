@@ -175,7 +175,7 @@
   </div>
   <div class="nav-btns" id="nav-btns">
     <button class="btn btn-ghost" onclick="showPage('login')">Connexion</button>
-    <button class="btn btn-primary" onclick="showPage('signup')">Essai gratuit</button>
+    <button class="btn btn-primary" onclick="showPage('signup')">Créer un compte</button>
   </div>
 </nav>
 <div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleSidebar()"></div>
@@ -186,8 +186,8 @@
     <h1>Répondez à vos avis Google<br>en <em>10 secondes</em> grâce à l'IA</h1>
     <p>Fini les heures perdues à rédiger des réponses. ReplyGoogle génère des réponses naturelles et professionnelles pour chaque avis de vos clients.</p>
     <div class="hero-cta">
-      <button class="btn btn-primary btn-lg" onclick="showPage('signup')">Commencer gratuitement</button>
-      <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Se connecter</button>
+      <button class="btn btn-primary btn-lg" onclick="showPage('login')">Se connecter</button>
+      <button class="btn btn-ghost btn-lg" onclick="showPage('signup')">Créer un compte</button>
     </div>
   </div>
   <div class="features">
@@ -222,7 +222,7 @@
         <li>Tons personnalisables</li>
         <li>Nouvelles fonctionnalités incluses</li>
       </ul>
-      <button class="btn btn-primary btn-full" onclick="showPage('signup')">Commencer gratuitement</button>
+      <button class="btn btn-primary btn-full" onclick="showPage('login')">Se connecter</button>
     </div>
   </div>
 </div>
@@ -752,7 +752,7 @@ async function doLogout() {
   document.getElementById('hamburger-btn').style.display = 'none';
   document.getElementById('nav-btns').innerHTML = `
     <button class="btn btn-ghost" onclick="showPage('login')">Connexion</button>
-    <button class="btn btn-primary" onclick="showPage('signup')">Essai gratuit</button>
+    <button class="btn btn-primary" onclick="showPage('signup')">Créer un compte</button>
   `;
 }
 
@@ -962,9 +962,9 @@ async function addEstablishment() {
   const name = document.getElementById('new-estab-name').value.trim();
   const type = document.getElementById('new-estab-type').value;
   const instructions = document.getElementById('new-estab-instructions').value.trim();
-  if (!name) { alert('Entrez un nom d'établissement.'); return; }
+  if (!name) { alert('Entrez un nom etablissement.'); return; }
   const { error } = await sb.from('establishments').insert({ user_id: currentUser.id, name, business_type: type, custom_instructions: instructions });
-  if (error) { alert('Erreur lors de l'ajout.'); return; }
+  if (error) { alert('Erreur lors de l\'ajout.'); return; }
   document.getElementById('new-estab-name').value = '';
   document.getElementById('new-estab-instructions').value = '';
   await loadEstablishments();
@@ -982,7 +982,7 @@ async function deleteEstablishment(id) {
 async function loadHistory() {
   const { data, error } = await sb.from('response_history').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
   const el = document.getElementById('history-list');
-  if (error || !data || !data.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Aucune réponse générée pour l'instant.</p>'; return; }
+  if (error || !data || !data.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Aucune réponse generee pour l\'instant.</p>'; return; }
   el.innerHTML = data.map(h => `
     <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1.2rem; margin-bottom:0.8rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
