@@ -366,6 +366,11 @@
           </div>
           <p class="result-text" id="result-text"></p>
         </div>
+
+        <div id="explanation-box" style="display:none; margin-top:0.8rem; background:rgba(247,201,79,0.06); border:1px solid rgba(247,201,79,0.25); border-radius:10px; padding:1rem 1.2rem;">
+          <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); font-weight:600; margin-bottom:6px;">💡 Note sur vos instructions</div>
+          <p id="explanation-text" style="font-size:13px; color:var(--muted); line-height:1.6;"></p>
+        </div>
       </div>
     </div>
 
@@ -601,6 +606,14 @@ async function generateReply() {
 
     document.getElementById('result-text').textContent = data.response;
     document.getElementById('result-box').classList.add('visible');
+
+    const customInstr = document.getElementById('custom-instructions').value.trim();
+    if (customInstr && data.explanation) {
+      document.getElementById('explanation-text').textContent = data.explanation;
+      document.getElementById('explanation-box').style.display = 'block';
+    } else {
+      document.getElementById('explanation-box').style.display = 'none';
+    }
 
     await incrementDailyUsage();
     await updateDailyCounter();
