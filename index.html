@@ -301,6 +301,7 @@
     <div class="tabs">
       <button class="tab active" onclick="switchTab('generate')">✍️ Générer une réponse</button>
       <button class="tab" onclick="switchTab('google')">🔗 Connecter Google</button>
+      <button class="tab" onclick="switchTab('account')">⚙️ Mon compte</button>
     </div>
 
     <!-- TAB: GENERATE -->
@@ -371,6 +372,33 @@
           <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); font-weight:600; margin-bottom:6px;">💡 Note sur vos instructions</div>
           <p id="explanation-text" style="font-size:13px; color:var(--muted); line-height:1.6;"></p>
         </div>
+      </div>
+    </div>
+
+    <!-- TAB: ACCOUNT -->
+    <div id="tab-account" class="tab-content">
+      <div class="google-card">
+        <h3>Mon abonnement</h3>
+        <p>Gérez votre abonnement ReplyGoogle Pro — changement de carte bancaire, factures, ou résiliation.</p>
+
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; margin-bottom:1.5rem;">
+          <div class="info-row"><strong>Plan actuel</strong> ReplyGoogle Pro — 19€/mois</div>
+          <div class="info-row"><strong>Réponses/jour</strong> 10 réponses incluses</div>
+          <div class="info-row"><strong>Renouvellement</strong> Automatique chaque mois</div>
+        </div>
+
+        <a href="https://billing.stripe.com/p/login/test_00g29E9tq5aV8fe000" target="_blank" class="btn btn-primary" style="display:block; text-align:center; text-decoration:none; padding:13px; border-radius:10px; margin-bottom:1rem;">
+          Gérer mon abonnement →
+        </a>
+        <p style="font-size:12px; color:var(--muted); text-align:center;">Vous serez redirigé vers le portail sécurisé Stripe pour gérer ou résilier votre abonnement.</p>
+      </div>
+
+      <div class="google-card">
+        <h3 style="color:var(--danger);">Zone de danger</h3>
+        <p>Supprimer définitivement votre compte ReplyGoogle et toutes vos données.</p>
+        <button class="btn" onclick="confirmDeleteAccount()" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); width:100%; padding:12px; border-radius:10px; margin-top:0.5rem;">
+          Supprimer mon compte
+        </button>
       </div>
     </div>
 
@@ -647,6 +675,16 @@ async function doReset() {
   sucEl.textContent = 'Mot de passe changé ! Redirection...';
   sucEl.style.display = 'block';
   setTimeout(() => showPage('login'), 2000);
+}
+
+async function confirmDeleteAccount() {
+  if (confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
+    const { error } = await sb.auth.admin?.deleteUser(currentUser.id).catch(() => ({ error: true }));
+    await sb.auth.signOut();
+    currentUser = null;
+    showPage('landing');
+    alert('Votre compte a été supprimé. À bientôt !');
+  }
 }
 
 // Check session on load
