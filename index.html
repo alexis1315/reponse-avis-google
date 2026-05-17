@@ -17,6 +17,7 @@
       --muted: #6b6b80;
       --success: #4caf7d;
       --danger: #f77b72;
+      --warning: #f7c94f;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
@@ -25,7 +26,7 @@
     nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); z-index: 100; }
     .logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; }
     .logo span { color: var(--accent-light); }
-    .nav-btns { display: flex; gap: 12px; }
+    .nav-btns { display: flex; gap: 12px; align-items: center; }
     .btn { padding: 8px 20px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
     .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
     .btn-ghost:hover { border-color: var(--accent); color: var(--accent-light); }
@@ -85,6 +86,13 @@
     .status-text { font-size: 14px; color: var(--muted); }
     .status-text strong { color: var(--text); }
 
+    /* TABS */
+    .tabs { display: flex; gap: 4px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 4px; margin-bottom: 1.5rem; }
+    .tab { flex: 1; padding: 10px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.15s; }
+    .tab.active { background: var(--accent); color: #fff; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
     .reply-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
     .reply-card h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 1.5rem; }
     .pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
@@ -106,15 +114,25 @@
     .loading-text { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 14px; display: none; }
     .loading-text.visible { display: block; }
 
-    .paywall { background: linear-gradient(135deg, rgba(91,106,247,0.1), rgba(91,106,247,0.05)); border: 1px solid var(--accent); border-radius: 16px; padding: 2rem; text-align: center; margin-top: 1.5rem; }
-    .paywall h3 { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; margin-bottom: 0.5rem; }
-    .paywall p { font-size: 14px; color: var(--muted); margin-bottom: 1.5rem; }
+    /* GOOGLE CONNECT */
+    .google-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
+    .google-card h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    .google-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
+    .google-btn { display: flex; align-items: center; gap: 10px; padding: 12px 20px; border-radius: 10px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; font-weight: 500; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s; width: 100%; justify-content: center; }
+    .google-btn:hover { border-color: var(--accent); color: var(--accent-light); }
+    .google-logo { width: 20px; height: 20px; }
+    .coming-soon-badge { display: inline-block; background: rgba(247,201,79,0.15); border: 1px solid rgba(247,201,79,0.4); color: var(--warning); font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; margin-left: 8px; letter-spacing: 0.05em; }
+    .consent-box { background: rgba(91,106,247,0.05); border: 1px solid rgba(91,106,247,0.2); border-radius: 12px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem; }
+    .consent-box p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+    .consent-check { display: flex; align-items: flex-start; gap: 10px; }
+    .consent-check input[type="checkbox"] { margin-top: 2px; accent-color: var(--accent); width: 16px; height: 16px; flex-shrink: 0; cursor: pointer; }
+    .consent-check label { font-size: 13px; color: var(--text); line-height: 1.5; cursor: pointer; }
+    .info-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; color: var(--muted); }
+    .info-row:last-child { border-bottom: none; }
+    .info-row strong { color: var(--text); min-width: 120px; }
 
     .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--success); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; display: none; z-index: 999; }
     .toast.visible { display: block; }
-
-    .free-counter { font-size: 12px; color: var(--muted); text-align: right; margin-top: 4px; }
-    .free-counter span { color: var(--accent-light); font-weight: 600; }
   </style>
 </head>
 <body>
@@ -137,7 +155,6 @@
       <button class="btn btn-ghost btn-lg" onclick="showPage('login')">Se connecter</button>
     </div>
   </div>
-
   <div class="features">
     <div class="feature-card">
       <div class="feature-icon">⚡</div>
@@ -160,7 +177,6 @@
       <p>Vos données restent confidentielles. Aucun avis n'est stocké sur nos serveurs.</p>
     </div>
   </div>
-
   <div class="pricing">
     <div class="price-card">
       <div class="price">19€ <span>/ mois</span></div>
@@ -225,7 +241,7 @@
       </div>
       <button class="btn btn-primary btn-full" onclick="doLogin()">Se connecter</button>
       <div class="auth-switch">Mot de passe oublié ? <a onclick="showPage('forgot')">Réinitialiser</a></div>
-      <div class="auth-switch">Pas encore de compte ? <a onclick="showPage('signup')">Créer un compte</a></div>
+      <div class="auth-switch" style="margin-top:8px;">Pas encore de compte ? <a onclick="showPage('signup')">Créer un compte</a></div>
     </div>
   </div>
 </div>
@@ -281,76 +297,101 @@
       <div class="status-text" id="status-text">Chargement...</div>
     </div>
 
-    <div class="reply-card">
-      <h3>Générer une réponse</h3>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('generate')">✍️ Générer une réponse</button>
+      <button class="tab" onclick="switchTab('google')">🔗 Connecter Google</button>
+    </div>
 
-      <div class="field">
-        <label>Nom de l'établissement</label>
-        <input type="text" id="dash-business" placeholder="Ex: Restaurant Le Provençal" />
-      </div>
+    <!-- TAB: GENERATE -->
+    <div id="tab-generate" class="tab-content active">
+      <div class="reply-card">
+        <h3>Générer une réponse</h3>
 
-      <div style="margin-bottom: 1rem;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Type d'établissement</label>
-        <div class="pills" id="type-pills">
-          <button class="pill" onclick="selectPill(this,'type')">🍽️ Restaurant</button>
-          <button class="pill" onclick="selectPill(this,'type')">🏨 Hôtel</button>
-          <button class="pill" onclick="selectPill(this,'type')">✂️ Salon</button>
-          <button class="pill" onclick="selectPill(this,'type')">🔧 Garage</button>
-          <button class="pill" onclick="selectPill(this,'type')">🛍️ Commerce</button>
+        <div class="field">
+          <label>Nom de l'établissement</label>
+          <input type="text" id="dash-business" placeholder="Ex: Restaurant Le Provençal" />
         </div>
-      </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Note de l'avis</label>
-        <div style="display:flex; gap:8px;">
-          <button class="star-pill" onclick="selectStar(this,1)">⭐ 1</button>
-          <button class="star-pill" onclick="selectStar(this,2)">⭐ 2</button>
-          <button class="star-pill" onclick="selectStar(this,3)">⭐ 3</button>
-          <button class="star-pill" onclick="selectStar(this,4)">⭐ 4</button>
-          <button class="star-pill active" onclick="selectStar(this,5)">⭐ 5</button>
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Type d'établissement</label>
+          <div class="pills" id="type-pills">
+            <button class="pill" onclick="selectPill(this,'type')">🍽️ Restaurant</button>
+            <button class="pill" onclick="selectPill(this,'type')">🏨 Hôtel</button>
+            <button class="pill" onclick="selectPill(this,'type')">✂️ Salon</button>
+            <button class="pill" onclick="selectPill(this,'type')">🔧 Garage</button>
+            <button class="pill" onclick="selectPill(this,'type')">🛍️ Commerce</button>
+          </div>
         </div>
-      </div>
 
-      <div style="margin-bottom: 1rem;">
-        <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Ton de la réponse</label>
-        <div class="pills" id="tone-pills">
-          <button class="pill active" onclick="selectPill(this,'tone')">Chaleureux</button>
-          <button class="pill" onclick="selectPill(this,'tone')">Professionnel</button>
-          <button class="pill" onclick="selectPill(this,'tone')">Formel</button>
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Note de l'avis</label>
+          <div style="display:flex; gap:8px;">
+            <button class="star-pill" onclick="selectStar(this,1)">⭐ 1</button>
+            <button class="star-pill" onclick="selectStar(this,2)">⭐ 2</button>
+            <button class="star-pill" onclick="selectStar(this,3)">⭐ 3</button>
+            <button class="star-pill" onclick="selectStar(this,4)">⭐ 4</button>
+            <button class="star-pill active" onclick="selectStar(this,5)">⭐ 5</button>
+          </div>
         </div>
-      </div>
 
-      <div class="field">
-        <label>Avis Google du client</label>
-        <textarea id="review-input" placeholder="Collez ici l'avis Google..."></textarea>
-      </div>
-
-      <div class="field">
-        <label>Votre clé API Anthropic</label>
-        <input type="text" id="dash-apikey" placeholder="sk-ant-..." />
-        <div style="font-size:12px; color:var(--muted); margin-top:4px;">Obtenez votre clé sur console.anthropic.com</div>
-      </div>
-
-      <div class="free-counter" id="free-counter"></div>
-
-      <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
-
-      <div class="loading-text" id="loading">Génération en cours...</div>
-
-      <div class="result-box" id="result-box">
-        <div class="result-header">
-          <span class="result-label">Réponse générée</span>
-          <button class="btn-copy" onclick="copyReply()">Copier</button>
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Ton de la réponse</label>
+          <div class="pills" id="tone-pills">
+            <button class="pill active" onclick="selectPill(this,'tone')">Chaleureux</button>
+            <button class="pill" onclick="selectPill(this,'tone')">Professionnel</button>
+            <button class="pill" onclick="selectPill(this,'tone')">Formel</button>
+          </div>
         </div>
-        <p class="result-text" id="result-text"></p>
-      </div>
 
-      <div class="paywall" id="paywall" style="display:none;">
-        <h3>Continuez sans limite</h3>
-        <p>Vous avez utilisé vos 3 réponses gratuites. Passez à ReplyGoogle Pro pour un accès illimité.</p>
-        <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary btn-lg" style="display:inline-block; text-decoration:none;">S'abonner pour 19€/mois</a>
+        <div class="field">
+          <label>Avis Google du client</label>
+          <textarea id="review-input" placeholder="Collez ici l'avis Google..."></textarea>
+        </div>
+
+        <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
+
+        <div class="loading-text" id="loading">Génération en cours...</div>
+
+        <div class="result-box" id="result-box">
+          <div class="result-header">
+            <span class="result-label">Réponse générée</span>
+            <button class="btn-copy" onclick="copyReply()">Copier</button>
+          </div>
+          <p class="result-text" id="result-text"></p>
+        </div>
       </div>
     </div>
+
+    <!-- TAB: GOOGLE CONNECT -->
+    <div id="tab-google" class="tab-content">
+      <div class="google-card">
+        <h3>Connecter votre compte Google Business <span class="coming-soon-badge">Bientôt disponible</span></h3>
+        <p>En connectant votre compte Google Business, l'application pourra analyser vos réponses passées pour s'en inspirer et générer des réponses encore plus fidèles à votre style.</p>
+
+        <div class="consent-box">
+          <p>En connectant votre compte Google, vous acceptez que ReplyGoogle utilise vos réponses passées aux avis Google <strong>uniquement</strong> pour améliorer la qualité des réponses générées. Aucune donnée n'est revendue ou partagée.</p>
+          <div class="consent-check">
+            <input type="checkbox" id="consent-check" onchange="updateGoogleBtn()" />
+            <label for="consent-check">J'accepte que ReplyGoogle accède à mes réponses Google Business passées afin de personnaliser les futures réponses générées par l'IA.</label>
+          </div>
+        </div>
+
+        <button class="google-btn" id="google-connect-btn" onclick="connectGoogle()" disabled style="opacity:0.5; cursor:not-allowed;">
+          <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Connecter mon compte Google Business
+        </button>
+
+        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
+          <p style="font-size: 13px; color: var(--muted); margin-bottom: 1rem;">Ce que l'application pourra faire une fois connectée :</p>
+          <div class="info-row"><strong>✓ Lire vos avis</strong> pour vous les afficher directement</div>
+          <div class="info-row"><strong>✓ Analyser vos réponses</strong> passées pour s'en inspirer</div>
+          <div class="info-row"><strong>✓ Générer des réponses</strong> fidèles à votre style</div>
+          <div class="info-row"><strong>✗ Publier automatiquement</strong> sans votre validation (jamais)</div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -359,6 +400,7 @@
 <script>
 const SUPABASE_URL = 'https://xurpvafngahgasehpnmm.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh1cnB2YWZuZ2FoZ2FzZWhwbm1tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg3NTM3MjksImV4cCI6MjA5NDMyOTcyOX0.YYerZbbd1GfXoboNORyezTnrmuipFTPX3gYz9BcrINU';
+const BACKEND_URL = 'https://replygoogle-backend-production.up.railway.app';
 const { createClient } = supabase;
 const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
@@ -366,8 +408,6 @@ let currentUser = null;
 let selectedType = '';
 let selectedStars = 5;
 let selectedTone = 'Chaleureux';
-let freeCount = 0;
-const FREE_LIMIT = 3;
 
 function togglePwd(id, btn) {
   const input = document.getElementById(id);
@@ -378,6 +418,13 @@ function togglePwd(id, btn) {
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
+}
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  event.target.classList.add('active');
 }
 
 function selectPill(btn, group) {
@@ -394,22 +441,30 @@ function selectStar(btn, stars) {
   selectedStars = stars;
 }
 
+function updateGoogleBtn() {
+  const checked = document.getElementById('consent-check').checked;
+  const btn = document.getElementById('google-connect-btn');
+  btn.disabled = !checked;
+  btn.style.opacity = checked ? '1' : '0.5';
+  btn.style.cursor = checked ? 'pointer' : 'not-allowed';
+}
+
+function connectGoogle() {
+  alert('La connexion Google Business sera disponible très prochainement. Nous vous enverrons un email dès que cette fonctionnalité est activée !');
+}
+
 async function doForgot() {
   const email = document.getElementById('forgot-email').value.trim();
   const errEl = document.getElementById('forgot-error');
   const sucEl = document.getElementById('forgot-success');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
-
   if (!email) { errEl.textContent = 'Entrez votre email.'; errEl.style.display = 'block'; return; }
-
   const { error } = await sb.auth.resetPasswordForEmail(email, {
     redirectTo: 'https://reponse-avis-google.vercel.app'
   });
-
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
-
-  sucEl.textContent = 'Email envoyé ! Vérifiez votre boîte mail pour réinitialiser votre mot de passe.';
+  sucEl.textContent = 'Email envoyé ! Vérifiez votre boîte mail.';
   sucEl.style.display = 'block';
 }
 
@@ -421,12 +476,9 @@ async function doSignup() {
   const sucEl = document.getElementById('signup-success');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
-
   if (!email || !password) { errEl.textContent = 'Veuillez remplir tous les champs.'; errEl.style.display = 'block'; return; }
-
   const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
-
   sucEl.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.';
   sucEl.style.display = 'block';
   setTimeout(() => showPage('login'), 2500);
@@ -437,10 +489,8 @@ async function doLogin() {
   const password = document.getElementById('login-password').value.trim();
   const errEl = document.getElementById('login-error');
   errEl.style.display = 'none';
-
   const { data, error } = await sb.auth.signInWithPassword({ email, password });
   if (error) { errEl.textContent = 'Email ou mot de passe incorrect.'; errEl.style.display = 'block'; return; }
-
   currentUser = data.user;
   loadDashboard();
 }
@@ -457,107 +507,49 @@ async function doLogout() {
 
 function loadDashboard() {
   showPage('dashboard');
-  freeCount = parseInt(localStorage.getItem('freeCount_' + currentUser.id) || '0');
-  updateStatus();
-  updateFreeCounter();
-
+  const dot = document.getElementById('status-dot');
+  const text = document.getElementById('status-text');
+  dot.className = 'status-dot';
+  text.innerHTML = `<strong>Compte actif</strong> — Réponses illimitées`;
   const business = currentUser.user_metadata?.business_name || '';
   document.getElementById('dash-business').value = business;
-
   document.getElementById('nav-btns').innerHTML = `
     <span style="font-size:14px; color:var(--muted);">${currentUser.email}</span>
     <button class="btn btn-danger" onclick="doLogout()">Déconnexion</button>
   `;
 }
 
-function updateStatus() {
-  const dot = document.getElementById('status-dot');
-  const text = document.getElementById('status-text');
-  if (freeCount < FREE_LIMIT) {
-    dot.className = 'status-dot';
-    text.innerHTML = `<strong>Compte actif</strong> — ${FREE_LIMIT - freeCount} réponse(s) gratuite(s) restante(s)`;
-  } else {
-    dot.className = 'status-dot inactive';
-    text.innerHTML = `<strong>Limite atteinte</strong> — Abonnez-vous pour continuer`;
-  }
-}
-
-function updateFreeCounter() {
-  const el = document.getElementById('free-counter');
-  if (freeCount < FREE_LIMIT) {
-    el.innerHTML = `<span>${FREE_LIMIT - freeCount}</span> réponse(s) gratuite(s) restante(s)`;
-  } else {
-    el.innerHTML = `Limite gratuite atteinte`;
-  }
-}
-
 async function generateReply() {
-  if (freeCount >= FREE_LIMIT) {
-    document.getElementById('paywall').style.display = 'block';
-    return;
-  }
-
   const review = document.getElementById('review-input').value.trim();
   const businessName = document.getElementById('dash-business').value.trim() || 'notre etablissement';
-  const apiKey = document.getElementById('dash-apikey').value.trim();
 
   if (!review) { alert('Collez un avis Google avant de générer.'); return; }
-  if (!apiKey) { alert('Entrez votre clé API Anthropic.'); return; }
 
   document.getElementById('result-box').classList.remove('visible');
   document.getElementById('loading').classList.add('visible');
   document.getElementById('gen-btn').disabled = true;
 
-  const typeLabel = selectedType || 'etablissement';
-  const prompt = `Tu es le gerant de "${businessName}", un(e) ${typeLabel}. Reponds a cet avis Google ${selectedStars} etoile(s) de facon ${selectedTone}.
-
-Regles STRICTES :
-- Maximum 2 phrases courtes
-- Ton naturel et humain
-- Zero emoji, zero markdown, zero gras
-- Pas de superlatifs exageres
-- Avis positif : remercier simplement, inviter a revenir
-- Avis negatif : s'excuser brievement, proposer d'en discuter en prive
-- Terminer par le nom de l'etablissement en texte simple
-
-Avis : "${review}"
-
-Reponds uniquement avec la reponse en texte brut.`;
-
   try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch(BACKEND_URL + '/generate', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': apiKey,
-        'anthropic-version': '2023-06-01',
-        'anthropic-dangerous-direct-browser-access': 'true'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5-20251001',
-        max_tokens: 200,
-        messages: [{ role: 'user', content: prompt }]
+        review,
+        businessName,
+        businessType: selectedType || 'etablissement',
+        stars: selectedStars,
+        tone: selectedTone
       })
     });
 
     const data = await res.json();
-    if (data.error) { alert('Erreur API : ' + data.error.message); return; }
+    if (data.error) { alert('Erreur : ' + data.error); return; }
 
-    const text = data.content.map(i => i.text || '').join('');
-    document.getElementById('result-text').textContent = text;
+    document.getElementById('result-text').textContent = data.response;
     document.getElementById('result-box').classList.add('visible');
 
-    freeCount++;
-    localStorage.setItem('freeCount_' + currentUser.id, freeCount);
-    updateStatus();
-    updateFreeCounter();
-
-    if (freeCount >= FREE_LIMIT) {
-      document.getElementById('paywall').style.display = 'block';
-    }
-
   } catch (err) {
-    alert('Erreur de connexion.');
+    alert('Erreur de connexion au serveur.');
   } finally {
     document.getElementById('loading').classList.remove('visible');
     document.getElementById('gen-btn').disabled = false;
@@ -579,12 +571,9 @@ async function doReset() {
   const sucEl = document.getElementById('reset-success');
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
-
   if (!password || password.length < 8) { errEl.textContent = 'Le mot de passe doit faire au moins 8 caractères.'; errEl.style.display = 'block'; return; }
-
   const { error } = await sb.auth.updateUser({ password });
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
-
   sucEl.textContent = 'Mot de passe changé ! Redirection...';
   sucEl.style.display = 'block';
   setTimeout(() => showPage('login'), 2000);
