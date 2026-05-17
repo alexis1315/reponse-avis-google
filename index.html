@@ -156,6 +156,10 @@
     .info-row:last-child { border-bottom: none; }
     .info-row strong { color: var(--text); min-width: 120px; }
 
+    input:checked + span { background: var(--accent) !important; }
+    input:checked + span:before { transform: translateX(20px); }
+    span.toggle-thumb:before { position:absolute; content:""; height:18px; width:18px; left:3px; bottom:3px; background:white; border-radius:50%; transition:0.3s; }
+
     .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--success); color: #fff; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; display: none; z-index: 999; }
     .toast.visible { display: block; }
   </style>
@@ -320,7 +324,7 @@
   <div class="dashboard-layout">
 
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
       <div class="sidebar-user">
         <div class="sidebar-user-email" id="sidebar-email">—</div>
         <div class="sidebar-status">
@@ -334,6 +338,14 @@
         <button class="sidebar-item active" onclick="switchTab('generate', this)">
           <span class="icon">✍️</span> Générer une réponse
         </button>
+        <button class="sidebar-item" onclick="switchTab('history', this)">
+          <span class="icon">🕐</span> Historique
+        </button>
+
+        <div class="sidebar-label">Établissements</div>
+        <button class="sidebar-item" onclick="switchTab('establishments', this)">
+          <span class="icon">🏪</span> Mes établissements
+        </button>
 
         <div class="sidebar-label">Intégrations</div>
         <button class="sidebar-item" onclick="switchTab('google', this)">
@@ -343,6 +355,9 @@
         <div class="sidebar-label">Paramètres</div>
         <button class="sidebar-item" onclick="switchTab('account', this)">
           <span class="icon">⚙️</span> Mon compte
+        </button>
+        <button class="sidebar-item" onclick="switchTab('legal', this)">
+          <span class="icon">📄</span> CGU & Confidentialité
         </button>
       </div>
 
@@ -362,7 +377,12 @@
         <h3>Générer une réponse</h3>
 
         <div class="field">
-          <label>Nom de l'établissement</label>
+          <label>Établissement <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(sélectionner ou taper manuellement)</span></label>
+          <div style="display:flex; gap:8px; margin-bottom:8px;">
+            <select id="establishment-select" onchange="loadEstablishment()" style="flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
+              <option value="">— Choisir un établissement —</option>
+            </select>
+          </div>
           <input type="text" id="dash-business" placeholder="Ex: Restaurant Le Provençal" />
         </div>
 
@@ -446,6 +466,44 @@
       </div>
 
       <div class="google-card">
+        <h3>Notifications</h3>
+        <p>Gérez vos préférences de notifications par email.</p>
+        <div style="margin-top:1.2rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <div style="font-size:14px; color:#fff; font-weight:500;">Nouveaux avis Google</div>
+              <div style="font-size:12px; color:var(--muted);">Recevoir un email quand un nouvel avis est posté</div>
+            </div>
+            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+              <input type="checkbox" id="notif-new-review" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-new-review"></span>
+            </label>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+            <div>
+              <div style="font-size:14px; color:#fff; font-weight:500;">Rappel de validation</div>
+              <div style="font-size:12px; color:var(--muted);">Rappel quand des réponses attendent votre validation</div>
+            </div>
+            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+              <input type="checkbox" id="notif-validation" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-validation"></span>
+            </label>
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+            <div>
+              <div style="font-size:14px; color:#fff; font-weight:500;">Résumé hebdomadaire</div>
+              <div style="font-size:12px; color:var(--muted);">Recevoir un résumé chaque semaine de vos réponses</div>
+            </div>
+            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+              <input type="checkbox" id="notif-weekly" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-weekly"></span>
+            </label>
+          </div>
+        </div>
+        <p style="font-size:11px; color:var(--muted); margin-top:1rem;">⚠️ Les notifications par email seront actives dès la connexion Google Business.</p>
+      </div>
+
+      <div class="google-card">
         <h3 style="color:var(--danger);">Zone de danger</h3>
         <p>Supprimer définitivement votre compte ReplyGoogle et toutes vos données.</p>
         <button class="btn" onclick="confirmDeleteAccount()" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); width:100%; padding:12px; border-radius:10px; margin-top:0.5rem;">
@@ -479,6 +537,92 @@
           <div class="info-row"><strong>✓ Analyser vos réponses</strong> passées pour s'en inspirer</div>
           <div class="info-row"><strong>✓ Générer des réponses</strong> fidèles à votre style</div>
           <div class="info-row"><strong>✗ Publier automatiquement</strong> sans votre validation (jamais)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: HISTORY -->
+    <div id="tab-history" class="tab-content">
+      <div class="reply-card">
+        <h3>Historique des réponses</h3>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Vos 20 dernières réponses générées.</p>
+        <div id="history-list">
+          <p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Chargement...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: ESTABLISHMENTS -->
+    <div id="tab-establishments" class="tab-content">
+      <div class="reply-card">
+        <h3 style="margin-bottom:1rem;">Mes établissements</h3>
+        <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Ajoutez plusieurs établissements avec leurs instructions personnalisées.</p>
+        
+        <div id="establishments-list" style="margin-bottom:1.5rem;"></div>
+
+        <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
+          <h4 style="font-size:14px; font-weight:600; color:#fff; margin-bottom:1rem;">Ajouter un établissement</h4>
+          <div class="field">
+            <label>Nom</label>
+            <input type="text" id="new-estab-name" placeholder="Ex: Restaurant Le Provençal" />
+          </div>
+          <div class="field">
+            <label>Type</label>
+            <select id="new-estab-type" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
+              <option value="">Sélectionner...</option>
+              <option value="Restaurant">🍽️ Restaurant</option>
+              <option value="Hôtel">🏨 Hôtel</option>
+              <option value="Salon">✂️ Salon</option>
+              <option value="Garage">🔧 Garage</option>
+              <option value="Commerce">🛍️ Commerce</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Instructions personnalisées</label>
+            <textarea id="new-estab-instructions" placeholder="Ex: Toujours répondre en tutoyant, mentionner notre chef étoilé..." style="min-height:80px;"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="addEstablishment()" style="width:100%; padding:12px;">Ajouter l'établissement</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: LEGAL -->
+    <div id="tab-legal" class="tab-content">
+      <div class="google-card">
+        <h3>Conditions Générales d'Utilisation</h3>
+        <p>Dernière mise à jour : Mai 2025</p>
+        <div style="margin-top:1.5rem; font-size:13px; color:var(--muted); line-height:1.8;">
+          <h4 style="color:#fff; margin-bottom:0.5rem;">1. Objet</h4>
+          <p style="margin-bottom:1rem;">ReplyGoogle est un service SaaS permettant aux gérants d'établissements de générer des réponses automatisées à leurs avis Google grâce à l'intelligence artificielle.</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">2. Abonnement et facturation</h4>
+          <p style="margin-bottom:1rem;">L'abonnement ReplyGoogle Pro est facturé 19€/mois. La résiliation peut être effectuée à tout moment via le portail client Stripe, avec effet à la fin de la période en cours.</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">3. Utilisation du service</h4>
+          <p style="margin-bottom:1rem;">Le service est limité à 10 réponses par jour. Les réponses générées sont fournies à titre indicatif et doivent être vérifiées par l'utilisateur avant publication.</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">4. Données personnelles (RGPD)</h4>
+          <p style="margin-bottom:1rem;">Nous collectons uniquement votre email et le nom de votre établissement. Vos données ne sont jamais revendues ni partagées avec des tiers. Conformément au RGPD, vous pouvez demander la suppression de vos données à tout moment via l'onglet "Mon compte".</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">5. Responsabilité</h4>
+          <p style="margin-bottom:1rem;">ReplyGoogle ne peut être tenu responsable des réponses générées par l'IA. L'utilisateur reste seul responsable du contenu publié sur sa fiche Google.</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">6. Contact</h4>
+          <p>Pour toute question : contact@replygoogle.fr</p>
+        </div>
+      </div>
+
+      <div class="google-card" style="margin-top:1rem;">
+        <h3>Politique de confidentialité</h3>
+        <div style="margin-top:1rem; font-size:13px; color:var(--muted); line-height:1.8;">
+          <h4 style="color:#fff; margin-bottom:0.5rem;">Données collectées</h4>
+          <p style="margin-bottom:1rem;">Email, nom de l'établissement, nombre de réponses générées par jour.</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">Utilisation des données</h4>
+          <p style="margin-bottom:1rem;">Vos données sont utilisées uniquement pour faire fonctionner le service. Aucune donnée n'est partagée avec des tiers sauf Supabase (hébergement base de données) et Stripe (paiements).</p>
+          
+          <h4 style="color:#fff; margin-bottom:0.5rem;">Vos droits</h4>
+          <p>Vous pouvez accéder, modifier ou supprimer vos données à tout moment. Pour supprimer votre compte, rendez-vous dans "Mon compte" → "Supprimer mon compte".</p>
         </div>
       </div>
     </div>
@@ -526,6 +670,7 @@ function switchTab(tab, btn) {
   document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   if (btn) btn.classList.add('active');
+  if (tab === 'history') loadHistory();
   // Close sidebar on mobile after click
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('hamburger-btn').classList.remove('open');
@@ -621,6 +766,8 @@ function loadDashboard() {
   document.getElementById('hamburger-btn').style.display = 'flex';
   document.getElementById('sidebar-email').textContent = currentUser.email;
   updateDailyCounter();
+  loadEstablishments();
+  loadNotifPrefs();
 }
 
 const DAILY_LIMIT = 10;
@@ -702,6 +849,7 @@ async function generateReply() {
 
     document.getElementById('result-text').textContent = data.response;
     document.getElementById('result-box').classList.add('visible');
+    await saveToHistory(businessName, review, data.response);
 
     const customInstr = document.getElementById('custom-instructions').value.trim();
     if (customInstr && data.explanation) {
@@ -753,6 +901,127 @@ async function confirmDeleteAccount() {
     showPage('landing');
     alert('Votre compte a été supprimé. À bientôt !');
   }
+}
+
+// ESTABLISHMENTS
+let establishments = [];
+let currentEstablishmentId = null;
+
+async function loadEstablishments() {
+  const { data, error } = await sb.from('establishments').select('*').eq('user_id', currentUser.id).order('created_at');
+  if (error || !data) return;
+  establishments = data;
+  updateEstablishmentSelect();
+  renderEstablishmentsList();
+}
+
+function updateEstablishmentSelect() {
+  const select = document.getElementById('establishment-select');
+  select.innerHTML = '<option value="">— Choisir un établissement —</option>';
+  establishments.forEach(e => {
+    const opt = document.createElement('option');
+    opt.value = e.id;
+    opt.textContent = e.name + (e.business_type ? ` (${e.business_type})` : '');
+    select.appendChild(opt);
+  });
+  if (currentEstablishmentId) select.value = currentEstablishmentId;
+}
+
+function loadEstablishment() {
+  const id = document.getElementById('establishment-select').value;
+  if (!id) return;
+  const estab = establishments.find(e => e.id === id);
+  if (!estab) return;
+  currentEstablishmentId = id;
+  document.getElementById('dash-business').value = estab.name;
+  if (estab.custom_instructions) document.getElementById('custom-instructions').value = estab.custom_instructions;
+  const pills = document.querySelectorAll('#type-pills .pill');
+  pills.forEach(p => {
+    p.classList.remove('active');
+    if (p.textContent.trim().includes(estab.business_type)) p.classList.add('active');
+  });
+  if (estab.business_type) selectedType = estab.business_type;
+}
+
+function renderEstablishmentsList() {
+  const el = document.getElementById('establishments-list');
+  if (!establishments.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:1rem;">Aucun établissement enregistré.</p>'; return; }
+  el.innerHTML = establishments.map(e => `
+    <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1rem 1.2rem; margin-bottom:0.8rem; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-weight:600; color:#fff; font-size:14px;">${e.name}</div>
+        <div style="font-size:12px; color:var(--muted);">${e.business_type || 'Type non défini'}</div>
+        ${e.custom_instructions ? `<div style="font-size:11px; color:var(--muted); margin-top:4px; font-style:italic;">"${e.custom_instructions.substring(0, 60)}${e.custom_instructions.length > 60 ? '...' : ''}"</div>` : ''}
+      </div>
+      <button onclick="deleteEstablishment('${e.id}')" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); border-radius:6px; padding:5px 10px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Supprimer</button>
+    </div>
+  `).join('');
+}
+
+async function addEstablishment() {
+  const name = document.getElementById('new-estab-name').value.trim();
+  const type = document.getElementById('new-estab-type').value;
+  const instructions = document.getElementById('new-estab-instructions').value.trim();
+  if (!name) { alert('Entrez un nom d'établissement.'); return; }
+  const { error } = await sb.from('establishments').insert({ user_id: currentUser.id, name, business_type: type, custom_instructions: instructions });
+  if (error) { alert('Erreur lors de l'ajout.'); return; }
+  document.getElementById('new-estab-name').value = '';
+  document.getElementById('new-estab-instructions').value = '';
+  await loadEstablishments();
+  alert('Établissement ajouté !');
+}
+
+async function deleteEstablishment(id) {
+  if (!confirm('Supprimer cet établissement ?')) return;
+  await sb.from('establishments').delete().eq('id', id);
+  if (currentEstablishmentId === id) currentEstablishmentId = null;
+  await loadEstablishments();
+}
+
+// HISTORY
+async function loadHistory() {
+  const { data, error } = await sb.from('response_history').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
+  const el = document.getElementById('history-list');
+  if (error || !data || !data.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Aucune réponse générée pour l'instant.</p>'; return; }
+  el.innerHTML = data.map(h => `
+    <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1.2rem; margin-bottom:0.8rem;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; font-weight:600; color:#fff;">${h.business_name}</span>
+        <span style="font-size:11px; color:var(--muted);">${new Date(h.created_at).toLocaleDateString('fr-FR')}</span>
+      </div>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:6px; font-style:italic;">"${h.review_text ? h.review_text.substring(0, 80) + '...' : ''}"</p>
+      <p style="font-size:13px; color:var(--text); line-height:1.6;">${h.response_text}</p>
+      <button onclick="navigator.clipboard.writeText('${h.response_text.replace(/'/g, "\'")}').then(() => alert('Copié !'))" style="margin-top:8px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 10px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif;">Copier</button>
+    </div>
+  `).join('');
+}
+
+async function saveToHistory(businessName, reviewText, responseText) {
+  await sb.from('response_history').insert({ user_id: currentUser.id, business_name: businessName, review_text: reviewText, response_text: responseText });
+}
+
+// NOTIFICATIONS
+async function loadNotifPrefs() {
+  const { data } = await sb.from('user_preferences').select('*').eq('user_id', currentUser.id).single();
+  if (!data) return;
+  const prefs = data.notification_prefs || {};
+  setToggle('notif-new-review', prefs.new_review || false);
+  setToggle('notif-validation', prefs.validation || false);
+  setToggle('notif-weekly', prefs.weekly || false);
+}
+
+function setToggle(id, val) {
+  const input = document.getElementById(id);
+  if (input) input.checked = val;
+}
+
+async function saveNotifPrefs() {
+  const prefs = {
+    new_review: document.getElementById('notif-new-review').checked,
+    validation: document.getElementById('notif-validation').checked,
+    weekly: document.getElementById('notif-weekly').checked
+  };
+  await sb.from('user_preferences').upsert({ user_id: currentUser.id, notification_prefs: prefs }, { onConflict: 'user_id' });
 }
 
 // Check session on load
