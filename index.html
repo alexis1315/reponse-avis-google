@@ -507,19 +507,66 @@ async function doLogout() {
 
 function loadDashboard() {
   showPage('dashboard');
-  const dot = document.getElementById('status-dot');
-  const text = document.getElementById('status-text');
-  dot.className = 'status-dot';
-  text.innerHTML = `<strong>Compte actif</strong> — Réponses illimitées`;
   const business = currentUser.user_metadata?.business_name || '';
   document.getElementById('dash-business').value = business;
   document.getElementById('nav-btns').innerHTML = `
     <span style="font-size:14px; color:var(--muted);">${currentUser.email}</span>
     <button class="btn btn-danger" onclick="doLogout()">Déconnexion</button>
   `;
+  updateDailyCounter();
+}
+
+const DAILY_LIMIT = 10;
+
+async function getDailyUsage() {
+  const today = new Date().toISOString().split('T')[0];
+  const { data, error } = await sb
+    .from('daily_usage')
+    .select('count')
+    .eq('user_id', currentUser.id)
+    .eq('usage_date', today)
+    .single();
+  if (error || !data) return 0;
+  return data.count;
+}
+
+async function incrementDailyUsage() {
+  const today = new Date().toISOString().split('T')[0];
+  const { data, error } = await sb
+    .from('daily_usage')
+    .select('count')
+    .eq('user_id', currentUser.id)
+    .eq('usage_date', today)
+    .single();
+
+  if (error || !data) {
+    await sb.from('daily_usage').insert({ user_id: currentUser.id, usage_date: today, count: 1 });
+  } else {
+    await sb.from('daily_usage').update({ count: data.count + 1 }).eq('user_id', currentUser.id).eq('usage_date', today);
+  }
+}
+
+async function updateDailyCounter() {
+  const used = await getDailyUsage();
+  const remaining = Math.max(0, DAILY_LIMIT - used);
+  const dot = document.getElementById('status-dot');
+  const text = document.getElementById('status-text');
+  if (remaining > 0) {
+    dot.className = 'status-dot';
+    text.innerHTML = `<strong>Compte actif</strong> — ${remaining} réponse(s) restante(s) aujourd'hui`;
+  } else {
+    dot.className = 'status-dot inactive';
+    text.innerHTML = `<strong>Limite atteinte</strong> — Revenez demain à minuit`;
+  }
 }
 
 async function generateReply() {
+  const used = await getDailyUsage();
+  if (used >= DAILY_LIMIT) {
+    alert('Vous avez atteint votre limite de 10 réponses pour aujourd\'hui. Revenez demain à minuit !');
+    return;
+  }
+
   const review = document.getElementById('review-input').value.trim();
   const businessName = document.getElementById('dash-business').value.trim() || 'notre etablissement';
 
@@ -547,6 +594,9 @@ async function generateReply() {
 
     document.getElementById('result-text').textContent = data.response;
     document.getElementById('result-box').classList.add('visible');
+
+    await incrementDailyUsage();
+    await updateDailyCounter();
 
   } catch (err) {
     alert('Erreur de connexion au serveur.');
