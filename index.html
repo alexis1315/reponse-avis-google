@@ -373,7 +373,7 @@
   <div class="dashboard-layout">
 
     <!-- SIDEBAR -->
-    <div class="sidebar" id="sidebar">
+    <div class="sidebar">
       <div class="sidebar-user">
         <div class="sidebar-user-email" id="sidebar-email">—</div>
         <div style="margin-bottom:8px;">
@@ -481,6 +481,17 @@
           <label>Instructions personnalisées <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(optionnel)</span></label>
           <textarea id="custom-instructions" placeholder="Ex: Réponse plus courte et formelle. Toujours mentionner notre équipe. Ne pas utiliser le mot excellent..." style="min-height:70px;"></textarea>
           <button type="button" onclick="document.getElementById('custom-instructions').value=''" style="margin-top:6px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 12px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">↺ Réinitialiser les instructions</button>
+        </div>
+
+        <div style="margin-bottom: 1rem;">
+          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Langue de la réponse</label>
+          <div class="pills" id="lang-pills">
+            <button class="pill active" onclick="selectPill(this,'lang')">🇫🇷 Français</button>
+            <button class="pill" onclick="selectPill(this,'lang')">🇬🇧 Anglais</button>
+            <button class="pill" onclick="selectPill(this,'lang')">🇪🇸 Espagnol</button>
+            <button class="pill" onclick="selectPill(this,'lang')">🇩🇪 Allemand</button>
+            <button class="pill" onclick="selectPill(this,'lang')">🇮🇹 Italien</button>
+          </div>
         </div>
 
         <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
@@ -750,6 +761,7 @@ let currentUser = null;
 let selectedType = '';
 let selectedStars = 5;
 let selectedTone = 'Chaleureux';
+let selectedLang = 'Français';
 
 function handleSubscribe(url) {
   if (currentUser) {
@@ -793,11 +805,13 @@ function switchTab(tab, btn) {
 }
 
 function selectPill(btn, group) {
-  const container = document.getElementById(group === 'type' ? 'type-pills' : 'tone-pills');
+  const containers = { type: 'type-pills', tone: 'tone-pills', lang: 'lang-pills' };
+  const container = document.getElementById(containers[group] || 'tone-pills');
   container.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   if (group === 'type') selectedType = btn.textContent.trim().split(' ').slice(1).join(' ');
   if (group === 'tone') selectedTone = btn.textContent.trim();
+  if (group === 'lang') selectedLang = btn.textContent.trim().split(' ').slice(1).join(' ');
 }
 
 function selectStar(btn, stars) {
@@ -955,7 +969,8 @@ async function generateReply() {
         businessType: selectedType || 'etablissement',
         stars: selectedStars,
         tone: selectedTone,
-        customInstructions: document.getElementById('custom-instructions').value.trim()
+        customInstructions: document.getElementById('custom-instructions').value.trim(),
+        language: selectedLang
       })
     });
 
