@@ -496,6 +496,13 @@
 
         <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
 
+        <div id="limit-banner" style="display:none; margin-top:1rem; background:rgba(247,201,79,0.08); border:1px solid rgba(247,201,79,0.3); border-radius:12px; padding:1.2rem 1.5rem;">
+          <div style="font-size:14px; font-weight:600; color:var(--warning); margin-bottom:6px;">⚠️ Limite quotidienne atteinte</div>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:1rem;">Vous avez utilisé toutes vos réponses gratuites aujourd'hui. Passez au plan Starter pour obtenir 20 réponses par jour.</p>
+          <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary" style="display:inline-block; text-decoration:none; padding:10px 20px; font-size:13px; border-radius:8px;">🚀 Passer au Starter — 19€/mois</a>
+          <p style="font-size:11px; color:var(--muted); margin-top:8px;">Ou revenez demain à minuit pour 3 nouvelles réponses gratuites.</p>
+        </div>
+
         <div class="loading-text" id="loading">Génération en cours...</div>
 
         <div class="result-box" id="result-box">
