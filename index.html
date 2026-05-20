@@ -683,7 +683,7 @@
               <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">19€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
               <div style="font-size:12px; color:var(--muted);">✓ 20 réponses/jour &nbsp;·&nbsp; ✓ 3 établissements &nbsp;·&nbsp; ✓ Instructions personnalisées</div>
             </div>
-            <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary" style="text-decoration:none; padding:10px 20px; font-size:13px;">S'abonner</a>
+            <button onclick="subscribeToPlan('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">S'abonner</button>
           </div>
 
           <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
@@ -692,7 +692,7 @@
               <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">30€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
               <div style="font-size:12px; color:var(--muted);">✓ 50 réponses/jour &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Instructions personnalisées &nbsp;·&nbsp; ✓ Historique complet</div>
             </div>
-            <a href="https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201" target="_blank" class="btn btn-ghost" style="text-decoration:none; padding:10px 20px; font-size:13px;">S'abonner</a>
+            <button onclick="subscribeToPlan('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
           </div>
 
           <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
@@ -701,7 +701,7 @@
               <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">59€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
               <div style="font-size:12px; color:var(--muted);">✓ Réponses illimitées &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Instructions personnalisées &nbsp;·&nbsp; ✓ Historique complet &nbsp;·&nbsp; ✓ Accès prioritaire &nbsp;·&nbsp; ✓ Support dédié</div>
             </div>
-            <a href="https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202" target="_blank" class="btn btn-ghost" style="text-decoration:none; padding:10px 20px; font-size:13px;">S'abonner</a>
+            <button onclick="subscribeToPlan('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
           </div>
 
         </div>
@@ -777,6 +777,16 @@ function handleSubscribe(url) {
     alert('Veuillez vous connecter ou créer un compte avant de vous abonner.');
     showPage('login');
   }
+}
+
+function subscribeToPlan(url) {
+  if (!currentUser) {
+    alert('Veuillez vous connecter avant de vous abonner.');
+    showPage('login');
+    return;
+  }
+  const email = encodeURIComponent(currentUser.email);
+  window.open(url + '?prefilled_email=' + email, '_blank');
 }
 
 function togglePwd(id, btn) {
@@ -901,12 +911,10 @@ function loadDashboard() {
   `;
   document.getElementById('hamburger-btn').style.display = 'flex';
   document.getElementById('sidebar-email').textContent = currentUser.email;
-  updateDailyCounter();
+  loadUserPlan();
   loadEstablishments();
   loadNotifPrefs();
 }
-
-const DAILY_LIMIT = 10;
 
 async function getDailyUsage() {
   const today = new Date().toISOString().split('T')[0];
@@ -938,7 +946,8 @@ async function incrementDailyUsage() {
 
 async function updateDailyCounter() {
   const used = await getDailyUsage();
-  const remaining = Math.max(0, DAILY_LIMIT - used);
+  const limit = PLAN_LIMITS[userPlan] || 3;
+  const remaining = Math.max(0, limit - used);
   const dot = document.getElementById('status-dot');
   const text = document.getElementById('status-text');
   if (remaining > 0) {
@@ -1135,6 +1144,31 @@ async function loadHistory() {
 
 async function saveToHistory(businessName, reviewText, responseText) {
   await sb.from('response_history').insert({ user_id: currentUser.id, business_name: businessName, review_text: reviewText, response_text: responseText });
+}
+
+// PLAN
+let userPlan = 'free';
+
+const PLAN_LIMITS = {
+  free: 3,
+  starter: 20,
+  pro: 50,
+  agence: 999999
+};
+
+async function loadUserPlan() {
+  const { data } = await sb.from('user_preferences').select('plan').eq('user_id', currentUser.id).single();
+  if (data && data.plan) {
+    userPlan = data.plan;
+  } else {
+    userPlan = 'free';
+  }
+  // Update plan badge
+  const badge = document.getElementById('plan-badge');
+  const planNames = { free: 'Gratuit', starter: 'Starter', pro: 'Pro', agence: 'Agence' };
+  if (badge) badge.textContent = planNames[userPlan] || 'Gratuit';
+  // Update daily counter with correct limit
+  updateDailyCounter();
 }
 
 // NOTIFICATIONS
