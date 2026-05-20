@@ -786,7 +786,8 @@ function subscribeToPlan(url) {
     return;
   }
   const email = encodeURIComponent(currentUser.email);
-  window.open(url + '?prefilled_email=' + email, '_blank');
+  const userId = encodeURIComponent(currentUser.id);
+  window.open(url + '?prefilled_email=' + email + '&client_reference_id=' + userId, '_blank');
 }
 
 function togglePwd(id, btn) {
