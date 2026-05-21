@@ -858,7 +858,7 @@ async function doForgot() {
   sucEl.style.display = 'none';
   if (!email) { errEl.textContent = 'Entrez votre email.'; errEl.style.display = 'block'; return; }
   const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://reponse-avis-google.vercel.app'
+    redirectTo: 'https://replygoogle.fr'
   });
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
   sucEl.textContent = 'Email envoyé ! Vérifiez votre boîte mail.';
@@ -962,12 +962,10 @@ async function updateDailyCounter() {
 
 async function generateReply() {
   const used = await getDailyUsage();
-  const limit = PLAN_LIMITS[userPlan] || 3;
-  if (used >= limit) {
-    document.getElementById('limit-banner').style.display = 'block';
+  if (used >= DAILY_LIMIT) {
+    alert('Vous avez atteint votre limite de 10 réponses pour aujourd\'hui. Revenez demain à minuit !');
     return;
   }
-  document.getElementById('limit-banner').style.display = 'none';
 
   const review = document.getElementById('review-input').value.trim();
   const businessName = document.getElementById('dash-business').value.trim() || 'notre etablissement';
