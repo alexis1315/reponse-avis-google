@@ -475,7 +475,7 @@
 
 <nav>
   <div class="nav-left">
-    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:flex;">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:none;">
       <span></span><span></span><span></span>
     </button>
     <div class="logo">Reply<span class="logo-dot">.</span>Google</div>
@@ -674,19 +674,19 @@
       </div>
 
       <div class="sidebar-section">Principal</div>
-      <button class="nav-item active" onclick="switchTab('generate',this)"><span class="ni">✍️</span> Générer</button>
-      <button class="nav-item" onclick="switchTab('history',this)"><span class="ni">🕐</span> Historique</button>
+      <button class="nav-item active" onclick="currentUser ? switchTab('generate',this) : showPage('login')"><span class="ni">✍️</span> Générer</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('history',this) : showPage('login')"><span class="ni">🕐</span> Historique</button>
 
       <div class="sidebar-section">Établissements</div>
-      <button class="nav-item" onclick="switchTab('establishments',this)"><span class="ni">🏪</span> Mes établissements</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('establishments',this) : showPage('login')"><span class="ni">🏪</span> Mes établissements</button>
 
       <div class="sidebar-section">Intégrations</div>
-      <button class="nav-item" onclick="switchTab('google',this)"><span class="ni">🔗</span> Connecter Google</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('google',this) : showPage('login')"><span class="ni">🔗</span> Connecter Google</button>
 
       <div class="sidebar-section">Paramètres</div>
-      <button class="nav-item" onclick="switchTab('pricing',this)"><span class="ni">💳</span> Abonnements</button>
-      <button class="nav-item" onclick="switchTab('account',this)"><span class="ni">⚙️</span> Mon compte</button>
-      <button class="nav-item" onclick="switchTab('legal',this)"><span class="ni">📄</span> CGU</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('pricing',this) : showPage('login')"><span class="ni">💳</span> Abonnements</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('account',this) : showPage('login')"><span class="ni">⚙️</span> Mon compte</button>
+      <button class="nav-item" onclick="currentUser ? switchTab('legal',this) : showPage('login')"><span class="ni">📄</span> CGU</button>
 
       <div class="sidebar-footer">
         <button class="nav-item danger" onclick="doLogout()"><span class="ni">↩</span> Déconnexion</button>
