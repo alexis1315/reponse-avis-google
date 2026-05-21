@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ReplyGoogle — Répondez à vos avis Google en quelques secondes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #1a56db;
+      --blue-light: #eff6ff;
+      --blue-mid: #dbeafe;
+      --text: #111827;
+      --text-muted: #6b7280;
+      --text-light: #9ca3af;
+      --border: #e5e7eb;
+      --bg: #ffffff;
+      --bg-soft: #f9fafb;
+      --bg-blue: #f0f7ff;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --star: #f59e0b;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 22px;
+      color: var(--text);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-logo span {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      background: var(--blue);
+      border-radius: 7px;
+      color: white;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary {
+      background: var(--blue);
+      color: white;
+    }
+
+    .btn-primary:hover { background: #1544b8; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(26,86,219,0.3); }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-secondary:hover { background: var(--bg-soft); }
+
+    /* HERO */
+    .hero {
+      padding: 100px 2rem 80px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-blue);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid var(--blue-mid);
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 6vw, 62px);
+      font-weight: 400;
+      line-height: 1.15;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--blue);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      font-weight: 400;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 3rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    .btn-primary-lg {
+      padding: 13px 28px;
+      font-size: 15px;
+      border-radius: var(--radius-sm);
+    }
+
+    .hero-trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-muted);
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .hero-trust .stars { color: var(--star); letter-spacing: -1px; }
+
+    /* DEMO CARD */
+    .demo-wrap {
+      max-width: 720px;
+      margin: 0 auto 80px;
+      padding: 0 2rem;
+      animation: fadeUp 0.8s 0.5s ease both;
+    }
+
+    .demo-card {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .demo-bar {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .demo-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+    .demo-body {
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .demo-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 1rem;
+    }
+
+    .demo-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-light);
+      margin-bottom: 8px;
+    }
+
+    .demo-text { font-size: 13px; color: var(--text); line-height: 1.5; }
+    .demo-stars { color: var(--star); font-size: 13px; margin-top: 6px; }
+
+    .demo-arrow {
+      font-size: 20px;
+      color: var(--blue);
+      text-align: center;
+    }
+
+    .demo-response-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--blue);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* LOGOS */
+    .logos {
+      padding: 40px 2rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-soft);
+    }
+
+    .logos p {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .logos-grid {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .logo-item {
+      font-size: 15px;
+      font-weight: 600;
+      color: #c4c4c4;
+      letter-spacing: -0.02em;
+    }
+
+    /* SECTION */
+    section { padding: 80px 2rem; }
+    .section-inner { max-width: 960px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+    }
+
+    /* FEATURES */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .feature-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .feature-card:hover { border-color: #93c5fd; transform: translateY(-2px); }
+
+    .feature-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-blue);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      margin-bottom: 1rem;
+    }
+
+    .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .feature-card p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+    /* HOW IT WORKS */
+    .how-bg { background: var(--bg-soft); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+      position: relative;
+    }
+
+    .step {
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .step-num {
+      width: 44px;
+      height: 44px;
+      background: var(--blue);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 600;
+      margin: 0 auto 1rem;
+    }
+
+    .step h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+    .step p { font-size: 14px; color: var(--text-muted); }
+
+    /* TESTIMONIALS */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .testimonial {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .testimonial-stars { color: var(--star); font-size: 14px; margin-bottom: 10px; }
+    .testimonial p { font-size: 14px; color: var(--text); line-height: 1.6; margin-bottom: 1rem; font-style: italic; }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-blue);
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .author-name { font-size: 13px; font-weight: 600; }
+    .author-biz { font-size: 12px; color: var(--text-muted); }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .pricing-card {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border: 2px solid var(--blue);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .plan-name { font-size: 13px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+
+    .plan-price {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      font-weight: 400;
+      margin-bottom: 4px;
+      line-height: 1;
+    }
+
+    .plan-price span { font-size: 16px; color: var(--text-muted); font-family: 'DM Sans', sans-serif; }
+    .plan-desc { font-size: 13px; color: var(--text-muted); margin-bottom: 1.25rem; }
+
+    .plan-features { list-style: none; margin-bottom: 1.5rem; }
+    .plan-features li {
+      font-size: 13px;
+      color: var(--text);
+      padding: 5px 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .plan-features li:last-child { border-bottom: none; }
+    .plan-features li::before { content: "✓"; color: var(--blue); font-weight: 600; font-size: 12px; }
+
+    .btn-plan {
+      width: 100%;
+      padding: 10px;
+      font-size: 14px;
+      border-radius: var(--radius-sm);
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all 0.2s;
+      text-align: center;
+      text-decoration: none;
+      display: block;
+    }
+
+    .btn-plan-primary { background: var(--blue); color: white; border: none; }
+    .btn-plan-primary:hover { background: #1544b8; }
+    .btn-plan-outline { background: transparent; color: var(--text); border: 1px solid var(--border); }
+    .btn-plan-outline:hover { background: var(--bg-soft); }
+
+    /* FAQ */
+    .faq-bg { background: var(--bg-soft); }
+
+    .faq-list { max-width: 640px; }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 18px 0;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .faq-q:hover { color: var(--blue); }
+
+    .faq-icon {
+      font-size: 20px;
+      color: var(--text-muted);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+
+    .faq-a {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s;
+    }
+
+    .faq-item.open .faq-a { max-height: 200px; padding-bottom: 16px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* CTA BAND */
+    .cta-band {
+      background: var(--text);
+      color: white;
+      text-align: center;
+      padding: 80px 2rem;
+    }
+
+    .cta-band h2 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(28px, 4vw, 44px);
+      font-weight: 400;
+      margin-bottom: 1rem;
+    }
+
+    .cta-band p { font-size: 16px; color: #9ca3af; margin-bottom: 2rem; }
+
+    .btn-white { background: white; color: var(--text); }
+    .btn-white:hover { background: #f3f4f6; transform: translateY(-1px); }
+
+    /* FOOTER */
+    footer {
+      padding: 40px 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    footer .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    footer p { font-size: 13px; color: var(--text-muted); }
+
+    footer nav { display: flex; gap: 1.5rem; }
+    footer nav a { font-size: 13px; color: var(--text-muted); text-decoration: none; }
+    footer nav a:hover { color: var(--text); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      nav .nav-links { display: none; }
+      .demo-body { grid-template-columns: 1fr; }
+      .demo-arrow { transform: rotate(90deg); }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span>R</span>
+    ReplyGoogle
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Fonctionnalités</a></li>
+    <li><a href="#how">Comment ça marche</a></li>
+    <li><a href="#pricing">Tarifs</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="nav-cta">
+    <a href="https://replygoogle.fr" class="btn btn-secondary">Connexion</a>
+    <a href="https://replygoogle.fr" class="btn btn-primary">Essayer gratuitement</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">
+    ✦ Propulsé par l'IA Claude
+  </div>
+  <h1>Répondez à vos avis Google<br><em>en quelques secondes</em></h1>
+  <p class="hero-sub">ReplyGoogle génère des réponses professionnelles et personnalisées pour chaque avis — positif ou négatif — en respectant votre ton.</p>
+  <div class="hero-cta">
+    <a href="https://replygoogle.fr" class="btn btn-primary btn-primary-lg">Commencer gratuitement →</a>
+    <a href="#how" class="btn btn-secondary btn-primary-lg">Voir comment ça marche</a>
+  </div>
+  <div class="hero-trust">
+    <span class="stars">★★★★★</span>
+    <span>Utilisé par des centaines de commerçants en France</span>
+  </div>
+</section>
+
+<!-- DEMO -->
+<div class="demo-wrap">
+  <div class="demo-card">
+    <div class="demo-bar">
+      <div class="demo-dot" style="background:#ff5f57"></div>
+      <div class="demo-dot" style="background:#febc2e"></div>
+      <div class="demo-dot" style="background:#28c840"></div>
+      <span style="font-size:12px; color:#9ca3af; margin-left:8px;">replygoogle.fr</span>
+    </div>
+    <div class="demo-body">
+      <div class="demo-box">
+        <div class="demo-label">Avis reçu</div>
+        <div class="demo-text">"Super restaurant, l'accueil était chaleureux et les plats délicieux. On reviendra avec plaisir !"</div>
+        <div class="demo-stars">★★★★★</div>
+      </div>
+      <div class="demo-arrow">→</div>
+      <div class="demo-box" style="border-color: #bfdbfe;">
+        <div class="demo-response-label">✓ Réponse générée</div>
+        <div class="demo-text" style="color:#1e3a8a;">"Merci beaucoup pour ce retour qui nous touche vraiment ! Votre fidélité est notre plus belle récompense. À très vite ! — Le Bistrot du Coin"</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGOS -->
+<div class="logos">
+  <p>Ils font confiance à ReplyGoogle</p>
+  <div class="logos-grid">
+    <span class="logo-item">Le Bistrot du Coin</span>
+    <span class="logo-item">Hôtel Lumière</span>
+    <span class="logo-item">Beauté & Sens</span>
+    <span class="logo-item">Auto Garage Martin</span>
+    <span class="logo-item">Pharmacie Centrale</span>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-tag">Fonctionnalités</span>
+      <h2 class="section-title">Tout ce dont vous avez besoin<br>pour soigner votre réputation</h2>
+      <p class="section-sub">Un outil simple et puissant, pensé pour les commerçants qui n'ont pas le temps.</p>
+    </div>
+    <div class="features-grid fade-in">
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Réponses en 1 clic</h3>
+        <p>Collez l'avis, cliquez sur générer. Une réponse professionnelle est prête en moins de 5 secondes.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎯</div>
+        <h3>Adapté à votre secteur</h3>
+        <p>Restaurant, hôtel, garage, salon de beauté — les réponses sont adaptées à votre type d'établissement.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Multilingue</h3>
+        <p>Répondez en français, anglais, espagnol ou toute autre langue — peu importe la langue de l'avis reçu.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3>Ton personnalisable</h3>
+        <p>Chaleureux, professionnel, sobre, dynamique — choisissez le ton qui correspond à votre image de marque.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📝</div>
+        <h3>Instructions sur mesure</h3>
+        <p>Ajoutez vos propres consignes : mentionner un produit, éviter certains mots, toujours terminer d'une certaine façon.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Historique complet</h3>
+        <p>Retrouvez toutes vos réponses générées classées par établissement et par date.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how-bg">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center; margin-bottom:3rem;">
+      <span class="section-tag">Comment ça marche</span>
+      <h2 class="section-title">Simple comme bonjour</h2>
+      <p class="section-sub" style="margin: 0 auto;">Aucune formation, aucune installation. Vous êtes prêt en 2 minutes.</p>
+    </div>
+    <div class="steps fade-in">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Créez votre compte</h3>
+        <p>Inscription gratuite en 30 secondes. Aucune carte bancaire requise.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Configurez votre établissement</h3>
+        <p>Nom, type, ton souhaité. Une fois pour toutes, en moins d'une minute.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Collez un avis Google</h3>
+        <p>Copiez l'avis depuis Google Business et collez-le dans ReplyGoogle.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <h3>Copiez et publiez</h3>
+        <p>Cliquez sur Générer, copiez la réponse, et publiez-la sur Google en 1 clic.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-tag">Témoignages</span>
+      <h2 class="section-title">Ce que disent nos clients</h2>
+      <p class="section-sub">Des commerçants comme vous qui ont repris le contrôle de leur réputation en ligne.</p>
+    </div>
+    <div class="testimonials-grid fade-in">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"Je répondais à mes avis une fois par mois, maintenant je le fais chaque semaine en 5 minutes. Les clients remarquent que je suis plus réactif."</p>
+        <div class="testimonial-author">
+          <div class="avatar">SL</div>
+          <div>
+            <div class="author-name">Sophie L.</div>
+            <div class="author-biz">Restauratrice, Lyon</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"J'avais du mal avec les avis négatifs, je ne savais pas quoi répondre. ReplyGoogle trouve toujours le bon ton — ni trop défensif, ni trop plat."</p>
+        <div class="testimonial-author">
+          <div class="avatar">MR</div>
+          <div>
+            <div class="author-name">Marc R.</div>
+            <div class="author-biz">Gérant de garage, Bordeaux</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p>"On reçoit des avis en anglais, en espagnol… avant on ignorait. Maintenant on répond dans la langue de chaque client. C'est un vrai plus."</p>
+        <div class="testimonial-author">
+          <div class="avatar">CK</div>
+          <div>
+            <div class="author-name">Claire K.</div>
+            <div class="author-biz">Hôtelière, Paris</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" style="background: var(--bg-soft);">
+  <div class="section-inner">
+    <div class="fade-in" style="text-align:center; margin-bottom:3rem;">
+      <span class="section-tag">Tarifs</span>
+      <h2 class="section-title">Un plan pour chaque besoin</h2>
+      <p class="section-sub" style="margin: 0 auto;">Commencez gratuitement, évoluez quand vous en avez besoin.</p>
+    </div>
+    <div class="pricing-grid fade-in">
+      <div class="pricing-card">
+        <div class="plan-name">Gratuit</div>
+        <div class="plan-price">0€ <span>/ mois</span></div>
+        <div class="plan-desc">Pour découvrir</div>
+        <ul class="plan-features">
+          <li>3 réponses par jour</li>
+          <li>1 établissement</li>
+          <li>Toutes les langues</li>
+          <li>Historique 7 jours</li>
+        </ul>
+        <a href="https://replygoogle.fr" class="btn-plan btn-plan-outline">Commencer</a>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-badge">Le plus populaire</div>
+        <div class="plan-name">Starter</div>
+        <div class="plan-price">19€ <span>/ mois</span></div>
+        <div class="plan-desc">Pour les indépendants</div>
+        <ul class="plan-features">
+          <li>20 réponses par jour</li>
+          <li>3 établissements</li>
+          <li>Toutes les langues</li>
+          <li>Instructions personnalisées</li>
+          <li>Historique illimité</li>
+        </ul>
+        <a href="https://replygoogle.fr" class="btn-plan btn-plan-primary">Choisir Starter</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Pro</div>
+        <div class="plan-price">30€ <span>/ mois</span></div>
+        <div class="plan-desc">Pour les multi-sites</div>
+        <ul class="plan-features">
+          <li>50 réponses par jour</li>
+          <li>10 établissements</li>
+          <li>Toutes les langues</li>
+          <li>Instructions personnalisées</li>
+          <li>Historique illimité</li>
+        </ul>
+        <a href="https://replygoogle.fr" class="btn-plan btn-plan-outline">Choisir Pro</a>
+      </div>
+      <div class="pricing-card">
+        <div class="plan-name">Agence</div>
+        <div class="plan-price">59€ <span>/ mois</span></div>
+        <div class="plan-desc">Pour les agences</div>
+        <ul class="plan-features">
+          <li>Réponses illimitées</li>
+          <li>Établissements illimités</li>
+          <li>Toutes les langues</li>
+          <li>Instructions personnalisées</li>
+          <li>Support prioritaire</li>
+        </ul>
+        <a href="https://replygoogle.fr" class="btn-plan btn-plan-outline">Choisir Agence</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="faq-bg">
+  <div class="section-inner">
+    <div class="fade-in">
+      <span class="section-tag">FAQ</span>
+      <h2 class="section-title">Questions fréquentes</h2>
+    </div>
+    <div class="faq-list fade-in">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Est-ce que ReplyGoogle publie les réponses à ma place ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Non, ReplyGoogle génère la réponse mais c'est vous qui la copiez et la publiez sur Google. Cela vous permet de relire et modifier si besoin avant de l'envoyer.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Les réponses sont-elles vraiment personnalisées ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Oui. Chaque réponse est générée spécifiquement pour l'avis reçu, en tenant compte du nom de votre établissement, du type d'activité, de la note, du ton choisi et de vos instructions personnalisées.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Puis-je tester avant de payer ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Absolument. Le plan gratuit vous donne accès à 3 réponses par jour sans limite de durée. Aucune carte bancaire n'est requise pour s'inscrire.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Que se passe-t-il si je dépasse ma limite ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Vous êtes notifié quand vous approchez de votre limite quotidienne. Vous pouvez passer à un plan supérieur à tout moment, sans engagement.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)">
+          Mes données sont-elles en sécurité ?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-a">Oui. Vos données sont stockées de manière sécurisée et ne sont jamais revendues à des tiers. Les avis que vous collez ne sont utilisés que pour générer la réponse et ne sont pas conservés.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<div class="cta-band">
+  <div style="max-width:600px; margin:0 auto;">
+    <h2>Prêt à répondre à tous vos avis<br>sans y passer des heures ?</h2>
+    <p>Rejoignez des centaines de commerçants qui ont amélioré leur note Google grâce à ReplyGoogle.</p>
+    <a href="https://replygoogle.fr" class="btn btn-white btn-primary-lg">Commencer gratuitement — c'est gratuit →</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">ReplyGoogle</div>
+  <p style="font-size:13px; color:var(--text-muted);">© 2026 ReplyGoogle. Tous droits réservés.</p>
+  <nav>
+    <a href="#">Mentions légales</a>
+    <a href="#">CGU</a>
+    <a href="#">Contact</a>
+  </nav>
+</footer>
+
+<script>
+  function toggleFaq(btn) {
+    const item = btn.parentElement;
+    item.classList.toggle('open');
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
