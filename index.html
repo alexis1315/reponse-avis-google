@@ -962,10 +962,12 @@ async function updateDailyCounter() {
 
 async function generateReply() {
   const used = await getDailyUsage();
-  if (used >= DAILY_LIMIT) {
-    alert('Vous avez atteint votre limite de 10 réponses pour aujourd\'hui. Revenez demain à minuit !');
+  const limit = PLAN_LIMITS[userPlan] || 3;
+  if (used >= limit) {
+    document.getElementById('limit-banner').style.display = 'block';
     return;
   }
+  document.getElementById('limit-banner').style.display = 'none';
 
   const review = document.getElementById('review-input').value.trim();
   const businessName = document.getElementById('dash-business').value.trim() || 'notre etablissement';
