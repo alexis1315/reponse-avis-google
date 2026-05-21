@@ -22,7 +22,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
 
-    /* NAV */
     nav { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 2.5rem; border-bottom: 1px solid var(--border); position: sticky; top: 0; background: rgba(10,10,15,0.95); backdrop-filter: blur(10px); z-index: 100; }
     .logo { font-family: 'DM Serif Display', serif; font-size: 1.4rem; color: #fff; }
     .logo span { color: var(--accent-light); }
@@ -34,11 +33,9 @@
     .btn-primary:hover { background: var(--accent-light); }
     .btn-danger { background: var(--danger); border: none; color: #fff; font-size: 13px; padding: 6px 14px; }
 
-    /* PAGES */
     .page { display: none; }
     .page.active { display: block; }
 
-    /* LANDING */
     .hero { max-width: 760px; margin: 0 auto; padding: 6rem 2rem 4rem; text-align: center; }
     .hero h1 { font-family: 'DM Serif Display', serif; font-size: 3.2rem; line-height: 1.2; color: #fff; margin-bottom: 1.5rem; }
     .hero h1 em { font-style: normal; color: var(--accent-light); }
@@ -52,15 +49,6 @@
     .feature-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 8px; color: #fff; }
     .feature-card p { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    .pricing { max-width: 400px; margin: 2rem auto 6rem; padding: 0 2rem; text-align: center; }
-    .price-card { background: var(--surface); border: 2px solid var(--accent); border-radius: 20px; padding: 2.5rem; }
-    .price-card .price { font-family: 'DM Serif Display', serif; font-size: 3rem; color: #fff; }
-    .price-card .price span { font-size: 1rem; color: var(--muted); font-family: 'DM Sans', sans-serif; }
-    .price-features { list-style: none; margin: 1.5rem 0; text-align: left; }
-    .price-features li { padding: 8px 0; font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--border); }
-    .price-features li::before { content: "✓ "; color: var(--success); }
-
-    /* AUTH */
     .auth-wrap { max-width: 420px; margin: 4rem auto; padding: 0 2rem; }
     .auth-card { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; }
     .auth-card h2 { font-family: 'DM Serif Display', serif; font-size: 1.8rem; margin-bottom: 0.5rem; color: #fff; }
@@ -76,10 +64,7 @@
     .msg.error { background: rgba(247,123,114,0.1); border: 1px solid rgba(247,123,114,0.3); color: var(--danger); }
     .msg.success { background: rgba(76,175,125,0.1); border: 1px solid rgba(76,175,125,0.3); color: var(--success); }
 
-    /* DASHBOARD */
     .dashboard-layout { display: block; min-height: calc(100vh - 65px); }
-
-    /* SIDEBAR */
 
     .sidebar-user { padding: 0.8rem 0.8rem 1.2rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
     .sidebar-user-email { font-size: 12px; color: var(--muted); margin-bottom: 8px; word-break: break-all; }
@@ -97,7 +82,6 @@
     .sidebar-item .icon { font-size: 16px; width: 20px; text-align: center; }
     .sidebar-bottom { border-top: 1px solid var(--border); padding-top: 1rem; margin-top: 1rem; }
 
-    /* HAMBURGER */
     .hamburger { display: flex; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 8px; border-radius: 8px; transition: background 0.15s; }
     .hamburger:hover { background: rgba(255,255,255,0.06); }
     .hamburger span { display: block; width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all 0.25s; }
@@ -105,13 +89,12 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .sidebar { width: 240px; position: fixed; top: 65px; left: 0; bottom: 0; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem; display: flex; flex-direction: column; transition: transform 0.25s ease; z-index: 60; transform: translateX(-240px); }
+    .sidebar { width: 240px; position: fixed; top: 65px; left: 0; bottom: 0; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem; display: flex; flex-direction: column; transition: transform 0.25s ease; z-index: 60; transform: translateX(-240px); overflow-y: auto; }
     .sidebar.open { transform: translateX(0); }
 
     .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; }
     .sidebar-overlay.visible { display: block; }
 
-    /* MAIN CONTENT */
     .dashboard-main { padding: 2rem; max-width: 760px; margin: 0 auto; }
     .dashboard-title { font-family: 'DM Serif Display', serif; font-size: 1.6rem; color: #fff; margin-bottom: 1.5rem; }
 
@@ -139,7 +122,6 @@
     .loading-text { text-align: center; padding: 1.5rem; color: var(--muted); font-size: 14px; display: none; }
     .loading-text.visible { display: block; }
 
-    /* GOOGLE CONNECT */
     .google-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; margin-bottom: 1.5rem; }
     .google-card h3 { font-size: 15px; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
     .google-card p { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 1.5rem; }
@@ -216,7 +198,6 @@
     <h2 style="font-family:'DM Serif Display',serif; font-size:2rem; color:#fff; text-align:center; margin-bottom:0.5rem;">Choisissez votre plan</h2>
     <p style="color:var(--muted); text-align:center; margin-bottom:2.5rem; font-size:15px;">Commencez gratuitement, évoluez selon vos besoins</p>
     <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:20px;">
-      
       <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
         <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:0.8rem;">Gratuit</div>
         <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">0€</div>
@@ -228,7 +209,6 @@
         </ul>
         <button class="btn btn-ghost" style="width:100%; padding:12px;" onclick="showPage('signup')">Commencer</button>
       </div>
-
       <div style="background:var(--surface); border:2px solid var(--accent); border-radius:20px; padding:2rem; position:relative;">
         <div style="position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--accent); color:#fff; font-size:11px; font-weight:600; padding:4px 12px; border-radius:20px;">POPULAIRE</div>
         <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-light); margin-bottom:0.8rem;">Starter</div>
@@ -242,7 +222,6 @@
         </ul>
         <button class="btn btn-primary" onclick="handleSubscribe('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')" style="width:100%; padding:12px; border-radius:10px;">S'abonner</button>
       </div>
-
       <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
         <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); margin-bottom:0.8rem;">Pro</div>
         <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">30€<span style="font-size:1rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
@@ -256,7 +235,6 @@
         </ul>
         <button class="btn btn-ghost" onclick="handleSubscribe('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')" style="width:100%; padding:12px; border-radius:10px;">S'abonner</button>
       </div>
-
       <div style="background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:2rem;">
         <div style="font-size:12px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--success); margin-bottom:0.8rem;">Agence</div>
         <div style="font-family:'DM Serif Display',serif; font-size:2.5rem; color:#fff; margin-bottom:0.3rem;">59€<span style="font-size:1rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
@@ -271,7 +249,6 @@
         </ul>
         <button class="btn btn-ghost" onclick="handleSubscribe('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')" style="width:100%; padding:12px; border-radius:10px;">S'abonner</button>
       </div>
-
     </div>
   </div>
 </div>
@@ -371,8 +348,6 @@
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
   <div class="dashboard-layout">
-
-    <!-- SIDEBAR -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-user">
         <div class="sidebar-user-email" id="sidebar-email">—</div>
@@ -384,375 +359,299 @@
           <div class="status-text" id="status-text">Chargement...</div>
         </div>
       </div>
-
       <div class="sidebar-nav">
         <div class="sidebar-label">Principal</div>
-        <button class="sidebar-item active" onclick="switchTab('generate', this)">
-          <span class="icon">✍️</span> Générer une réponse
-        </button>
-        <button class="sidebar-item" onclick="switchTab('history', this)">
-          <span class="icon">🕐</span> Historique
-        </button>
-
+        <button class="sidebar-item active" onclick="switchTab('generate', this)"><span class="icon">✍️</span> Générer une réponse</button>
+        <button class="sidebar-item" onclick="switchTab('history', this)"><span class="icon">🕐</span> Historique</button>
         <div class="sidebar-label">Établissements</div>
-        <button class="sidebar-item" onclick="switchTab('establishments', this)">
-          <span class="icon">🏪</span> Mes établissements
-        </button>
-
+        <button class="sidebar-item" onclick="switchTab('establishments', this)"><span class="icon">🏪</span> Mes établissements</button>
         <div class="sidebar-label">Intégrations</div>
-        <button class="sidebar-item" onclick="switchTab('google', this)">
-          <span class="icon">🔗</span> Connecter Google
-        </button>
-
+        <button class="sidebar-item" onclick="switchTab('google', this)"><span class="icon">🔗</span> Connecter Google</button>
         <div class="sidebar-label">Paramètres</div>
-        <button class="sidebar-item" onclick="switchTab('pricing', this)">
-          <span class="icon">💳</span> Abonnements
-        </button>
-        <button class="sidebar-item" onclick="switchTab('account', this)">
-          <span class="icon">⚙️</span> Mon compte
-        </button>
-        <button class="sidebar-item" onclick="switchTab('legal', this)">
-          <span class="icon">📄</span> CGU & Confidentialité
-        </button>
+        <button class="sidebar-item" onclick="switchTab('pricing', this)"><span class="icon">💳</span> Abonnements</button>
+        <button class="sidebar-item" onclick="switchTab('account', this)"><span class="icon">⚙️</span> Mon compte</button>
+        <button class="sidebar-item" onclick="switchTab('legal', this)"><span class="icon">📄</span> CGU & Confidentialité</button>
       </div>
-
       <div class="sidebar-bottom">
-        <button class="sidebar-item" onclick="doLogout()" style="color:var(--danger);">
-          <span class="icon">→</span> Déconnexion
-        </button>
+        <button class="sidebar-item" onclick="doLogout()" style="color:var(--danger);"><span class="icon">→</span> Déconnexion</button>
       </div>
     </div>
 
-    <!-- MAIN -->
     <div class="dashboard-main">
 
-    <!-- TAB: GENERATE -->
-    <div id="tab-generate" class="tab-content active">
-      <div class="reply-card">
-        <h3>Générer une réponse</h3>
-
-        <div class="field">
-          <label>Établissement <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(sélectionner ou taper manuellement)</span></label>
-          <div style="display:flex; gap:8px; margin-bottom:8px;">
-            <select id="establishment-select" onchange="loadEstablishment()" style="flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
-              <option value="">— Choisir un établissement —</option>
-            </select>
-          </div>
-          <input type="text" id="dash-business" placeholder="Ex: Restaurant Le Provençal" />
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Type d'établissement</label>
-          <div class="pills" id="type-pills">
-            <button class="pill" onclick="selectPill(this,'type')">🍽️ Restaurant</button>
-            <button class="pill" onclick="selectPill(this,'type')">🏨 Hôtel</button>
-            <button class="pill" onclick="selectPill(this,'type')">✂️ Salon</button>
-            <button class="pill" onclick="selectPill(this,'type')">🔧 Garage</button>
-            <button class="pill" onclick="selectPill(this,'type')">🛍️ Commerce</button>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Note de l'avis</label>
-          <div style="display:flex; gap:8px;">
-            <button class="star-pill" onclick="selectStar(this,1)">⭐ 1</button>
-            <button class="star-pill" onclick="selectStar(this,2)">⭐ 2</button>
-            <button class="star-pill" onclick="selectStar(this,3)">⭐ 3</button>
-            <button class="star-pill" onclick="selectStar(this,4)">⭐ 4</button>
-            <button class="star-pill active" onclick="selectStar(this,5)">⭐ 5</button>
-          </div>
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Ton de la réponse</label>
-          <div class="pills" id="tone-pills">
-            <button class="pill active" onclick="selectPill(this,'tone')">Chaleureux</button>
-            <button class="pill" onclick="selectPill(this,'tone')">Professionnel</button>
-            <button class="pill" onclick="selectPill(this,'tone')">Formel</button>
-          </div>
-        </div>
-
-        <div class="field">
-          <label>Avis Google du client</label>
-          <textarea id="review-input" placeholder="Collez ici l'avis Google..."></textarea>
-        </div>
-
-        <div class="field">
-          <label>Instructions personnalisées <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(optionnel)</span></label>
-          <textarea id="custom-instructions" placeholder="Ex: Réponse plus courte et formelle. Toujours mentionner notre équipe. Ne pas utiliser le mot excellent..." style="min-height:70px;"></textarea>
-          <button type="button" onclick="document.getElementById('custom-instructions').value=''" style="margin-top:6px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 12px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">↺ Réinitialiser les instructions</button>
-        </div>
-
-        <div style="margin-bottom: 1rem;">
-          <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Langue de la réponse</label>
-          <div class="pills" id="lang-pills">
-            <button class="pill active" onclick="selectPill(this,'lang')">🇫🇷 Français</button>
-            <button class="pill" onclick="selectPill(this,'lang')">🇬🇧 Anglais</button>
-            <button class="pill" onclick="selectPill(this,'lang')">🇪🇸 Espagnol</button>
-            <button class="pill" onclick="selectPill(this,'lang')">🇩🇪 Allemand</button>
-            <button class="pill" onclick="selectPill(this,'lang')">🇮🇹 Italien</button>
-          </div>
-        </div>
-
-        <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
-
-        <div id="limit-banner" style="display:none; margin-top:1rem; background:rgba(247,201,79,0.08); border:1px solid rgba(247,201,79,0.3); border-radius:12px; padding:1.2rem 1.5rem;">
-          <div style="font-size:14px; font-weight:600; color:var(--warning); margin-bottom:6px;">⚠️ Limite quotidienne atteinte</div>
-          <p style="font-size:13px; color:var(--muted); margin-bottom:1rem;">Vous avez utilisé toutes vos réponses gratuites aujourd'hui. Passez au plan Starter pour obtenir 20 réponses par jour.</p>
-          <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary" style="display:inline-block; text-decoration:none; padding:10px 20px; font-size:13px; border-radius:8px;">🚀 Passer au Starter — 19€/mois</a>
-          <p style="font-size:11px; color:var(--muted); margin-top:8px;">Ou revenez demain à minuit pour 3 nouvelles réponses gratuites.</p>
-        </div>
-
-        <div class="loading-text" id="loading">Génération en cours...</div>
-
-        <div class="result-box" id="result-box">
-          <div class="result-header">
-            <span class="result-label">Réponse générée</span>
-            <button class="btn-copy" onclick="copyReply()">Copier</button>
-          </div>
-          <p class="result-text" id="result-text"></p>
-        </div>
-
-        <div id="explanation-box" style="display:none; margin-top:0.8rem; background:rgba(247,201,79,0.06); border:1px solid rgba(247,201,79,0.25); border-radius:10px; padding:1rem 1.2rem;">
-          <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); font-weight:600; margin-bottom:6px;">💡 Note sur vos instructions</div>
-          <p id="explanation-text" style="font-size:13px; color:var(--muted); line-height:1.6;"></p>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: ACCOUNT -->
-    <div id="tab-account" class="tab-content">
-      <div class="google-card">
-        <h3>Mon abonnement</h3>
-        <p>Gérez votre abonnement ReplyGoogle Pro — changement de carte bancaire, factures, ou résiliation.</p>
-
-        <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; margin-bottom:1.5rem;">
-          <div class="info-row"><strong>Plan actuel</strong> ReplyGoogle Pro — 19€/mois</div>
-          <div class="info-row"><strong>Réponses/jour</strong> 10 réponses incluses</div>
-          <div class="info-row"><strong>Renouvellement</strong> Automatique chaque mois</div>
-        </div>
-
-        <a href="https://billing.stripe.com/p/login/test_00g29E9tq5aV8fe000" target="_blank" class="btn btn-primary" style="display:block; text-align:center; text-decoration:none; padding:13px; border-radius:10px; margin-bottom:1rem;">
-          Gérer mon abonnement →
-        </a>
-        <p style="font-size:12px; color:var(--muted); text-align:center;">Vous serez redirigé vers le portail sécurisé Stripe pour gérer ou résilier votre abonnement.</p>
-      </div>
-
-      <div class="google-card">
-        <h3>Notifications</h3>
-        <p>Gérez vos préférences de notifications par email.</p>
-        <div style="margin-top:1.2rem;">
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
-            <div>
-              <div style="font-size:14px; color:#fff; font-weight:500;">Nouveaux avis Google</div>
-              <div style="font-size:12px; color:var(--muted);">Recevoir un email quand un nouvel avis est posté</div>
-            </div>
-            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
-              <input type="checkbox" id="notif-new-review" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
-              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-new-review"></span>
-            </label>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
-            <div>
-              <div style="font-size:14px; color:#fff; font-weight:500;">Rappel de validation</div>
-              <div style="font-size:12px; color:var(--muted);">Rappel quand des réponses attendent votre validation</div>
-            </div>
-            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
-              <input type="checkbox" id="notif-validation" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
-              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-validation"></span>
-            </label>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
-            <div>
-              <div style="font-size:14px; color:#fff; font-weight:500;">Résumé hebdomadaire</div>
-              <div style="font-size:12px; color:var(--muted);">Recevoir un résumé chaque semaine de vos réponses</div>
-            </div>
-            <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
-              <input type="checkbox" id="notif-weekly" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
-              <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-weekly"></span>
-            </label>
-          </div>
-        </div>
-        <p style="font-size:11px; color:var(--muted); margin-top:1rem;">⚠️ Les notifications par email seront actives dès la connexion Google Business.</p>
-      </div>
-
-      <div class="google-card">
-        <h3 style="color:var(--danger);">Zone de danger</h3>
-        <p>Supprimer définitivement votre compte ReplyGoogle et toutes vos données.</p>
-        <button class="btn" onclick="confirmDeleteAccount()" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); width:100%; padding:12px; border-radius:10px; margin-top:0.5rem;">
-          Supprimer mon compte
-        </button>
-      </div>
-    </div>
-
-    <!-- TAB: GOOGLE CONNECT -->
-    <div id="tab-google" class="tab-content">
-      <div class="google-card">
-        <h3>Connecter votre compte Google Business <span class="coming-soon-badge">Bientôt disponible</span></h3>
-        <p>En connectant votre compte Google Business, l'application pourra analyser vos réponses passées pour s'en inspirer et générer des réponses encore plus fidèles à votre style.</p>
-
-        <div class="consent-box">
-          <p>En connectant votre compte Google, vous acceptez que ReplyGoogle utilise vos réponses passées aux avis Google <strong>uniquement</strong> pour améliorer la qualité des réponses générées. Aucune donnée n'est revendue ou partagée.</p>
-          <div class="consent-check">
-            <input type="checkbox" id="consent-check" onchange="updateGoogleBtn()" />
-            <label for="consent-check">J'accepte que ReplyGoogle accède à mes réponses Google Business passées afin de personnaliser les futures réponses générées par l'IA.</label>
-          </div>
-        </div>
-
-        <button class="google-btn" id="google-connect-btn" onclick="connectGoogle()" disabled style="opacity:0.5; cursor:not-allowed;">
-          <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-          Connecter mon compte Google Business
-        </button>
-
-        <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border);">
-          <p style="font-size: 13px; color: var(--muted); margin-bottom: 1rem;">Ce que l'application pourra faire une fois connectée :</p>
-          <div class="info-row"><strong>✓ Lire vos avis</strong> pour vous les afficher directement</div>
-          <div class="info-row"><strong>✓ Analyser vos réponses</strong> passées pour s'en inspirer</div>
-          <div class="info-row"><strong>✓ Générer des réponses</strong> fidèles à votre style</div>
-          <div class="info-row"><strong>✗ Publier automatiquement</strong> sans votre validation (jamais)</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: HISTORY -->
-    <div id="tab-history" class="tab-content">
-      <div class="reply-card">
-        <h3>Historique des réponses</h3>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Vos 20 dernières réponses générées.</p>
-        <div id="history-list">
-          <p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Chargement...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB: ESTABLISHMENTS -->
-    <div id="tab-establishments" class="tab-content">
-      <div class="reply-card">
-        <h3 style="margin-bottom:1rem;">Mes établissements</h3>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Ajoutez plusieurs établissements avec leurs instructions personnalisées.</p>
-        
-        <div id="establishments-list" style="margin-bottom:1.5rem;"></div>
-
-        <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
-          <h4 style="font-size:14px; font-weight:600; color:#fff; margin-bottom:1rem;">Ajouter un établissement</h4>
+      <div id="tab-generate" class="tab-content active">
+        <div class="reply-card">
+          <h3>Générer une réponse</h3>
           <div class="field">
-            <label>Nom</label>
-            <input type="text" id="new-estab-name" placeholder="Ex: Restaurant Le Provençal" />
+            <label>Établissement <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(sélectionner ou taper manuellement)</span></label>
+            <div style="display:flex; gap:8px; margin-bottom:8px;">
+              <select id="establishment-select" onchange="loadEstablishment()" style="flex:1; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
+                <option value="">— Choisir un établissement —</option>
+              </select>
+            </div>
+            <input type="text" id="dash-business" placeholder="Ex: Restaurant Le Provençal" />
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Type d'établissement</label>
+            <div class="pills" id="type-pills">
+              <button class="pill" onclick="selectPill(this,'type')">🍽️ Restaurant</button>
+              <button class="pill" onclick="selectPill(this,'type')">🏨 Hôtel</button>
+              <button class="pill" onclick="selectPill(this,'type')">✂️ Salon</button>
+              <button class="pill" onclick="selectPill(this,'type')">🔧 Garage</button>
+              <button class="pill" onclick="selectPill(this,'type')">🛍️ Commerce</button>
+            </div>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Note de l'avis</label>
+            <div style="display:flex; gap:8px;">
+              <button class="star-pill" onclick="selectStar(this,1)">⭐ 1</button>
+              <button class="star-pill" onclick="selectStar(this,2)">⭐ 2</button>
+              <button class="star-pill" onclick="selectStar(this,3)">⭐ 3</button>
+              <button class="star-pill" onclick="selectStar(this,4)">⭐ 4</button>
+              <button class="star-pill active" onclick="selectStar(this,5)">⭐ 5</button>
+            </div>
+          </div>
+          <div style="margin-bottom: 1rem;">
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Ton de la réponse</label>
+            <div class="pills" id="tone-pills">
+              <button class="pill active" onclick="selectPill(this,'tone')">Chaleureux</button>
+              <button class="pill" onclick="selectPill(this,'tone')">Professionnel</button>
+              <button class="pill" onclick="selectPill(this,'tone')">Formel</button>
+            </div>
           </div>
           <div class="field">
-            <label>Type</label>
-            <select id="new-estab-type" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
-              <option value="">Sélectionner...</option>
-              <option value="Restaurant">🍽️ Restaurant</option>
-              <option value="Hôtel">🏨 Hôtel</option>
-              <option value="Salon">✂️ Salon</option>
-              <option value="Garage">🔧 Garage</option>
-              <option value="Commerce">🛍️ Commerce</option>
-            </select>
+            <label>Avis Google du client</label>
+            <textarea id="review-input" placeholder="Collez ici l'avis Google..."></textarea>
           </div>
           <div class="field">
-            <label>Instructions personnalisées</label>
-            <textarea id="new-estab-instructions" placeholder="Ex: Toujours répondre en tutoyant, mentionner notre chef étoilé..." style="min-height:80px;"></textarea>
+            <label>Instructions personnalisées <span style="font-weight:400; text-transform:none; letter-spacing:0; color:var(--muted); font-size:11px;">(optionnel)</span></label>
+            <textarea id="custom-instructions" placeholder="Ex: Réponse plus courte et formelle. Toujours mentionner notre équipe..." style="min-height:70px;"></textarea>
+            <button type="button" onclick="document.getElementById('custom-instructions').value=''" style="margin-top:6px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 12px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">↺ Réinitialiser les instructions</button>
           </div>
-          <button class="btn btn-primary" onclick="addEstablishment()" style="width:100%; padding:12px;">Ajouter l'établissement</button>
+          <div style="margin-bottom: 1rem;">
+            <label style="display:block; font-size:12px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:8px;">Langue de la réponse</label>
+            <div class="pills" id="lang-pills">
+              <button class="pill active" onclick="selectPill(this,'lang')">🇫🇷 Français</button>
+              <button class="pill" onclick="selectPill(this,'lang')">🇬🇧 Anglais</button>
+              <button class="pill" onclick="selectPill(this,'lang')">🇪🇸 Espagnol</button>
+              <button class="pill" onclick="selectPill(this,'lang')">🇩🇪 Allemand</button>
+              <button class="pill" onclick="selectPill(this,'lang')">🇮🇹 Italien</button>
+            </div>
+          </div>
+          <button class="btn btn-primary btn-full" style="margin-top:1rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
+          <div id="limit-banner" style="display:none; margin-top:1rem; background:rgba(247,201,79,0.08); border:1px solid rgba(247,201,79,0.3); border-radius:12px; padding:1.2rem 1.5rem;">
+            <div style="font-size:14px; font-weight:600; color:var(--warning); margin-bottom:6px;">⚠️ Limite quotidienne atteinte</div>
+            <p style="font-size:13px; color:var(--muted); margin-bottom:1rem;">Vous avez utilisé toutes vos réponses gratuites aujourd'hui. Passez au plan Starter pour obtenir 20 réponses par jour.</p>
+            <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary" style="display:inline-block; text-decoration:none; padding:10px 20px; font-size:13px; border-radius:8px;">🚀 Passer au Starter — 19€/mois</a>
+            <p style="font-size:11px; color:var(--muted); margin-top:8px;">Ou revenez demain à minuit pour 3 nouvelles réponses gratuites.</p>
+          </div>
+          <div class="loading-text" id="loading">Génération en cours...</div>
+          <div class="result-box" id="result-box">
+            <div class="result-header">
+              <span class="result-label">Réponse générée</span>
+              <button class="btn-copy" onclick="copyReply()">Copier</button>
+            </div>
+            <p class="result-text" id="result-text"></p>
+          </div>
+          <div id="explanation-box" style="display:none; margin-top:0.8rem; background:rgba(247,201,79,0.06); border:1px solid rgba(247,201,79,0.25); border-radius:10px; padding:1rem 1.2rem;">
+            <div style="font-size:11px; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); font-weight:600; margin-bottom:6px;">💡 Note sur vos instructions</div>
+            <p id="explanation-text" style="font-size:13px; color:var(--muted); line-height:1.6;"></p>
+          </div>
         </div>
       </div>
+
+      <div id="tab-account" class="tab-content">
+        <div class="google-card">
+          <h3>Mon abonnement</h3>
+          <p>Gérez votre abonnement ReplyGoogle — changement de carte bancaire, factures, ou résiliation.</p>
+          <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.2rem 1.5rem; margin-bottom:1.5rem;">
+            <div class="info-row"><strong>Plan actuel</strong> <span id="account-plan-name">Gratuit</span></div>
+            <div class="info-row"><strong>Renouvellement</strong> Automatique chaque mois</div>
+          </div>
+          <a href="https://billing.stripe.com/p/login/test_00g29E9tq5aV8fe000" target="_blank" class="btn btn-primary" style="display:block; text-align:center; text-decoration:none; padding:13px; border-radius:10px; margin-bottom:1rem;">Gérer mon abonnement →</a>
+          <p style="font-size:12px; color:var(--muted); text-align:center;">Vous serez redirigé vers le portail sécurisé Stripe.</p>
+        </div>
+        <div class="google-card">
+          <h3>Notifications</h3>
+          <p>Gérez vos préférences de notifications par email.</p>
+          <div style="margin-top:1.2rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+              <div>
+                <div style="font-size:14px; color:#fff; font-weight:500;">Nouveaux avis Google</div>
+                <div style="font-size:12px; color:var(--muted);">Recevoir un email quand un nouvel avis est posté</div>
+              </div>
+              <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+                <input type="checkbox" id="notif-new-review" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-new-review"></span>
+              </label>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border);">
+              <div>
+                <div style="font-size:14px; color:#fff; font-weight:500;">Rappel de validation</div>
+                <div style="font-size:12px; color:var(--muted);">Rappel quand des réponses attendent votre validation</div>
+              </div>
+              <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+                <input type="checkbox" id="notif-validation" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-validation"></span>
+              </label>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 0;">
+              <div>
+                <div style="font-size:14px; color:#fff; font-weight:500;">Résumé hebdomadaire</div>
+                <div style="font-size:12px; color:var(--muted);">Recevoir un résumé chaque semaine de vos réponses</div>
+              </div>
+              <label style="position:relative; display:inline-block; width:44px; height:24px; cursor:pointer;">
+                <input type="checkbox" id="notif-weekly" onchange="saveNotifPrefs()" style="opacity:0; width:0; height:0;">
+                <span style="position:absolute; cursor:pointer; top:0; left:0; right:0; bottom:0; background:var(--border); border-radius:24px; transition:0.3s;" id="toggle-weekly"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="google-card">
+          <h3 style="color:var(--danger);">Zone de danger</h3>
+          <p>Supprimer définitivement votre compte ReplyGoogle et toutes vos données.</p>
+          <button class="btn" onclick="confirmDeleteAccount()" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); width:100%; padding:12px; border-radius:10px; margin-top:0.5rem;">Supprimer mon compte</button>
+        </div>
+      </div>
+
+      <div id="tab-google" class="tab-content">
+        <div class="google-card">
+          <h3>Connecter votre compte Google Business <span class="coming-soon-badge">Bientôt disponible</span></h3>
+          <p>En connectant votre compte Google Business, l'application pourra analyser vos réponses passées pour s'en inspirer.</p>
+          <div class="consent-box">
+            <p>En connectant votre compte Google, vous acceptez que ReplyGoogle utilise vos réponses passées aux avis Google <strong>uniquement</strong> pour améliorer la qualité des réponses générées.</p>
+            <div class="consent-check">
+              <input type="checkbox" id="consent-check" onchange="updateGoogleBtn()" />
+              <label for="consent-check">J'accepte que ReplyGoogle accède à mes réponses Google Business passées afin de personnaliser les futures réponses générées par l'IA.</label>
+            </div>
+          </div>
+          <button class="google-btn" id="google-connect-btn" onclick="connectGoogle()" disabled style="opacity:0.5; cursor:not-allowed;">
+            <svg class="google-logo" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Connecter mon compte Google Business
+          </button>
+          <div style="margin-top:1.5rem; padding-top:1.5rem; border-top:1px solid var(--border);">
+            <div class="info-row"><strong>✓ Lire vos avis</strong> pour vous les afficher directement</div>
+            <div class="info-row"><strong>✓ Analyser vos réponses</strong> passées pour s'en inspirer</div>
+            <div class="info-row"><strong>✓ Générer des réponses</strong> fidèles à votre style</div>
+            <div class="info-row"><strong>✗ Publier automatiquement</strong> sans votre validation (jamais)</div>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-history" class="tab-content">
+        <div class="reply-card">
+          <h3>Historique des réponses</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Vos 20 dernières réponses générées.</p>
+          <div id="history-list"><p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Chargement...</p></div>
+        </div>
+      </div>
+
+      <div id="tab-establishments" class="tab-content">
+        <div class="reply-card">
+          <h3 style="margin-bottom:1rem;">Mes établissements</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:1.5rem;">Ajoutez plusieurs établissements avec leurs instructions personnalisées.</p>
+          <div id="establishments-list" style="margin-bottom:1.5rem;"></div>
+          <div style="background:var(--bg); border:1px solid var(--border); border-radius:12px; padding:1.5rem;">
+            <h4 style="font-size:14px; font-weight:600; color:#fff; margin-bottom:1rem;">Ajouter un établissement</h4>
+            <div class="field">
+              <label>Nom</label>
+              <input type="text" id="new-estab-name" placeholder="Ex: Restaurant Le Provençal" />
+            </div>
+            <div class="field">
+              <label>Type</label>
+              <select id="new-estab-type" style="width:100%; background:var(--bg); border:1px solid var(--border); border-radius:8px; padding:11px 14px; font-size:14px; color:var(--text); font-family:'DM Sans',sans-serif; outline:none;">
+                <option value="">Sélectionner...</option>
+                <option value="Restaurant">🍽️ Restaurant</option>
+                <option value="Hôtel">🏨 Hôtel</option>
+                <option value="Salon">✂️ Salon</option>
+                <option value="Garage">🔧 Garage</option>
+                <option value="Commerce">🛍️ Commerce</option>
+              </select>
+            </div>
+            <div class="field">
+              <label>Instructions personnalisées</label>
+              <textarea id="new-estab-instructions" placeholder="Ex: Toujours répondre en tutoyant, mentionner notre chef étoilé..." style="min-height:80px;"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="addEstablishment()" style="width:100%; padding:12px;">Ajouter l'établissement</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="tab-pricing" class="tab-content">
+        <div class="reply-card">
+          <h3 style="margin-bottom:0.5rem;">Abonnements</h3>
+          <p style="font-size:13px; color:var(--muted); margin-bottom:2rem;">Choisissez le plan adapté à vos besoins.</p>
+          <div style="display:grid; gap:16px;">
+            <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px;">Gratuit</div>
+                <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">0€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+                <div style="font-size:12px; color:var(--muted);">✓ 3 réponses/jour &nbsp;·&nbsp; ✓ 1 établissement</div>
+              </div>
+              <span style="font-size:12px; color:var(--muted); font-style:italic;">Plan actuel par défaut</span>
+            </div>
+            <div style="background:var(--bg); border:2px solid var(--accent); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; position:relative;">
+              <div style="position:absolute; top:-11px; left:20px; background:var(--accent); color:#fff; font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;">POPULAIRE</div>
+              <div>
+                <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-light); margin-bottom:4px;">Starter</div>
+                <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">19€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+                <div style="font-size:12px; color:var(--muted);">✓ 20 réponses/jour &nbsp;·&nbsp; ✓ 3 établissements &nbsp;·&nbsp; ✓ Instructions personnalisées</div>
+              </div>
+              <button onclick="subscribeToPlan('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">S'abonner</button>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); margin-bottom:4px;">Pro</div>
+                <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">30€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+                <div style="font-size:12px; color:var(--muted);">✓ 50 réponses/jour &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Instructions personnalisées &nbsp;·&nbsp; ✓ Historique complet</div>
+              </div>
+              <button onclick="subscribeToPlan('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
+            </div>
+            <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
+              <div>
+                <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--success); margin-bottom:4px;">Agence</div>
+                <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">59€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
+                <div style="font-size:12px; color:var(--muted);">✓ Réponses illimitées &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Support dédié</div>
+              </div>
+              <button onclick="subscribeToPlan('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
+            </div>
+          </div>
+          <p style="font-size:12px; color:var(--muted); text-align:center; margin-top:1.5rem;">Pour gérer ou résilier, rendez-vous dans <strong style="color:var(--text);">Mon compte</strong>.</p>
+        </div>
+      </div>
+
+      <div id="tab-legal" class="tab-content">
+        <div class="google-card">
+          <h3>Conditions Générales d'Utilisation</h3>
+          <p>Dernière mise à jour : Mai 2025</p>
+          <div style="margin-top:1.5rem; font-size:13px; color:var(--muted); line-height:1.8;">
+            <h4 style="color:#fff; margin-bottom:0.5rem;">1. Objet</h4>
+            <p style="margin-bottom:1rem;">ReplyGoogle est un service SaaS permettant aux gérants d'établissements de générer des réponses automatisées à leurs avis Google grâce à l'intelligence artificielle.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">2. Abonnement et facturation</h4>
+            <p style="margin-bottom:1rem;">La résiliation peut être effectuée à tout moment via le portail client Stripe, avec effet à la fin de la période en cours.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">3. Données personnelles (RGPD)</h4>
+            <p style="margin-bottom:1rem;">Nous collectons uniquement votre email et le nom de votre établissement. Vos données ne sont jamais revendues ni partagées avec des tiers.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">4. Responsabilité</h4>
+            <p style="margin-bottom:1rem;">ReplyGoogle ne peut être tenu responsable des réponses générées par l'IA. L'utilisateur reste seul responsable du contenu publié sur sa fiche Google.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">5. Contact</h4>
+            <p>Pour toute question : contact@replygoogle.fr</p>
+          </div>
+        </div>
+        <div class="google-card" style="margin-top:1rem;">
+          <h3>Politique de confidentialité</h3>
+          <div style="margin-top:1rem; font-size:13px; color:var(--muted); line-height:1.8;">
+            <h4 style="color:#fff; margin-bottom:0.5rem;">Données collectées</h4>
+            <p style="margin-bottom:1rem;">Email, nom de l'établissement, nombre de réponses générées par jour.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">Utilisation des données</h4>
+            <p style="margin-bottom:1rem;">Vos données sont utilisées uniquement pour faire fonctionner le service. Aucune donnée n'est partagée avec des tiers sauf Supabase et Stripe.</p>
+            <h4 style="color:#fff; margin-bottom:0.5rem;">Vos droits</h4>
+            <p>Pour supprimer votre compte, rendez-vous dans "Mon compte" → "Supprimer mon compte".</p>
+          </div>
+        </div>
+      </div>
+
     </div>
-
-    <!-- TAB: PRICING -->
-    <div id="tab-pricing" class="tab-content">
-      <div class="reply-card">
-        <h3 style="margin-bottom:0.5rem;">Abonnements</h3>
-        <p style="font-size:13px; color:var(--muted); margin-bottom:2rem;">Choisissez le plan adapté à vos besoins. Votre plan actuel est indiqué en haut du menu.</p>
-
-        <div style="display:grid; gap:16px;">
-
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-            <div>
-              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); margin-bottom:4px;">Gratuit</div>
-              <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">0€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
-              <div style="font-size:12px; color:var(--muted);">✓ 3 réponses/jour &nbsp;·&nbsp; ✓ 1 établissement</div>
-            </div>
-            <span style="font-size:12px; color:var(--muted); font-style:italic;">Plan actuel par défaut</span>
-          </div>
-
-          <div style="background:var(--bg); border:2px solid var(--accent); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; position:relative;">
-            <div style="position:absolute; top:-11px; left:20px; background:var(--accent); color:#fff; font-size:11px; font-weight:600; padding:3px 10px; border-radius:20px;">POPULAIRE</div>
-            <div>
-              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--accent-light); margin-bottom:4px;">Starter</div>
-              <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">19€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
-              <div style="font-size:12px; color:var(--muted);">✓ 20 réponses/jour &nbsp;·&nbsp; ✓ 3 établissements &nbsp;·&nbsp; ✓ Instructions personnalisées</div>
-            </div>
-            <button onclick="subscribeToPlan('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')" class="btn btn-primary" style="padding:10px 20px; font-size:13px;">S'abonner</button>
-          </div>
-
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-            <div>
-              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--warning); margin-bottom:4px;">Pro</div>
-              <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">30€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
-              <div style="font-size:12px; color:var(--muted);">✓ 50 réponses/jour &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Instructions personnalisées &nbsp;·&nbsp; ✓ Historique complet</div>
-            </div>
-            <button onclick="subscribeToPlan('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
-          </div>
-
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:14px; padding:1.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem;">
-            <div>
-              <div style="font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--success); margin-bottom:4px;">Agence</div>
-              <div style="font-size:1.5rem; font-family:'DM Serif Display',serif; color:#fff; margin-bottom:8px;">59€<span style="font-size:0.9rem; font-family:'DM Sans',sans-serif; color:var(--muted);">/mois</span></div>
-              <div style="font-size:12px; color:var(--muted);">✓ Réponses illimitées &nbsp;·&nbsp; ✓ Établissements illimités &nbsp;·&nbsp; ✓ Instructions personnalisées &nbsp;·&nbsp; ✓ Historique complet &nbsp;·&nbsp; ✓ Accès prioritaire &nbsp;·&nbsp; ✓ Support dédié</div>
-            </div>
-            <button onclick="subscribeToPlan('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')" class="btn btn-ghost" style="padding:10px 20px; font-size:13px;">S'abonner</button>
-          </div>
-
-        </div>
-
-        <p style="font-size:12px; color:var(--muted); text-align:center; margin-top:1.5rem;">Pour gérer ou résilier votre abonnement, rendez-vous dans <strong style="color:var(--text);">Mon compte</strong>.</p>
-      </div>
-    </div>
-
-    <!-- TAB: LEGAL -->
-    <div id="tab-legal" class="tab-content">
-      <div class="google-card">
-        <h3>Conditions Générales d'Utilisation</h3>
-        <p>Dernière mise à jour : Mai 2025</p>
-        <div style="margin-top:1.5rem; font-size:13px; color:var(--muted); line-height:1.8;">
-          <h4 style="color:#fff; margin-bottom:0.5rem;">1. Objet</h4>
-          <p style="margin-bottom:1rem;">ReplyGoogle est un service SaaS permettant aux gérants d'établissements de générer des réponses automatisées à leurs avis Google grâce à l'intelligence artificielle.</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">2. Abonnement et facturation</h4>
-          <p style="margin-bottom:1rem;">L'abonnement ReplyGoogle Pro est facturé 19€/mois. La résiliation peut être effectuée à tout moment via le portail client Stripe, avec effet à la fin de la période en cours.</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">3. Utilisation du service</h4>
-          <p style="margin-bottom:1rem;">Le service est limité à 10 réponses par jour. Les réponses générées sont fournies à titre indicatif et doivent être vérifiées par l'utilisateur avant publication.</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">4. Données personnelles (RGPD)</h4>
-          <p style="margin-bottom:1rem;">Nous collectons uniquement votre email et le nom de votre établissement. Vos données ne sont jamais revendues ni partagées avec des tiers. Conformément au RGPD, vous pouvez demander la suppression de vos données à tout moment via l'onglet "Mon compte".</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">5. Responsabilité</h4>
-          <p style="margin-bottom:1rem;">ReplyGoogle ne peut être tenu responsable des réponses générées par l'IA. L'utilisateur reste seul responsable du contenu publié sur sa fiche Google.</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">6. Contact</h4>
-          <p>Pour toute question : contact@replygoogle.fr</p>
-        </div>
-      </div>
-
-      <div class="google-card" style="margin-top:1rem;">
-        <h3>Politique de confidentialité</h3>
-        <div style="margin-top:1rem; font-size:13px; color:var(--muted); line-height:1.8;">
-          <h4 style="color:#fff; margin-bottom:0.5rem;">Données collectées</h4>
-          <p style="margin-bottom:1rem;">Email, nom de l'établissement, nombre de réponses générées par jour.</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">Utilisation des données</h4>
-          <p style="margin-bottom:1rem;">Vos données sont utilisées uniquement pour faire fonctionner le service. Aucune donnée n'est partagée avec des tiers sauf Supabase (hébergement base de données) et Stripe (paiements).</p>
-          
-          <h4 style="color:#fff; margin-bottom:0.5rem;">Vos droits</h4>
-          <p>Vous pouvez accéder, modifier ou supprimer vos données à tout moment. Pour supprimer votre compte, rendez-vous dans "Mon compte" → "Supprimer mon compte".</p>
-        </div>
-      </div>
-    </div>
-
-    </div><!-- end dashboard-main -->
-  </div><!-- end dashboard-layout -->
+  </div>
 </div>
 
 <div class="toast" id="toast">✓ Copié !</div>
@@ -769,22 +668,17 @@ let selectedType = '';
 let selectedStars = 5;
 let selectedTone = 'Chaleureux';
 let selectedLang = 'Français';
+let userPlan = 'free';
+
+const PLAN_LIMITS = { free: 3, starter: 20, pro: 50, agence: 999999 };
 
 function handleSubscribe(url) {
-  if (currentUser) {
-    window.open(url, '_blank');
-  } else {
-    alert('Veuillez vous connecter ou créer un compte avant de vous abonner.');
-    showPage('login');
-  }
+  if (currentUser) { window.open(url, '_blank'); }
+  else { alert('Veuillez vous connecter ou créer un compte avant de vous abonner.'); showPage('login'); }
 }
 
 function subscribeToPlan(url) {
-  if (!currentUser) {
-    alert('Veuillez vous connecter avant de vous abonner.');
-    showPage('login');
-    return;
-  }
+  if (!currentUser) { alert('Veuillez vous connecter avant de vous abonner.'); showPage('login'); return; }
   const email = encodeURIComponent(currentUser.email);
   const userId = encodeURIComponent(currentUser.id);
   window.open(url + '?prefilled_email=' + email + '&client_reference_id=' + userId, '_blank');
@@ -808,6 +702,7 @@ function toggleSidebar() {
   sidebar.classList.toggle('open');
   btn.classList.toggle('open');
   overlay.classList.toggle('visible');
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
 }
 
 function switchTab(tab, btn) {
@@ -816,10 +711,10 @@ function switchTab(tab, btn) {
   document.getElementById('tab-' + tab).classList.add('active');
   if (btn) btn.classList.add('active');
   if (tab === 'history') loadHistory();
-  // Close sidebar on mobile after click
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('hamburger-btn').classList.remove('open');
   document.getElementById('sidebar-overlay').classList.remove('visible');
+  document.body.style.overflow = '';
 }
 
 function selectPill(btn, group) {
@@ -847,19 +742,16 @@ function updateGoogleBtn() {
 }
 
 function connectGoogle() {
-  alert('La connexion Google Business sera disponible très prochainement. Nous vous enverrons un email dès que cette fonctionnalité est activée !');
+  alert('La connexion Google Business sera disponible très prochainement !');
 }
 
 async function doForgot() {
   const email = document.getElementById('forgot-email').value.trim();
   const errEl = document.getElementById('forgot-error');
   const sucEl = document.getElementById('forgot-success');
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
   if (!email) { errEl.textContent = 'Entrez votre email.'; errEl.style.display = 'block'; return; }
-  const { error } = await sb.auth.resetPasswordForEmail(email, {
-    redirectTo: 'https://replygoogle.fr'
-  });
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo: 'https://replygoogle.fr/app.html' });
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
   sucEl.textContent = 'Email envoyé ! Vérifiez votre boîte mail.';
   sucEl.style.display = 'block';
@@ -871,27 +763,26 @@ async function doSignup() {
   const business = document.getElementById('signup-business').value.trim();
   const errEl = document.getElementById('signup-error');
   const sucEl = document.getElementById('signup-success');
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
   if (!email || !password) { errEl.textContent = 'Veuillez remplir tous les champs.'; errEl.style.display = 'block'; return; }
- const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
-if (error) {
-  if (error.message.includes('already registered') || error.message.includes('already exists') || error.status === 422) {
-    errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
-  } else {
-    errEl.textContent = error.message;
+  const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
+  if (error) {
+    if (error.message.includes('already registered') || error.message.includes('already exists') || error.status === 422) {
+      errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
+    } else {
+      errEl.textContent = error.message;
+    }
+    errEl.style.display = 'block';
+    return;
   }
-  errEl.style.display = 'block';
-  return;
-}
-if (data?.user && data.user.identities && data.user.identities.length === 0) {
-  errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
-  errEl.style.display = 'block';
-  return;
-}
-sucEl.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.';
-sucEl.style.display = 'block';
-setTimeout(() => showPage('login'), 2500);
+  if (data?.user && data.user.identities && data.user.identities.length === 0) {
+    errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
+    errEl.style.display = 'block';
+    return;
+  }
+  sucEl.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.';
+  sucEl.style.display = 'block';
+  setTimeout(() => showPage('login'), 2500);
 }
 
 async function doLogin() {
@@ -920,9 +811,7 @@ function loadDashboard() {
   showPage('dashboard');
   const business = currentUser.user_metadata?.business_name || '';
   document.getElementById('dash-business').value = business;
-  document.getElementById('nav-btns').innerHTML = `
-    <span style="font-size:14px; color:var(--muted);">${currentUser.email}</span>
-  `;
+  document.getElementById('nav-btns').innerHTML = `<span style="font-size:14px; color:var(--muted);">${currentUser.email}</span>`;
   document.getElementById('hamburger-btn').style.display = 'flex';
   document.getElementById('sidebar-email').textContent = currentUser.email;
   loadUserPlan();
@@ -932,25 +821,14 @@ function loadDashboard() {
 
 async function getDailyUsage() {
   const today = new Date().toISOString().split('T')[0];
-  const { data, error } = await sb
-    .from('daily_usage')
-    .select('count')
-    .eq('user_id', currentUser.id)
-    .eq('usage_date', today)
-    .single();
+  const { data, error } = await sb.from('daily_usage').select('count').eq('user_id', currentUser.id).eq('usage_date', today).single();
   if (error || !data) return 0;
   return data.count;
 }
 
 async function incrementDailyUsage() {
   const today = new Date().toISOString().split('T')[0];
-  const { data, error } = await sb
-    .from('daily_usage')
-    .select('count')
-    .eq('user_id', currentUser.id)
-    .eq('usage_date', today)
-    .single();
-
+  const { data, error } = await sb.from('daily_usage').select('count').eq('user_id', currentUser.id).eq('usage_date', today).single();
   if (error || !data) {
     await sb.from('daily_usage').insert({ user_id: currentUser.id, usage_date: today, count: 1 });
   } else {
@@ -976,43 +854,31 @@ async function updateDailyCounter() {
 async function generateReply() {
   const used = await getDailyUsage();
   const limit = PLAN_LIMITS[userPlan] || 3;
-  if (used >= limit) {
-    document.getElementById('limit-banner').style.display = 'block';
-    return;
-  }
+  if (used >= limit) { document.getElementById('limit-banner').style.display = 'block'; return; }
   document.getElementById('limit-banner').style.display = 'none';
-
   const review = document.getElementById('review-input').value.trim();
   const businessName = document.getElementById('dash-business').value.trim() || 'notre etablissement';
-
   if (!review) { alert('Collez un avis Google avant de générer.'); return; }
-
   document.getElementById('result-box').classList.remove('visible');
   document.getElementById('loading').classList.add('visible');
   document.getElementById('gen-btn').disabled = true;
-
   try {
     const res = await fetch(BACKEND_URL + '/generate', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        review,
-        businessName,
+        review, businessName,
         businessType: selectedType || 'etablissement',
-        stars: selectedStars,
-        tone: selectedTone,
+        stars: selectedStars, tone: selectedTone,
         customInstructions: document.getElementById('custom-instructions').value.trim(),
         language: selectedLang
       })
     });
-
     const data = await res.json();
     if (data.error) { alert('Erreur : ' + data.error); return; }
-
     document.getElementById('result-text').textContent = data.response;
     document.getElementById('result-box').classList.add('visible');
     await saveToHistory(businessName, review, data.response);
-
     const customInstr = document.getElementById('custom-instructions').value.trim();
     if (customInstr && data.explanation) {
       document.getElementById('explanation-text').textContent = data.explanation;
@@ -1020,10 +886,8 @@ async function generateReply() {
     } else {
       document.getElementById('explanation-box').style.display = 'none';
     }
-
     await incrementDailyUsage();
     await updateDailyCounter();
-
   } catch (err) {
     alert('Erreur de connexion au serveur.');
   } finally {
@@ -1045,8 +909,7 @@ async function doReset() {
   const password = document.getElementById('reset-password').value.trim();
   const errEl = document.getElementById('reset-error');
   const sucEl = document.getElementById('reset-success');
-  errEl.style.display = 'none';
-  sucEl.style.display = 'none';
+  errEl.style.display = 'none'; sucEl.style.display = 'none';
   if (!password || password.length < 8) { errEl.textContent = 'Le mot de passe doit faire au moins 8 caractères.'; errEl.style.display = 'block'; return; }
   const { error } = await sb.auth.updateUser({ password });
   if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
@@ -1057,7 +920,6 @@ async function doReset() {
 
 async function confirmDeleteAccount() {
   if (confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')) {
-    const { error } = await sb.auth.admin?.deleteUser(currentUser.id).catch(() => ({ error: true }));
     await sb.auth.signOut();
     currentUser = null;
     showPage('landing');
@@ -1065,7 +927,6 @@ async function confirmDeleteAccount() {
   }
 }
 
-// ESTABLISHMENTS
 let establishments = [];
 let currentEstablishmentId = null;
 
@@ -1098,10 +959,7 @@ function loadEstablishment() {
   document.getElementById('dash-business').value = estab.name;
   if (estab.custom_instructions) document.getElementById('custom-instructions').value = estab.custom_instructions;
   const pills = document.querySelectorAll('#type-pills .pill');
-  pills.forEach(p => {
-    p.classList.remove('active');
-    if (p.textContent.trim().includes(estab.business_type)) p.classList.add('active');
-  });
+  pills.forEach(p => { p.classList.remove('active'); if (p.textContent.trim().includes(estab.business_type)) p.classList.add('active'); });
   if (estab.business_type) selectedType = estab.business_type;
 }
 
@@ -1113,7 +971,7 @@ function renderEstablishmentsList() {
       <div>
         <div style="font-weight:600; color:#fff; font-size:14px;">${e.name}</div>
         <div style="font-size:12px; color:var(--muted);">${e.business_type || 'Type non défini'}</div>
-        ${e.custom_instructions ? `<div style="font-size:11px; color:var(--muted); margin-top:4px; font-style:italic;">"${e.custom_instructions.substring(0, 60)}${e.custom_instructions.length > 60 ? '...' : ''}"</div>` : ''}
+        ${e.custom_instructions ? `<div style="font-size:11px; color:var(--muted); margin-top:4px; font-style:italic;">"${e.custom_instructions.substring(0,60)}${e.custom_instructions.length>60?'...':''}"</div>` : ''}
       </div>
       <button onclick="deleteEstablishment('${e.id}')" style="background:rgba(247,123,114,0.1); border:1px solid rgba(247,123,114,0.3); color:var(--danger); border-radius:6px; padding:5px 10px; font-size:12px; cursor:pointer; font-family:'DM Sans',sans-serif;">Supprimer</button>
     </div>
@@ -1124,9 +982,9 @@ async function addEstablishment() {
   const name = document.getElementById('new-estab-name').value.trim();
   const type = document.getElementById('new-estab-type').value;
   const instructions = document.getElementById('new-estab-instructions').value.trim();
-  if (!name) { alert('Entrez un nom etablissement.'); return; }
+  if (!name) { alert('Entrez un nom établissement.'); return; }
   const { error } = await sb.from('establishments').insert({ user_id: currentUser.id, name, business_type: type, custom_instructions: instructions });
-  if (error) { alert('Erreur lors de l\'ajout.'); return; }
+  if (error) { alert("Erreur lors de l'ajout."); return; }
   document.getElementById('new-estab-name').value = '';
   document.getElementById('new-estab-instructions').value = '';
   await loadEstablishments();
@@ -1140,20 +998,19 @@ async function deleteEstablishment(id) {
   await loadEstablishments();
 }
 
-// HISTORY
 async function loadHistory() {
   const { data, error } = await sb.from('response_history').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
   const el = document.getElementById('history-list');
-  if (error || !data || !data.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Aucune réponse generee pour l\'instant.</p>'; return; }
+  if (error || !data || !data.length) { el.innerHTML = '<p style="color:var(--muted); font-size:14px; text-align:center; padding:2rem;">Aucune réponse générée pour l\'instant.</p>'; return; }
   el.innerHTML = data.map(h => `
     <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1.2rem; margin-bottom:0.8rem;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
         <span style="font-size:12px; font-weight:600; color:#fff;">${h.business_name}</span>
         <span style="font-size:11px; color:var(--muted);">${new Date(h.created_at).toLocaleDateString('fr-FR')}</span>
       </div>
-      <p style="font-size:12px; color:var(--muted); margin-bottom:6px; font-style:italic;">"${h.review_text ? h.review_text.substring(0, 80) + '...' : ''}"</p>
+      <p style="font-size:12px; color:var(--muted); margin-bottom:6px; font-style:italic;">"${h.review_text ? h.review_text.substring(0,80)+'...' : ''}"</p>
       <p style="font-size:13px; color:var(--text); line-height:1.6;">${h.response_text}</p>
-      <button onclick="navigator.clipboard.writeText('${h.response_text.replace(/'/g, "\'")}').then(() => alert('Copié !'))" style="margin-top:8px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 10px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif;">Copier</button>
+      <button onclick="navigator.clipboard.writeText(this.dataset.text).then(()=>alert('Copié !'))" data-text="${h.response_text.replace(/"/g,'&quot;')}" style="margin-top:8px; background:none; border:1px solid var(--border); color:var(--muted); border-radius:6px; padding:4px 10px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif;">Copier</button>
     </div>
   `).join('');
 }
@@ -1162,32 +1019,15 @@ async function saveToHistory(businessName, reviewText, responseText) {
   await sb.from('response_history').insert({ user_id: currentUser.id, business_name: businessName, review_text: reviewText, response_text: responseText });
 }
 
-// PLAN
-let userPlan = 'free';
-
-const PLAN_LIMITS = {
-  free: 3,
-  starter: 20,
-  pro: 50,
-  agence: 999999
-};
-
 async function loadUserPlan() {
   const { data } = await sb.from('user_preferences').select('plan').eq('user_id', currentUser.id).single();
-  if (data && data.plan) {
-    userPlan = data.plan;
-  } else {
-    userPlan = 'free';
-  }
-  // Update plan badge
+  userPlan = (data && data.plan) ? data.plan : 'free';
   const badge = document.getElementById('plan-badge');
   const planNames = { free: 'Gratuit', starter: 'Starter', pro: 'Pro', agence: 'Agence' };
   if (badge) badge.textContent = planNames[userPlan] || 'Gratuit';
-  // Update daily counter with correct limit
   updateDailyCounter();
 }
 
-// NOTIFICATIONS
 async function loadNotifPrefs() {
   const { data } = await sb.from('user_preferences').select('*').eq('user_id', currentUser.id).single();
   if (!data) return;
@@ -1211,19 +1051,12 @@ async function saveNotifPrefs() {
   await sb.from('user_preferences').upsert({ user_id: currentUser.id, notification_prefs: prefs }, { onConflict: 'user_id' });
 }
 
-// Check session on load
 sb.auth.getSession().then(({ data: { session } }) => {
-  if (session) {
-    currentUser = session.user;
-    loadDashboard();
-  }
+  if (session) { currentUser = session.user; loadDashboard(); }
 });
 
-// Detect password reset token in URL
 sb.auth.onAuthStateChange((event, session) => {
-  if (event === 'PASSWORD_RECOVERY') {
-    showPage('reset');
-  }
+  if (event === 'PASSWORD_RECOVERY') { showPage('reset'); }
 });
 </script>
 </body>
