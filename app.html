@@ -874,11 +874,24 @@ async function doSignup() {
   errEl.style.display = 'none';
   sucEl.style.display = 'none';
   if (!email || !password) { errEl.textContent = 'Veuillez remplir tous les champs.'; errEl.style.display = 'block'; return; }
-  const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
-  if (error) { errEl.textContent = error.message; errEl.style.display = 'block'; return; }
-  sucEl.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.';
-  sucEl.style.display = 'block';
-  setTimeout(() => showPage('login'), 2500);
+ const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
+if (error) {
+  if (error.message.includes('already registered') || error.message.includes('already exists') || error.status === 422) {
+    errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
+  } else {
+    errEl.textContent = error.message;
+  }
+  errEl.style.display = 'block';
+  return;
+}
+if (data?.user && data.user.identities && data.user.identities.length === 0) {
+  errEl.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
+  errEl.style.display = 'block';
+  return;
+}
+sucEl.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.';
+sucEl.style.display = 'block';
+setTimeout(() => showPage('login'), 2500);
 }
 
 async function doLogin() {
