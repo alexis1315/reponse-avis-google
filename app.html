@@ -89,7 +89,7 @@
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-    .sidebar { width: 240px; position: fixed; top: 65px; left: 0; bottom: 0; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem; display: flex; flex-direction: column; transition: transform 0.25s ease; z-index: 60; transform: translateX(-240px); overflow-y: auto; }
+    .sidebar { width: 240px; position: fixed; top: 65px; left: 0; bottom: 0; background: var(--surface); border-right: 1px solid var(--border); padding: 1.5rem 1rem; display: flex; flex-direction: column; transition: transform 0.25s ease; z-index: 60; transform: translateX(-240px); overflow-y: auto; scrollbar-width: none; }
     .sidebar.open { transform: translateX(0); }
 
     .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 50; }
