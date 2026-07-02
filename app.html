@@ -4,73 +4,82 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ReplyGoogle — Réponses IA aux avis Google</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
     :root {
-      --bg: #0c0c10;
-      --surface: #13131a;
-      --surface2: #1a1a24;
-      --border: rgba(255,255,255,0.06);
-      --border2: rgba(255,255,255,0.1);
-      --accent: #6366f1;
-      --accent2: #818cf8;
-      --accent3: #c7d2fe;
-      --text: #f1f1f3;
-      --text2: #a0a0b0;
-      --text3: #5a5a70;
-      --success: #34d399;
-      --danger: #f87171;
-      --warning: #fbbf24;
-      --glow: rgba(99,102,241,0.15);
+      --white: #ffffff;
+      --bg: #f8f9fb;
+      --surface: #ffffff;
+      --border: #e8eaed;
+      --border2: #d1d5db;
+      --accent: #1a73e8;
+      --accent2: #1557b0;
+      --accent-light: #e8f0fe;
+      --text: #1a1a2e;
+      --text2: #5f6368;
+      --text3: #9aa0a6;
+      --success: #34a853;
+      --danger: #ea4335;
+      --warning: #fbbc04;
+      --warning-light: #fef9e7;
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+      --shadow-lg: 0 8px 24px rgba(0,0,0,0.10);
+      --radius: 12px;
+      --radius-sm: 8px;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; -webkit-font-smoothing: antialiased; }
 
-    /* SCROLLBAR */
-    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 5px; }
 
     /* NAV */
     nav {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 0 2rem; height: 60px;
+      padding: 0 2rem; height: 64px;
+      background: var(--white);
       border-bottom: 1px solid var(--border);
       position: sticky; top: 0; z-index: 100;
-      background: rgba(12,12,16,0.8);
-      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
     }
-    .nav-left { display: flex; align-items: center; gap: 12px; }
+    .nav-left { display: flex; align-items: center; gap: 10px; }
     .logo {
-      font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700;
+      font-family: 'Inter', sans-serif; font-size: 1.1rem; font-weight: 700;
       color: var(--text); letter-spacing: -0.02em;
+      display: flex; align-items: center; gap: 6px;
     }
-    .logo-dot { color: var(--accent2); }
+    .logo-icon {
+      width: 28px; height: 28px; background: var(--accent);
+      border-radius: 7px; display: flex; align-items: center; justify-content: center;
+      color: white; font-size: 14px; font-weight: 700;
+    }
     .nav-right { display: flex; gap: 8px; align-items: center; }
 
     /* BUTTONS */
     .btn {
       display: inline-flex; align-items: center; gap: 6px;
-      padding: 7px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
-      cursor: pointer; font-family: 'DM Sans', sans-serif;
-      transition: all 0.15s; border: none; text-decoration: none;
+      padding: 8px 18px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: 'Inter', sans-serif;
+      transition: all 0.15s; border: none; text-decoration: none; white-space: nowrap;
     }
     .btn-ghost {
       background: transparent; border: 1px solid var(--border2);
       color: var(--text2);
     }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent2); background: var(--glow); }
+    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
     .btn-primary {
       background: var(--accent); color: #fff;
-      box-shadow: 0 0 20px rgba(99,102,241,0.3);
+      box-shadow: 0 2px 8px rgba(26,115,232,0.25);
     }
-    .btn-primary:hover { background: var(--accent2); box-shadow: 0 0 30px rgba(99,102,241,0.4); transform: translateY(-1px); }
-    .btn-sm { padding: 5px 12px; font-size: 12px; border-radius: 6px; }
-    .btn-full { width: 100%; padding: 11px; font-size: 14px; border-radius: 10px; justify-content: center; }
-    .btn-danger-ghost { background: transparent; border: 1px solid rgba(248,113,113,0.3); color: var(--danger); }
-    .btn-danger-ghost:hover { background: rgba(248,113,113,0.08); }
+    .btn-primary:hover { background: var(--accent2); box-shadow: 0 4px 12px rgba(26,115,232,0.3); transform: translateY(-1px); }
+    .btn-sm { padding: 6px 14px; font-size: 13px; border-radius: 6px; }
+    .btn-full { width: 100%; padding: 11px; font-size: 14px; border-radius: var(--radius-sm); justify-content: center; }
+    .btn-danger { background: transparent; border: 1px solid rgba(234,67,53,0.3); color: var(--danger); }
+    .btn-danger:hover { background: rgba(234,67,53,0.05); }
 
     /* PAGES */
     .page { display: none; }
@@ -78,142 +87,133 @@
 
     /* AUTH */
     .auth-wrap {
-      min-height: calc(100vh - 60px);
+      min-height: calc(100vh - 64px);
       display: flex; align-items: center; justify-content: center;
-      padding: 2rem;
+      padding: 2rem; background: var(--bg);
     }
     .auth-card {
-      width: 100%; max-width: 400px;
-      background: var(--surface);
-      border: 1px solid var(--border2);
-      border-radius: 20px;
+      width: 100%; max-width: 420px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
       padding: 2.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .auth-card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      box-shadow: var(--shadow-md);
     }
     .auth-title {
-      font-family: 'Syne', sans-serif; font-size: 1.5rem; font-weight: 700;
+      font-family: 'Inter', sans-serif; font-size: 1.4rem; font-weight: 700;
       color: var(--text); margin-bottom: 4px; letter-spacing: -0.02em;
     }
-    .auth-sub { font-size: 13px; color: var(--text2); margin-bottom: 2rem; }
+    .auth-sub { font-size: 14px; color: var(--text2); margin-bottom: 1.75rem; }
     .field { margin-bottom: 1rem; }
     .field label {
-      display: block; font-size: 11px; font-weight: 600;
-      color: var(--text3); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;
+      display: block; font-size: 13px; font-weight: 500;
+      color: var(--text); margin-bottom: 6px;
     }
     .field input {
-      width: 100%; background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 8px; padding: 10px 12px; font-size: 14px;
-      color: var(--text); font-family: 'DM Sans', sans-serif;
+      width: 100%; background: var(--white); border: 1px solid var(--border2);
+      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
+      color: var(--text); font-family: 'Inter', sans-serif;
       outline: none; transition: all 0.15s;
     }
-    .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+    .field input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,115,232,0.12); }
     .field input::placeholder { color: var(--text3); }
     .auth-switch { text-align: center; margin-top: 1.25rem; font-size: 13px; color: var(--text2); }
-    .auth-switch a { color: var(--accent2); cursor: pointer; text-decoration: none; }
+    .auth-switch a { color: var(--accent); cursor: pointer; text-decoration: none; font-weight: 500; }
     .auth-switch a:hover { text-decoration: underline; }
-    .msg { padding: 10px 12px; border-radius: 8px; font-size: 13px; margin-bottom: 1rem; display: none; }
-    .msg.error { background: rgba(248,113,113,0.08); border: 1px solid rgba(248,113,113,0.2); color: var(--danger); }
-    .msg.success { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); color: var(--success); }
+    .msg { padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; margin-bottom: 1rem; display: none; }
+    .msg.error { background: rgba(234,67,53,0.06); border: 1px solid rgba(234,67,53,0.2); color: var(--danger); }
+    .msg.success { background: rgba(52,168,83,0.06); border: 1px solid rgba(52,168,83,0.2); color: var(--success); }
     .pwd-wrap { position: relative; }
     .pwd-toggle {
-      position: absolute; right: 10px; top: 50%; transform: translateY(-50%);
+      position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
       background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; padding: 4px;
     }
-    .pwd-toggle:hover { color: var(--text2); }
 
-    /* LANDING PAGE */
+    /* LANDING */
     .landing-hero {
-      max-width: 640px; margin: 0 auto;
+      max-width: 680px; margin: 0 auto;
       padding: 5rem 2rem 3rem; text-align: center;
     }
     .landing-badge {
       display: inline-flex; align-items: center; gap: 6px;
-      background: var(--glow); border: 1px solid rgba(99,102,241,0.3);
-      color: var(--accent2); font-size: 12px; font-weight: 500;
-      padding: 5px 12px; border-radius: 20px; margin-bottom: 1.5rem;
+      background: var(--accent-light); border: 1px solid rgba(26,115,232,0.2);
+      color: var(--accent); font-size: 12px; font-weight: 600;
+      padding: 5px 14px; border-radius: 20px; margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
     }
-    .landing-badge span { width: 6px; height: 6px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+    .landing-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
     @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
     .landing-h1 {
-      font-family: 'Syne', sans-serif; font-size: clamp(2rem, 5vw, 3rem);
+      font-family: 'Inter', sans-serif; font-size: clamp(2rem, 5vw, 3.2rem);
       font-weight: 700; line-height: 1.15; letter-spacing: -0.03em;
-      color: var(--text); margin-bottom: 1rem;
+      color: var(--text); margin-bottom: 1.25rem;
     }
-    .landing-h1 em { font-style: normal; color: var(--accent2); }
-    .landing-sub { font-size: 16px; color: var(--text2); line-height: 1.7; margin-bottom: 2rem; max-width: 480px; margin-left: auto; margin-right: auto; }
-    .landing-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 3rem; }
-    .landing-trust { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 12px; color: var(--text3); }
+    .landing-h1 em { font-style: normal; color: var(--accent); }
+    .landing-sub { font-size: 17px; color: var(--text2); line-height: 1.7; margin-bottom: 2rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+    .landing-cta { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+    .landing-trust { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--text3); }
     .landing-trust-stars { color: var(--warning); }
 
     .landing-features {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1px; max-width: 800px; margin: 3rem auto;
-      background: var(--border); border-radius: 16px; overflow: hidden;
-      border: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px; max-width: 820px; margin: 3rem auto; padding: 0 2rem;
     }
     .feat {
-      background: var(--surface); padding: 1.5rem;
-      transition: background 0.2s;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.5rem;
+      box-shadow: var(--shadow); transition: box-shadow 0.2s, transform 0.2s;
     }
-    .feat:hover { background: var(--surface2); }
-    .feat-icon { font-size: 1.4rem; margin-bottom: 10px; }
-    .feat h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; font-family: 'Syne', sans-serif; }
+    .feat:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+    .feat-icon { font-size: 1.5rem; margin-bottom: 10px; }
+    .feat h3 { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
     .feat p { font-size: 13px; color: var(--text2); line-height: 1.6; }
 
     .landing-pricing {
-      max-width: 900px; margin: 0 auto 5rem; padding: 0 2rem;
+      max-width: 920px; margin: 0 auto 5rem; padding: 0 2rem;
     }
     .pricing-label {
-      text-align: center; font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.12em; color: var(--accent2); margin-bottom: 0.75rem;
+      text-align: center; font-size: 12px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.1em; color: var(--accent); margin-bottom: 0.75rem;
     }
     .pricing-title {
-      font-family: 'Syne', sans-serif; font-size: 1.75rem; font-weight: 700;
+      font-family: 'Inter', sans-serif; font-size: 1.75rem; font-weight: 700;
       text-align: center; color: var(--text); margin-bottom: 0.5rem; letter-spacing: -0.02em;
     }
-    .pricing-sub { text-align: center; color: var(--text2); font-size: 14px; margin-bottom: 2rem; }
-    .pricing-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;
-    }
+    .pricing-sub { text-align: center; color: var(--text2); font-size: 15px; margin-bottom: 2rem; }
+    .pricing-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
     .price-card {
-      background: var(--surface); border: 1px solid var(--border2);
-      border-radius: 16px; padding: 1.5rem;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem;
+      box-shadow: var(--shadow); transition: all 0.2s; position: relative;
     }
-    .price-card:hover { border-color: var(--border2); transform: translateY(-2px); }
-    .price-card.featured { border-color: var(--accent); box-shadow: 0 0 30px var(--glow); }
+    .price-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .price-card.featured { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(26,115,232,0.15), var(--shadow-md); }
     .price-badge {
-      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      position: absolute; top: -11px; left: 50%; transform: translateX(-50%);
       background: var(--accent); color: #fff; font-size: 10px; font-weight: 700;
-      padding: 3px 10px; border-radius: 20px; white-space: nowrap; letter-spacing: 0.05em;
+      padding: 3px 12px; border-radius: 20px; white-space: nowrap; letter-spacing: 0.05em;
     }
-    .plan-name { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); margin-bottom: 8px; }
-    .plan-price { font-family: 'Syne', sans-serif; font-size: 2rem; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px; }
-    .plan-price sub { font-size: 0.8rem; font-weight: 400; color: var(--text2); font-family: 'DM Sans', sans-serif; vertical-align: baseline; }
-    .plan-desc { font-size: 12px; color: var(--text2); margin-bottom: 1.25rem; }
-    .plan-feats { list-style: none; margin-bottom: 1.25rem; }
-    .plan-feats li { font-size: 12px; color: var(--text2); padding: 4px 0; display: flex; align-items: center; gap: 7px; }
-    .plan-feats li::before { content: "✓"; color: var(--success); font-weight: 700; font-size: 11px; flex-shrink: 0; }
+    .plan-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 10px; }
+    .plan-price { font-size: 2.2rem; font-weight: 700; color: var(--text); line-height: 1; margin-bottom: 4px; }
+    .plan-price sub { font-size: 14px; font-weight: 400; color: var(--text2); vertical-align: baseline; }
+    .plan-desc { font-size: 13px; color: var(--text2); margin-bottom: 1.25rem; }
+    .plan-feats { list-style: none; margin-bottom: 1.5rem; }
+    .plan-feats li { font-size: 13px; color: var(--text2); padding: 5px 0; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
+    .plan-feats li:last-child { border-bottom: none; }
+    .plan-feats li::before { content: "✓"; color: var(--success); font-weight: 700; font-size: 12px; flex-shrink: 0; }
 
     /* DASHBOARD */
-    .dash-wrap { display: flex; min-height: calc(100vh - 60px); }
+    .dash-wrap { display: flex; min-height: calc(100vh - 64px); }
 
     /* SIDEBAR */
     .sidebar {
-      width: 220px; flex-shrink: 0;
-      background: var(--surface);
+      width: 240px; flex-shrink: 0;
+      background: var(--white);
       border-right: 1px solid var(--border);
       display: flex; flex-direction: column;
       padding: 1.25rem 0.75rem;
-      position: fixed; top: 60px; left: 0; bottom: 0;
-      transform: translateX(-220px);
+      position: fixed; top: 64px; left: 0; bottom: 0;
+      transform: translateX(-240px);
       transition: transform 0.25s ease;
       z-index: 60;
       overflow-y: auto;
@@ -222,54 +222,52 @@
     .sidebar.open { transform: translateX(0); }
     .sidebar-overlay {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.6); z-index: 50;
+      background: rgba(0,0,0,0.3); z-index: 50;
       backdrop-filter: blur(2px);
     }
     .sidebar-overlay.visible { display: block; }
 
     .sidebar-profile {
-      padding: 0.75rem; margin-bottom: 0.5rem;
-      background: var(--surface2); border-radius: 10px;
+      padding: 0.875rem 1rem; margin-bottom: 0.75rem;
+      background: var(--bg); border-radius: var(--radius-sm);
       border: 1px solid var(--border);
     }
-    .sidebar-email { font-size: 11px; color: var(--text3); margin-bottom: 8px; word-break: break-all; }
+    .sidebar-email { font-size: 12px; color: var(--text2); margin-bottom: 8px; word-break: break-all; font-weight: 500; }
     .plan-pill {
-      display: inline-block; font-size: 10px; font-weight: 700;
-      padding: 2px 8px; border-radius: 20px; letter-spacing: 0.05em;
-      background: var(--glow); border: 1px solid rgba(99,102,241,0.3); color: var(--accent2);
-      margin-bottom: 8px;
+      display: inline-block; font-size: 11px; font-weight: 600;
+      padding: 3px 10px; border-radius: 20px; letter-spacing: 0.03em;
+      background: var(--accent-light); color: var(--accent); margin-bottom: 8px;
     }
     .sidebar-counter { display: flex; align-items: center; gap: 6px; }
-    .counter-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--success); box-shadow: 0 0 6px var(--success); flex-shrink: 0;
+    .counter-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--success); flex-shrink: 0; }
+    .counter-dot.off { background: var(--text3); }
+    .counter-text { font-size: 12px; color: var(--text2); }
+
+    .sidebar-section {
+      font-size: 11px; font-weight: 600; text-transform: uppercase;
+      letter-spacing: 0.08em; color: var(--text3);
+      padding: 0 0.75rem; margin: 1rem 0 4px;
     }
-    .counter-dot.off { background: var(--text3); box-shadow: none; }
-    .counter-text { font-size: 11px; color: var(--text2); }
-
-    .sidebar-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); padding: 0 0.5rem; margin: 1rem 0 4px; }
-
     .nav-item {
-      display: flex; align-items: center; gap: 9px;
-      padding: 8px 10px; border-radius: 8px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: var(--radius-sm);
       border: none; background: transparent; color: var(--text2);
-      font-size: 13px; font-weight: 500; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; transition: all 0.15s;
-      width: 100%; text-align: left; margin-bottom: 1px;
+      font-size: 14px; font-weight: 500; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all 0.12s;
+      width: 100%; text-align: left; margin-bottom: 2px;
     }
-    .nav-item:hover { background: var(--surface2); color: var(--text); }
-    .nav-item.active { background: var(--glow); color: var(--accent2); border: 1px solid rgba(99,102,241,0.2); }
-    .nav-item .ni { font-size: 14px; width: 18px; text-align: center; opacity: 0.8; }
+    .nav-item:hover { background: var(--bg); color: var(--text); }
+    .nav-item.active { background: var(--accent-light); color: var(--accent); font-weight: 600; }
+    .nav-item .ni { font-size: 15px; width: 20px; text-align: center; }
     .nav-item.danger { color: var(--danger); }
-    .nav-item.danger:hover { background: rgba(248,113,113,0.08); }
-
+    .nav-item.danger:hover { background: rgba(234,67,53,0.06); }
     .sidebar-footer { margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--border); }
 
     /* HAMBURGER */
     .hamburger {
-      display: none; flex-direction: column; gap: 4px;
+      display: flex; flex-direction: column; gap: 4px;
       cursor: pointer; background: none; border: none; padding: 8px;
-      border-radius: 8px;
+      border-radius: var(--radius-sm);
     }
     .hamburger span { display: block; width: 20px; height: 2px; background: var(--text2); border-radius: 2px; transition: all 0.25s; }
     .hamburger.open span:nth-child(1) { transform: translateY(6px) rotate(45deg); }
@@ -277,70 +275,69 @@
     .hamburger.open span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
     /* MAIN */
-    .dash-main { flex: 1; padding: 2rem; max-width: 800px; margin: 0 auto; width: 100%; }
-
+    .dash-main { flex: 1; padding: 2rem; max-width: 820px; margin: 0 auto; width: 100%; }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
 
     /* CARDS */
     .card {
-      background: var(--surface); border: 1px solid var(--border);
-      border-radius: 16px; padding: 1.75rem; margin-bottom: 1.25rem;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.75rem; margin-bottom: 1.25rem;
+      box-shadow: var(--shadow);
     }
     .card-title {
-      font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700;
-      color: var(--text); margin-bottom: 1.25rem; letter-spacing: -0.01em;
+      font-size: 16px; font-weight: 700; color: var(--text);
+      margin-bottom: 1.25rem; letter-spacing: -0.01em;
     }
     .section-label {
-      font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.1em; color: var(--text3); margin-bottom: 8px; display: block;
+      font-size: 12px; font-weight: 600; color: var(--text2);
+      margin-bottom: 8px; display: block;
     }
 
     /* FORM */
     .form-input {
-      width: 100%; background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 8px; padding: 10px 12px; font-size: 13px;
-      color: var(--text); font-family: 'DM Sans', sans-serif;
+      width: 100%; background: var(--white); border: 1px solid var(--border2);
+      border-radius: var(--radius-sm); padding: 10px 14px; font-size: 14px;
+      color: var(--text); font-family: 'Inter', sans-serif;
       outline: none; transition: all 0.15s;
     }
-    .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--glow); }
+    .form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(26,115,232,0.12); }
     .form-input::placeholder { color: var(--text3); }
     select.form-input { cursor: pointer; }
     textarea.form-input { resize: vertical; min-height: 90px; line-height: 1.6; }
-
     .form-group { margin-bottom: 1rem; }
 
     /* PILLS */
-    .pills-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .pills-row { display: flex; flex-wrap: wrap; gap: 8px; }
     .pill {
-      padding: 5px 12px; border-radius: 20px;
-      border: 1px solid var(--border2); background: transparent;
-      color: var(--text2); font-size: 12px; font-weight: 500;
-      cursor: pointer; transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+      padding: 6px 14px; border-radius: 20px;
+      border: 1px solid var(--border2); background: var(--white);
+      color: var(--text2); font-size: 13px; font-weight: 500;
+      cursor: pointer; transition: all 0.12s; font-family: 'Inter', sans-serif;
     }
-    .pill:hover { border-color: var(--accent); color: var(--accent2); }
-    .pill.active { background: var(--glow); border-color: var(--accent); color: var(--accent2); }
+    .pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-light); }
+    .pill.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent); font-weight: 600; }
     .star-pill {
-      padding: 5px 10px; border-radius: 20px;
-      border: 1px solid var(--border2); background: transparent;
-      color: var(--text2); font-size: 12px; cursor: pointer;
-      font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+      padding: 6px 12px; border-radius: 20px;
+      border: 1px solid var(--border2); background: var(--white);
+      color: var(--text2); font-size: 13px; cursor: pointer;
+      font-family: 'Inter', sans-serif; transition: all 0.12s;
     }
-    .star-pill.active { background: rgba(251,191,36,0.1); border-color: var(--warning); color: var(--warning); }
+    .star-pill.active { background: var(--warning-light); border-color: var(--warning); color: #b45309; font-weight: 600; }
 
     /* RESULT */
     .result-box {
-      background: var(--bg); border: 1px solid var(--border2);
-      border-radius: 12px; padding: 1.25rem; margin-top: 1rem; display: none;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 1.25rem; margin-top: 1rem; display: none;
     }
     .result-box.visible { display: block; }
     .result-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-    .result-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text3); font-weight: 700; }
+    .result-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); font-weight: 700; }
     .result-text { font-size: 14px; line-height: 1.8; color: var(--text); white-space: pre-wrap; }
     .loading-wrap { text-align: center; padding: 1.5rem; display: none; }
     .loading-wrap.visible { display: block; }
     .spinner {
-      width: 20px; height: 20px; border: 2px solid var(--border2);
+      width: 22px; height: 22px; border: 2px solid var(--border);
       border-top-color: var(--accent); border-radius: 50%;
       animation: spin 0.8s linear infinite; display: inline-block; margin-bottom: 8px;
     }
@@ -349,19 +346,19 @@
 
     /* LIMIT BANNER */
     .limit-banner {
-      background: rgba(251,191,36,0.05); border: 1px solid rgba(251,191,36,0.2);
-      border-radius: 12px; padding: 1.25rem; margin-top: 1rem; display: none;
+      background: var(--warning-light); border: 1px solid rgba(251,188,4,0.3);
+      border-radius: var(--radius-sm); padding: 1.25rem; margin-top: 1rem; display: none;
     }
-    .limit-title { font-size: 13px; font-weight: 600; color: var(--warning); margin-bottom: 6px; }
-    .limit-desc { font-size: 12px; color: var(--text2); margin-bottom: 1rem; line-height: 1.6; }
+    .limit-title { font-size: 14px; font-weight: 600; color: #b45309; margin-bottom: 6px; }
+    .limit-desc { font-size: 13px; color: var(--text2); margin-bottom: 1rem; line-height: 1.6; }
 
     /* TOAST */
     .toast {
       position: fixed; bottom: 1.5rem; right: 1.5rem;
-      background: var(--surface2); border: 1px solid var(--success);
-      color: var(--success); padding: 10px 16px; border-radius: 10px;
+      background: var(--text); color: white;
+      padding: 10px 18px; border-radius: 10px;
       font-size: 13px; font-weight: 500; display: none; z-index: 999;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      box-shadow: var(--shadow-lg);
     }
     .toast.visible { display: flex; align-items: center; gap: 8px; }
 
@@ -369,68 +366,63 @@
     .divider { border: none; border-top: 1px solid var(--border); margin: 1.25rem 0; }
 
     /* INFO ROW */
-    .info-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+    .info-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid var(--border); font-size: 14px; }
     .info-row:last-child { border-bottom: none; }
     .info-row .label { color: var(--text2); }
     .info-row .value { color: var(--text); font-weight: 500; }
 
     /* NOTIF ROW */
-    .notif-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .notif-row { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; border-bottom: 1px solid var(--border); }
     .notif-row:last-child { border-bottom: none; }
-    .notif-label { font-size: 13px; color: var(--text); font-weight: 500; }
-    .notif-desc { font-size: 11px; color: var(--text3); margin-top: 2px; }
-    .toggle-wrap { position: relative; width: 40px; height: 22px; cursor: pointer; flex-shrink: 0; }
+    .notif-label { font-size: 14px; color: var(--text); font-weight: 500; }
+    .notif-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
+    .toggle-wrap { position: relative; width: 42px; height: 24px; cursor: pointer; flex-shrink: 0; }
     .toggle-wrap input { opacity: 0; width: 0; height: 0; }
-    .toggle-track {
-      position: absolute; inset: 0; background: var(--border2); border-radius: 22px; transition: 0.2s;
-    }
+    .toggle-track { position: absolute; inset: 0; background: var(--border2); border-radius: 24px; transition: 0.2s; }
     .toggle-wrap input:checked + .toggle-track { background: var(--accent); }
-    .toggle-thumb {
-      position: absolute; top: 3px; left: 3px;
-      width: 16px; height: 16px; background: #fff; border-radius: 50%; transition: 0.2s;
-    }
+    .toggle-thumb { position: absolute; top: 3px; left: 3px; width: 18px; height: 18px; background: #fff; border-radius: 50%; transition: 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
     .toggle-wrap input:checked ~ .toggle-thumb { transform: translateX(18px); }
 
     /* HISTORY */
     .history-item {
-      background: var(--bg); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem; margin-bottom: 0.75rem;
-      transition: border-color 0.2s;
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin-bottom: 0.75rem;
+      transition: box-shadow 0.15s;
     }
-    .history-item:hover { border-color: var(--border2); }
+    .history-item:hover { box-shadow: var(--shadow); }
     .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-    .history-biz { font-size: 13px; font-weight: 600; color: var(--text); }
-    .history-date { font-size: 11px; color: var(--text3); }
-    .history-review { font-size: 12px; color: var(--text2); font-style: italic; margin-bottom: 6px; }
+    .history-biz { font-size: 14px; font-weight: 600; color: var(--text); }
+    .history-date { font-size: 12px; color: var(--text3); }
+    .history-review { font-size: 13px; color: var(--text2); font-style: italic; margin-bottom: 6px; }
     .history-response { font-size: 13px; color: var(--text); line-height: 1.6; }
 
     /* ESTAB */
     .estab-item {
       background: var(--bg); border: 1px solid var(--border);
-      border-radius: 10px; padding: 1rem 1.25rem; margin-bottom: 0.75rem;
+      border-radius: var(--radius-sm); padding: 1rem 1.25rem; margin-bottom: 0.75rem;
       display: flex; justify-content: space-between; align-items: center; gap: 1rem;
     }
     .estab-name { font-size: 14px; font-weight: 600; color: var(--text); }
     .estab-type { font-size: 12px; color: var(--text3); margin-top: 2px; }
-    .estab-instr { font-size: 11px; color: var(--text2); margin-top: 4px; font-style: italic; }
+    .estab-instr { font-size: 12px; color: var(--text2); margin-top: 4px; font-style: italic; }
 
-    /* PRICING INSIDE DASH */
+    /* PLAN ROWS */
     .plan-row {
       background: var(--bg); border: 1px solid var(--border);
-      border-radius: 12px; padding: 1.25rem;
+      border-radius: var(--radius-sm); padding: 1.25rem;
       display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 1rem; margin-bottom: 10px; position: relative;
+      flex-wrap: wrap; gap: 1rem; margin-bottom: 10px;
     }
-    .plan-row.active-plan { border-color: var(--accent); box-shadow: 0 0 20px var(--glow); }
+    .plan-row.active-plan { border-color: var(--accent); background: var(--accent-light); }
     .plan-row-name { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text3); margin-bottom: 4px; }
-    .plan-row-price { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 700; color: var(--text); }
-    .plan-row-price span { font-size: 12px; color: var(--text2); font-family: 'DM Sans', sans-serif; font-weight: 400; }
-    .plan-row-features { font-size: 12px; color: var(--text2); margin-top: 4px; }
+    .plan-row-price { font-size: 1.4rem; font-weight: 700; color: var(--text); }
+    .plan-row-price span { font-size: 13px; color: var(--text2); font-weight: 400; }
+    .plan-row-features { font-size: 13px; color: var(--text2); margin-top: 4px; }
 
     /* GOOGLE CONNECT */
     .connect-box {
-      background: var(--glow); border: 1px solid rgba(99,102,241,0.2);
-      border-radius: 12px; padding: 1.25rem; margin-bottom: 1.25rem;
+      background: var(--accent-light); border: 1px solid rgba(26,115,232,0.2);
+      border-radius: var(--radius-sm); padding: 1.25rem; margin-bottom: 1.25rem;
     }
     .connect-box p { font-size: 13px; color: var(--text2); line-height: 1.6; margin-bottom: 1rem; }
     .consent-check { display: flex; align-items: flex-start; gap: 10px; }
@@ -438,35 +430,36 @@
     .consent-check label { font-size: 13px; color: var(--text); line-height: 1.5; cursor: pointer; }
     .google-btn {
       display: flex; align-items: center; justify-content: center; gap: 10px;
-      width: 100%; padding: 11px; border-radius: 10px;
-      border: 1px solid var(--border2); background: var(--bg);
-      color: var(--text); font-size: 13px; font-weight: 500;
-      cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+      width: 100%; padding: 12px; border-radius: var(--radius-sm);
+      border: 1px solid var(--border2); background: var(--white);
+      color: var(--text); font-size: 14px; font-weight: 500;
+      cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s;
+      box-shadow: var(--shadow);
     }
-    .google-btn:hover:not(:disabled) { border-color: var(--accent2); color: var(--accent2); }
-    .google-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .google-btn:hover:not(:disabled) { border-color: var(--accent); box-shadow: var(--shadow-md); }
+    .google-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     .google-logo { width: 18px; height: 18px; }
+
+    /* LEGAL */
+    .legal-section h4 { font-size: 14px; font-weight: 600; color: var(--text); margin: 1.25rem 0 6px; }
+    .legal-section p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+
+    /* EXPL BOX */
+    .expl-box {
+      background: var(--warning-light); border: 1px solid rgba(251,188,4,0.3);
+      border-radius: var(--radius-sm); padding: 1rem; margin-top: 0.75rem; display: none;
+    }
+    .expl-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #b45309; font-weight: 700; margin-bottom: 6px; }
+    .expl-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
     .coming-soon {
-      display: inline-block; background: rgba(251,191,36,0.1);
-      border: 1px solid rgba(251,191,36,0.3); color: var(--warning);
+      display: inline-block; background: var(--warning-light);
+      border: 1px solid rgba(251,188,4,0.3); color: #b45309;
       font-size: 10px; font-weight: 700; padding: 2px 8px;
       border-radius: 6px; margin-left: 8px; letter-spacing: 0.05em;
     }
 
-    /* LEGAL */
-    .legal-section h4 { font-size: 13px; font-weight: 600; color: var(--text); margin: 1.25rem 0 6px; }
-    .legal-section p { font-size: 13px; color: var(--text2); line-height: 1.7; }
-
-    /* EXPLANATION BOX */
-    .expl-box {
-      background: rgba(251,191,36,0.04); border: 1px solid rgba(251,191,36,0.15);
-      border-radius: 10px; padding: 1rem; margin-top: 0.75rem; display: none;
-    }
-    .expl-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--warning); font-weight: 700; margin-bottom: 6px; }
-    .expl-text { font-size: 13px; color: var(--text2); line-height: 1.6; }
-
     @media (max-width: 768px) {
-      .hamburger { display: flex; }
       .dash-main { padding: 1.5rem 1rem; }
     }
   </style>
@@ -475,10 +468,13 @@
 
 <nav>
   <div class="nav-left">
-    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:none;">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:flex;">
       <span></span><span></span><span></span>
     </button>
-    <div class="logo">Reply<span class="logo-dot">.</span>Google</div>
+    <div class="logo">
+      <div class="logo-icon">R</div>
+      ReplyGoogle
+    </div>
   </div>
   <div class="nav-right" id="nav-btns">
     <button class="btn btn-ghost btn-sm" onclick="showPage('login')">Connexion</button>
@@ -493,22 +489,22 @@
   <div class="landing-hero">
     <div class="landing-badge"><span></span> Propulsé par l'IA Claude</div>
     <h1 class="landing-h1">Répondez à vos avis Google<br><em>en quelques secondes</em></h1>
-    <p class="landing-sub">ReplyGoogle génère des réponses professionnelles et personnalisées pour chaque avis — positif ou négatif.</p>
+    <p class="landing-sub">ReplyGoogle génère des réponses professionnelles et personnalisées pour chaque avis — positif ou négatif — en respectant votre ton.</p>
     <div class="landing-cta">
-      <button class="btn btn-primary" onclick="showPage('signup')" style="padding:10px 24px; font-size:14px;">Commencer gratuitement →</button>
-      <button class="btn btn-ghost" onclick="showPage('login')" style="padding:10px 24px; font-size:14px;">Se connecter</button>
+      <button class="btn btn-primary" onclick="showPage('signup')" style="padding:11px 28px; font-size:15px;">Commencer gratuitement →</button>
+      <button class="btn btn-ghost" onclick="showPage('login')" style="padding:11px 28px; font-size:15px;">Se connecter</button>
     </div>
     <div class="landing-trust">
       <span class="landing-trust-stars">★★★★★</span>
-      <span>Utilisé par des centaines de commerçants</span>
+      <span>Utilisé par des centaines de commerçants en France</span>
     </div>
   </div>
 
   <div class="landing-features">
-    <div class="feat"><div class="feat-icon">⚡</div><h3>Réponse en 5s</h3><p>Collez l'avis, cliquez, copiez.</p></div>
-    <div class="feat"><div class="feat-icon">🎯</div><h3>Ton personnalisé</h3><p>Chaleureux, pro ou formel.</p></div>
-    <div class="feat"><div class="feat-icon">🌍</div><h3>Multilingue</h3><p>Répondez dans n'importe quelle langue.</p></div>
-    <div class="feat"><div class="feat-icon">📝</div><h3>Instructions custom</h3><p>Ajoutez vos propres consignes.</p></div>
+    <div class="feat"><div class="feat-icon">⚡</div><h3>Réponse en 5 secondes</h3><p>Collez l'avis, cliquez, copiez. Aussi simple que ça.</p></div>
+    <div class="feat"><div class="feat-icon">🎯</div><h3>Ton personnalisé</h3><p>Chaleureux, professionnel ou formel selon votre style.</p></div>
+    <div class="feat"><div class="feat-icon">🌍</div><h3>Multilingue</h3><p>Répondez dans n'importe quelle langue automatiquement.</p></div>
+    <div class="feat"><div class="feat-icon">📝</div><h3>Instructions custom</h3><p>Ajoutez vos propres consignes pour chaque établissement.</p></div>
   </div>
 
   <div class="landing-pricing">
@@ -529,7 +525,7 @@
       </div>
       <div class="price-card featured">
         <div class="price-badge">POPULAIRE</div>
-        <div class="plan-name" style="color:var(--accent2)">Starter</div>
+        <div class="plan-name" style="color:var(--accent)">Starter</div>
         <div class="plan-price">19€<sub>/mois</sub></div>
         <div class="plan-desc">Pour les indépendants</div>
         <ul class="plan-feats">
@@ -541,7 +537,7 @@
         <button class="btn btn-primary btn-full" onclick="handleSubscribe('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')">S'abonner</button>
       </div>
       <div class="price-card">
-        <div class="plan-name" style="color:var(--warning)">Pro</div>
+        <div class="plan-name">Pro</div>
         <div class="plan-price">30€<sub>/mois</sub></div>
         <div class="plan-desc">Pour les multi-sites</div>
         <ul class="plan-feats">
@@ -553,7 +549,7 @@
         <button class="btn btn-ghost btn-full" onclick="handleSubscribe('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')">S'abonner</button>
       </div>
       <div class="price-card">
-        <div class="plan-name" style="color:var(--success)">Agence</div>
+        <div class="plan-name">Agence</div>
         <div class="plan-price">59€<sub>/mois</sub></div>
         <div class="plan-desc">Pour les agences</div>
         <ul class="plan-feats">
@@ -575,21 +571,9 @@
       <div class="auth-sub">3 réponses gratuites · Sans carte bancaire</div>
       <div class="msg error" id="signup-error"></div>
       <div class="msg success" id="signup-success"></div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="signup-email" placeholder="vous@exemple.com" />
-      </div>
-      <div class="field">
-        <label>Mot de passe</label>
-        <div class="pwd-wrap">
-          <input type="password" id="signup-password" placeholder="8 caractères minimum" style="padding-right:40px;" />
-          <button type="button" class="pwd-toggle" onclick="togglePwd('signup-password',this)">👁</button>
-        </div>
-      </div>
-      <div class="field">
-        <label>Nom de votre établissement</label>
-        <input type="text" id="signup-business" placeholder="Ex: Restaurant Le Provençal" />
-      </div>
+      <div class="field"><label>Email</label><input type="email" id="signup-email" placeholder="vous@exemple.com" /></div>
+      <div class="field"><label>Mot de passe</label><div class="pwd-wrap"><input type="password" id="signup-password" placeholder="8 caractères minimum" style="padding-right:40px;" /><button type="button" class="pwd-toggle" onclick="togglePwd('signup-password',this)">👁</button></div></div>
+      <div class="field"><label>Nom de votre établissement</label><input type="text" id="signup-business" placeholder="Ex: Restaurant Le Provençal" /></div>
       <button class="btn btn-primary btn-full" onclick="doSignup()">Créer mon compte →</button>
       <div class="auth-switch">Déjà un compte ? <a onclick="showPage('login')">Se connecter</a></div>
     </div>
@@ -603,17 +587,8 @@
       <div class="auth-title">Connexion</div>
       <div class="auth-sub">Bon retour parmi nous</div>
       <div class="msg error" id="login-error"></div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="login-email" placeholder="vous@exemple.com" />
-      </div>
-      <div class="field">
-        <label>Mot de passe</label>
-        <div class="pwd-wrap">
-          <input type="password" id="login-password" placeholder="Votre mot de passe" style="padding-right:40px;" />
-          <button type="button" class="pwd-toggle" onclick="togglePwd('login-password',this)">👁</button>
-        </div>
-      </div>
+      <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="vous@exemple.com" /></div>
+      <div class="field"><label>Mot de passe</label><div class="pwd-wrap"><input type="password" id="login-password" placeholder="Votre mot de passe" style="padding-right:40px;" /><button type="button" class="pwd-toggle" onclick="togglePwd('login-password',this)">👁</button></div></div>
       <button class="btn btn-primary btn-full" onclick="doLogin()">Se connecter →</button>
       <div class="auth-switch" style="margin-top:0.75rem;">Mot de passe oublié ? <a onclick="showPage('forgot')">Réinitialiser</a></div>
       <div class="auth-switch" style="margin-top:0.5rem;">Pas de compte ? <a onclick="showPage('signup')">Créer un compte</a></div>
@@ -629,10 +604,7 @@
       <div class="auth-sub">On vous envoie un lien de réinitialisation</div>
       <div class="msg error" id="forgot-error"></div>
       <div class="msg success" id="forgot-success"></div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="forgot-email" placeholder="vous@exemple.com" />
-      </div>
+      <div class="field"><label>Email</label><input type="email" id="forgot-email" placeholder="vous@exemple.com" /></div>
       <button class="btn btn-primary btn-full" onclick="doForgot()">Envoyer le lien</button>
       <div class="auth-switch">Retour à la <a onclick="showPage('login')">connexion</a></div>
     </div>
@@ -647,13 +619,7 @@
       <div class="auth-sub">Choisissez un nouveau mot de passe sécurisé</div>
       <div class="msg error" id="reset-error"></div>
       <div class="msg success" id="reset-success"></div>
-      <div class="field">
-        <label>Nouveau mot de passe</label>
-        <div class="pwd-wrap">
-          <input type="password" id="reset-password" placeholder="8 caractères minimum" style="padding-right:40px;" />
-          <button type="button" class="pwd-toggle" onclick="togglePwd('reset-password',this)">👁</button>
-        </div>
-      </div>
+      <div class="field"><label>Nouveau mot de passe</label><div class="pwd-wrap"><input type="password" id="reset-password" placeholder="8 caractères minimum" style="padding-right:40px;" /><button type="button" class="pwd-toggle" onclick="togglePwd('reset-password',this)">👁</button></div></div>
       <button class="btn btn-primary btn-full" onclick="doReset()">Changer le mot de passe</button>
     </div>
   </div>
@@ -662,7 +628,6 @@
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
   <div class="dash-wrap">
-
     <div class="sidebar" id="sidebar">
       <div class="sidebar-profile">
         <div class="sidebar-email" id="sidebar-email">—</div>
@@ -694,20 +659,15 @@
     </div>
 
     <div class="dash-main">
-
       <!-- GENERATE -->
       <div id="tab-generate" class="tab-content active">
         <div class="card">
           <div class="card-title">Générer une réponse</div>
-
           <div class="form-group">
             <span class="section-label">Établissement</span>
-            <select id="establishment-select" class="form-input" onchange="loadEstablishment()" style="margin-bottom:8px;">
-              <option value="">— Choisir un établissement —</option>
-            </select>
+            <select id="establishment-select" class="form-input" onchange="loadEstablishment()" style="margin-bottom:8px;"><option value="">— Choisir un établissement —</option></select>
             <input type="text" id="dash-business" class="form-input" placeholder="Ou tapez le nom manuellement..." />
           </div>
-
           <div class="form-group">
             <span class="section-label">Type d'établissement</span>
             <div class="pills-row" id="type-pills">
@@ -718,7 +678,6 @@
               <button class="pill" onclick="selectPill(this,'type')">🛍️ Commerce</button>
             </div>
           </div>
-
           <div class="form-group">
             <span class="section-label">Note de l'avis</span>
             <div class="pills-row">
@@ -729,7 +688,6 @@
               <button class="star-pill active" onclick="selectStar(this,5)">⭐ 5</button>
             </div>
           </div>
-
           <div class="form-group">
             <span class="section-label">Ton de la réponse</span>
             <div class="pills-row" id="tone-pills">
@@ -738,18 +696,15 @@
               <button class="pill" onclick="selectPill(this,'tone')">Formel</button>
             </div>
           </div>
-
           <div class="form-group">
             <span class="section-label">Avis Google</span>
             <textarea id="review-input" class="form-input" placeholder="Collez ici l'avis Google..."></textarea>
           </div>
-
           <div class="form-group">
-            <span class="section-label">Instructions personnalisées <span style="text-transform:none;font-weight:400;color:var(--text3);font-size:10px;">(optionnel)</span></span>
+            <span class="section-label">Instructions personnalisées <span style="font-weight:400;color:var(--text3);font-size:11px;">(optionnel)</span></span>
             <textarea id="custom-instructions" class="form-input" placeholder="Ex: Toujours mentionner notre équipe, réponse courte..." style="min-height:70px;"></textarea>
-            <button type="button" onclick="document.getElementById('custom-instructions').value=''" style="margin-top:6px; background:none; border:1px solid var(--border); color:var(--text3); border-radius:6px; padding:3px 10px; font-size:11px; cursor:pointer; font-family:'DM Sans',sans-serif; transition:all 0.15s;">↺ Réinitialiser</button>
+            <button type="button" onclick="document.getElementById('custom-instructions').value=''" style="margin-top:6px; background:none; border:1px solid var(--border); color:var(--text3); border-radius:6px; padding:4px 12px; font-size:12px; cursor:pointer; font-family:'Inter',sans-serif;">↺ Réinitialiser</button>
           </div>
-
           <div class="form-group">
             <span class="section-label">Langue de la réponse</span>
             <div class="pills-row" id="lang-pills">
@@ -760,28 +715,17 @@
               <button class="pill" onclick="selectPill(this,'lang')">🇮🇹 Italien</button>
             </div>
           </div>
-
           <button class="btn btn-primary btn-full" style="margin-top:1.25rem;" onclick="generateReply()" id="gen-btn">Générer la réponse →</button>
-
           <div class="limit-banner" id="limit-banner">
             <div class="limit-title">⚠️ Limite quotidienne atteinte</div>
             <p class="limit-desc">Vous avez utilisé toutes vos réponses aujourd'hui. Passez au plan Starter pour 20 réponses/jour.</p>
             <a href="https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200" target="_blank" class="btn btn-primary btn-sm">🚀 Passer au Starter — 19€/mois</a>
           </div>
-
-          <div class="loading-wrap" id="loading">
-            <div class="spinner"></div>
-            <div class="loading-text">Génération en cours...</div>
-          </div>
-
+          <div class="loading-wrap" id="loading"><div class="spinner"></div><div class="loading-text">Génération en cours...</div></div>
           <div class="result-box" id="result-box">
-            <div class="result-top">
-              <span class="result-label">Réponse générée</span>
-              <button class="btn btn-ghost btn-sm" onclick="copyReply()">Copier</button>
-            </div>
+            <div class="result-top"><span class="result-label">Réponse générée</span><button class="btn btn-ghost btn-sm" onclick="copyReply()">Copier</button></div>
             <p class="result-text" id="result-text"></p>
           </div>
-
           <div class="expl-box" id="explanation-box">
             <div class="expl-label">💡 Note sur vos instructions</div>
             <p class="expl-text" id="explanation-text"></p>
@@ -805,26 +749,10 @@
           <p style="font-size:13px; color:var(--text2); margin-bottom:1.25rem;">Gérez vos établissements avec leurs instructions personnalisées.</p>
           <div id="establishments-list" style="margin-bottom:1.25rem;"></div>
           <hr class="divider">
-          <div style="font-size:13px; font-weight:600; color:var(--text); margin-bottom:1rem; font-family:'Syne',sans-serif;">Ajouter un établissement</div>
-          <div class="form-group">
-            <span class="section-label">Nom</span>
-            <input type="text" id="new-estab-name" class="form-input" placeholder="Ex: Restaurant Le Provençal" />
-          </div>
-          <div class="form-group">
-            <span class="section-label">Type</span>
-            <select id="new-estab-type" class="form-input">
-              <option value="">Sélectionner...</option>
-              <option value="Restaurant">🍽️ Restaurant</option>
-              <option value="Hôtel">🏨 Hôtel</option>
-              <option value="Salon">✂️ Salon</option>
-              <option value="Garage">🔧 Garage</option>
-              <option value="Commerce">🛍️ Commerce</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <span class="section-label">Instructions personnalisées</span>
-            <textarea id="new-estab-instructions" class="form-input" placeholder="Ex: Toujours répondre en tutoyant..." style="min-height:70px;"></textarea>
-          </div>
+          <div style="font-size:15px; font-weight:600; color:var(--text); margin-bottom:1rem;">Ajouter un établissement</div>
+          <div class="form-group"><span class="section-label">Nom</span><input type="text" id="new-estab-name" class="form-input" placeholder="Ex: Restaurant Le Provençal" /></div>
+          <div class="form-group"><span class="section-label">Type</span><select id="new-estab-type" class="form-input"><option value="">Sélectionner...</option><option value="Restaurant">🍽️ Restaurant</option><option value="Hôtel">🏨 Hôtel</option><option value="Salon">✂️ Salon</option><option value="Garage">🔧 Garage</option><option value="Commerce">🛍️ Commerce</option></select></div>
+          <div class="form-group"><span class="section-label">Instructions personnalisées</span><textarea id="new-estab-instructions" class="form-input" placeholder="Ex: Toujours répondre en tutoyant..." style="min-height:70px;"></textarea></div>
           <button class="btn btn-primary btn-full" onclick="addEstablishment()">Ajouter l'établissement</button>
         </div>
       </div>
@@ -833,12 +761,12 @@
       <div id="tab-google" class="tab-content">
         <div class="card">
           <div class="card-title">Connecter Google Business <span class="coming-soon">Bientôt</span></div>
-          <p style="font-size:13px; color:var(--text2); margin-bottom:1.25rem; line-height:1.6;">En connectant votre compte Google Business, l'application pourra analyser vos réponses passées pour générer des réponses encore plus fidèles à votre style.</p>
+          <p style="font-size:13px; color:var(--text2); margin-bottom:1.25rem; line-height:1.6;">En connectant votre compte Google Business, l'application pourra récupérer vos avis directement et générer des réponses encore plus adaptées.</p>
           <div class="connect-box">
-            <p>En connectant votre compte Google, vous acceptez que ReplyGoogle utilise vos réponses passées <strong>uniquement</strong> pour améliorer la qualité des réponses générées.</p>
+            <p>En connectant votre compte Google, vous acceptez que ReplyGoogle accède à vos avis Google Business <strong>uniquement</strong> pour améliorer la qualité des réponses générées.</p>
             <div class="consent-check">
               <input type="checkbox" id="consent-check" onchange="updateGoogleBtn()" />
-              <label for="consent-check">J'accepte que ReplyGoogle accède à mes réponses Google Business passées.</label>
+              <label for="consent-check">J'accepte que ReplyGoogle accède à mes avis Google Business.</label>
             </div>
           </div>
           <button class="google-btn" id="google-connect-btn" onclick="connectGoogle()" disabled>
@@ -846,9 +774,9 @@
             Connecter mon compte Google Business
           </button>
           <div style="margin-top:1.25rem; border-top:1px solid var(--border); padding-top:1.25rem;">
-            <div class="info-row"><span class="label">✓ Lire vos avis</span><span class="value" style="font-size:12px;color:var(--text2)">Affichage direct</span></div>
-            <div class="info-row"><span class="label">✓ Analyser vos réponses</span><span class="value" style="font-size:12px;color:var(--text2)">Inspiration style</span></div>
-            <div class="info-row"><span class="label">✗ Publier automatiquement</span><span class="value" style="font-size:12px;color:var(--danger)">Jamais</span></div>
+            <div class="info-row"><span class="label">✓ Lire vos avis</span><span class="value" style="font-size:13px;color:var(--text2)">Affichage direct</span></div>
+            <div class="info-row"><span class="label">✓ Analyser vos réponses</span><span class="value" style="font-size:13px;color:var(--text2)">Inspiration style</span></div>
+            <div class="info-row"><span class="label">✗ Publier automatiquement</span><span class="value" style="font-size:13px;color:var(--danger)">Jamais</span></div>
           </div>
         </div>
       </div>
@@ -858,38 +786,10 @@
         <div class="card">
           <div class="card-title">Abonnements</div>
           <p style="font-size:13px; color:var(--text2); margin-bottom:1.5rem;">Votre plan actuel est indiqué dans le menu.</p>
-          <div class="plan-row">
-            <div>
-              <div class="plan-row-name">Gratuit</div>
-              <div class="plan-row-price">0€ <span>/mois</span></div>
-              <div class="plan-row-features">3 réponses/jour · 1 établissement</div>
-            </div>
-            <span style="font-size:12px; color:var(--text3); font-style:italic;">Par défaut</span>
-          </div>
-          <div class="plan-row active-plan">
-            <div>
-              <div class="plan-row-name" style="color:var(--accent2)">Starter</div>
-              <div class="plan-row-price">19€ <span>/mois</span></div>
-              <div class="plan-row-features">20 réponses/jour · 3 établissements · Instructions custom</div>
-            </div>
-            <button class="btn btn-primary btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')">S'abonner</button>
-          </div>
-          <div class="plan-row">
-            <div>
-              <div class="plan-row-name" style="color:var(--warning)">Pro</div>
-              <div class="plan-row-price">30€ <span>/mois</span></div>
-              <div class="plan-row-features">50 réponses/jour · 10 établissements · Historique complet</div>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')">S'abonner</button>
-          </div>
-          <div class="plan-row">
-            <div>
-              <div class="plan-row-name" style="color:var(--success)">Agence</div>
-              <div class="plan-row-price">59€ <span>/mois</span></div>
-              <div class="plan-row-features">Illimité · Support prioritaire</div>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')">S'abonner</button>
-          </div>
+          <div class="plan-row"><div><div class="plan-row-name">Gratuit</div><div class="plan-row-price">0€ <span>/mois</span></div><div class="plan-row-features">3 réponses/jour · 1 établissement</div></div><span style="font-size:12px; color:var(--text3); font-style:italic;">Par défaut</span></div>
+          <div class="plan-row active-plan"><div><div class="plan-row-name" style="color:var(--accent)">Starter</div><div class="plan-row-price">19€ <span>/mois</span></div><div class="plan-row-features">20 réponses/jour · 3 établissements · Instructions custom</div></div><button class="btn btn-primary btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_6oU6oBbcN2CL38UbsO2B200')">S'abonner</button></div>
+          <div class="plan-row"><div><div class="plan-row-name">Pro</div><div class="plan-row-price">30€ <span>/mois</span></div><div class="plan-row-features">50 réponses/jour · 10 établissements · Historique complet</div></div><button class="btn btn-ghost btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_9B64gt6Wxa5d9xibsO2B201')">S'abonner</button></div>
+          <div class="plan-row"><div><div class="plan-row-name">Agence</div><div class="plan-row-price">59€ <span>/mois</span></div><div class="plan-row-features">Illimité · Support prioritaire</div></div><button class="btn btn-ghost btn-sm" onclick="subscribeToPlan('https://buy.stripe.com/test_14A3cp1Cd4KT8te40m2B202')">S'abonner</button></div>
           <p style="font-size:12px; color:var(--text3); text-align:center; margin-top:1rem;">Pour gérer ou résilier, allez dans <strong style="color:var(--text2);">Mon compte</strong>.</p>
         </div>
       </div>
@@ -898,33 +798,22 @@
       <div id="tab-account" class="tab-content">
         <div class="card">
           <div class="card-title">Mon abonnement</div>
-          <div style="background:var(--bg); border:1px solid var(--border); border-radius:10px; padding:1rem; margin-bottom:1.25rem;">
+          <div style="background:var(--bg); border:1px solid var(--border); border-radius:var(--radius-sm); padding:1rem; margin-bottom:1.25rem;">
             <div class="info-row"><span class="label">Plan actuel</span><span class="value" id="account-plan-name">Gratuit</span></div>
             <div class="info-row"><span class="label">Renouvellement</span><span class="value">Automatique</span></div>
           </div>
           <a href="https://billing.stripe.com/p/login/test_00g29E9tq5aV8fe000" target="_blank" class="btn btn-primary btn-full" style="text-decoration:none; justify-content:center;">Gérer mon abonnement →</a>
         </div>
-
         <div class="card">
           <div class="card-title">Notifications</div>
-          <div class="notif-row">
-            <div><div class="notif-label">Nouveaux avis Google</div><div class="notif-desc">Email quand un avis est posté</div></div>
-            <label class="toggle-wrap"><input type="checkbox" id="notif-new-review" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-          </div>
-          <div class="notif-row">
-            <div><div class="notif-label">Rappel de validation</div><div class="notif-desc">Réponses en attente</div></div>
-            <label class="toggle-wrap"><input type="checkbox" id="notif-validation" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-          </div>
-          <div class="notif-row">
-            <div><div class="notif-label">Résumé hebdomadaire</div><div class="notif-desc">Récap chaque semaine</div></div>
-            <label class="toggle-wrap"><input type="checkbox" id="notif-weekly" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label>
-          </div>
+          <div class="notif-row"><div><div class="notif-label">Nouveaux avis Google</div><div class="notif-desc">Email quand un avis est posté</div></div><label class="toggle-wrap"><input type="checkbox" id="notif-new-review" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="notif-row"><div><div class="notif-label">Rappel de validation</div><div class="notif-desc">Réponses en attente</div></div><label class="toggle-wrap"><input type="checkbox" id="notif-validation" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
+          <div class="notif-row"><div><div class="notif-label">Résumé hebdomadaire</div><div class="notif-desc">Récap chaque semaine</div></div><label class="toggle-wrap"><input type="checkbox" id="notif-weekly" onchange="saveNotifPrefs()"><div class="toggle-track"></div><div class="toggle-thumb"></div></label></div>
         </div>
-
-        <div class="card" style="border-color:rgba(248,113,113,0.2);">
+        <div class="card" style="border-color:rgba(234,67,53,0.2);">
           <div class="card-title" style="color:var(--danger);">Zone de danger</div>
           <p style="font-size:13px; color:var(--text2); margin-bottom:1rem;">Supprimer définitivement votre compte et toutes vos données.</p>
-          <button class="btn btn-danger-ghost btn-full" onclick="confirmDeleteAccount()">Supprimer mon compte</button>
+          <button class="btn btn-danger btn-full" onclick="confirmDeleteAccount()">Supprimer mon compte</button>
         </div>
       </div>
 
@@ -950,7 +839,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </div>
@@ -1018,7 +906,7 @@ function updateGoogleBtn() {
 }
 function connectGoogle() {
   if (!currentUser) { showPage('login'); return; }
-  window.location.href = 'https://replygoogle-backend-production.up.railway.app/auth/google?userId=' + encodeURIComponent(currentUser.id);
+  window.location.href = BACKEND_URL + '/auth/google?userId=' + encodeURIComponent(currentUser.id);
 }
 
 async function doForgot() {
@@ -1040,14 +928,10 @@ async function doSignup() {
   if (!email || !password) { err.textContent = 'Veuillez remplir tous les champs.'; err.style.display = 'block'; return; }
   const { data, error } = await sb.auth.signUp({ email, password, options: { data: { business_name: business } } });
   if (error) {
-    err.textContent = (error.message.includes('already registered') || error.message.includes('already exists') || error.status === 422)
-      ? 'Un compte existe déjà avec cet email. Connectez-vous plutôt.' : error.message;
+    err.textContent = (error.message.includes('already registered') || error.message.includes('already exists') || error.status === 422) ? 'Un compte existe déjà avec cet email. Connectez-vous plutôt.' : error.message;
     err.style.display = 'block'; return;
   }
-  if (data?.user?.identities?.length === 0) {
-    err.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.';
-    err.style.display = 'block'; return;
-  }
+  if (data?.user?.identities?.length === 0) { err.textContent = 'Un compte existe déjà avec cet email. Connectez-vous plutôt.'; err.style.display = 'block'; return; }
   suc.textContent = 'Compte créé ! Vérifiez votre email puis connectez-vous.'; suc.style.display = 'block';
   setTimeout(() => showPage('login'), 2500);
 }
@@ -1063,18 +947,13 @@ async function doLogin() {
 
 async function doLogout() {
   await sb.auth.signOut(); currentUser = null; showPage('landing');
-  document.getElementById('hamburger-btn').style.display = 'none';
-  document.getElementById('nav-btns').innerHTML = `
-    <button class="btn btn-ghost btn-sm" onclick="showPage('login')">Connexion</button>
-    <button class="btn btn-primary btn-sm" onclick="showPage('signup')">Essayer gratuitement</button>
-  `;
+  document.getElementById('nav-btns').innerHTML = `<button class="btn btn-ghost btn-sm" onclick="showPage('login')">Connexion</button><button class="btn btn-primary btn-sm" onclick="showPage('signup')">Essayer gratuitement</button>`;
 }
 
 function loadDashboard() {
   showPage('dashboard');
   document.getElementById('dash-business').value = currentUser.user_metadata?.business_name || '';
-  document.getElementById('nav-btns').innerHTML = `<span style="font-size:13px;color:var(--text2);">${currentUser.email}</span>`;
-  document.getElementById('hamburger-btn').style.display = 'flex';
+  document.getElementById('nav-btns').innerHTML = `<span style="font-size:13px;color:var(--text2);font-weight:500;">${currentUser.email}</span>`;
   document.getElementById('sidebar-email').textContent = currentUser.email;
   loadUserPlan(); loadEstablishments(); loadNotifPrefs();
 }
@@ -1170,15 +1049,7 @@ function loadEstablishment() {
 function renderEstabs() {
   const el = document.getElementById('establishments-list');
   if (!establishments.length) { el.innerHTML = '<p style="color:var(--text2);font-size:13px;text-align:center;padding:1rem;">Aucun établissement enregistré.</p>'; return; }
-  el.innerHTML = establishments.map(e => `
-    <div class="estab-item">
-      <div>
-        <div class="estab-name">${e.name}</div>
-        <div class="estab-type">${e.business_type || 'Type non défini'}</div>
-        ${e.custom_instructions ? `<div class="estab-instr">"${e.custom_instructions.substring(0,60)}${e.custom_instructions.length>60?'...':''}"</div>` : ''}
-      </div>
-      <button onclick="deleteEstab('${e.id}')" class="btn btn-danger-ghost btn-sm">Supprimer</button>
-    </div>`).join('');
+  el.innerHTML = establishments.map(e => `<div class="estab-item"><div><div class="estab-name">${e.name}</div><div class="estab-type">${e.business_type || 'Type non défini'}</div>${e.custom_instructions ? `<div class="estab-instr">"${e.custom_instructions.substring(0,60)}${e.custom_instructions.length>60?'...':''}"</div>` : ''}</div><button onclick="deleteEstab('${e.id}')" class="btn btn-danger btn-sm">Supprimer</button></div>`).join('');
 }
 async function addEstablishment() {
   const name = document.getElementById('new-estab-name').value.trim();
@@ -1199,16 +1070,7 @@ async function loadHistory() {
   const { data } = await sb.from('response_history').select('*').eq('user_id', currentUser.id).order('created_at', { ascending: false }).limit(20);
   const el = document.getElementById('history-list');
   if (!data?.length) { el.innerHTML = '<p style="color:var(--text2);font-size:13px;text-align:center;padding:2rem;">Aucune réponse générée pour l\'instant.</p>'; return; }
-  el.innerHTML = data.map(h => `
-    <div class="history-item">
-      <div class="history-header">
-        <span class="history-biz">${h.business_name}</span>
-        <span class="history-date">${new Date(h.created_at).toLocaleDateString('fr-FR')}</span>
-      </div>
-      ${h.review_text ? `<div class="history-review">"${h.review_text.substring(0,80)}..."</div>` : ''}
-      <div class="history-response">${h.response_text}</div>
-      <button onclick="navigator.clipboard.writeText(this.dataset.text).then(()=>{const t=document.getElementById('toast');t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),2000)})" data-text="${h.response_text.replace(/"/g,'&quot;')}" class="btn btn-ghost btn-sm" style="margin-top:8px;">Copier</button>
-    </div>`).join('');
+  el.innerHTML = data.map(h => `<div class="history-item"><div class="history-header"><span class="history-biz">${h.business_name}</span><span class="history-date">${new Date(h.created_at).toLocaleDateString('fr-FR')}</span></div>${h.review_text ? `<div class="history-review">"${h.review_text.substring(0,80)}..."</div>` : ''}<div class="history-response">${h.response_text}</div><button onclick="navigator.clipboard.writeText(this.dataset.text).then(()=>{const t=document.getElementById('toast');t.classList.add('visible');setTimeout(()=>t.classList.remove('visible'),2000)})" data-text="${h.response_text.replace(/"/g,'&quot;')}" class="btn btn-ghost btn-sm" style="margin-top:8px;">Copier</button></div>`).join('');
 }
 async function saveToHistory(biz, rev, resp) {
   await sb.from('response_history').insert({ user_id: currentUser.id, business_name: biz, review_text: rev, response_text: resp });
@@ -1232,22 +1094,17 @@ async function saveNotifPrefs() {
   await sb.from('user_preferences').upsert({ user_id: currentUser.id, notification_prefs: { new_review: document.getElementById('notif-new-review').checked, validation: document.getElementById('notif-validation').checked, weekly: document.getElementById('notif-weekly').checked } }, { onConflict: 'user_id' });
 }
 
-// Gestion du callback Google OAuth
+// Google OAuth callback
 const urlParams = new URLSearchParams(window.location.search);
 const googleCode = urlParams.get('code');
 const googleState = urlParams.get('state');
 if (googleCode && googleState) {
-  fetch('https://replygoogle-backend-production.up.railway.app/auth/google/callback', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  fetch(BACKEND_URL + '/auth/google/callback', {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ code: googleCode, userId: googleState })
   }).then(r => r.json()).then(data => {
-    if (data.success) {
-      window.history.replaceState({}, document.title, '/app.html');
-      alert('✅ Compte Google connecté avec succès !');
-    } else {
-      alert('Erreur lors de la connexion Google : ' + (data.error || 'Erreur inconnue'));
-    }
+    if (data.success) { window.history.replaceState({}, document.title, '/app.html'); alert('✅ Compte Google connecté avec succès !'); }
+    else { alert('Erreur lors de la connexion Google : ' + (data.error || 'Erreur inconnue')); }
   });
 }
 
