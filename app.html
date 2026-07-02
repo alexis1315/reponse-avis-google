@@ -475,7 +475,7 @@
 
 <nav>
   <div class="nav-left">
-    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:flex;">
+    <button class="hamburger" id="hamburger-btn" onclick="toggleSidebar()" style="display:none;">
       <span></span><span></span><span></span>
     </button>
     <div class="logo">Reply<span class="logo-dot">.</span>Google</div>
@@ -1016,7 +1016,10 @@ function updateGoogleBtn() {
   const c = document.getElementById('consent-check').checked, b = document.getElementById('google-connect-btn');
   b.disabled = !c;
 }
-function connectGoogle() { alert('La connexion Google Business sera disponible très prochainement !'); }
+function connectGoogle() {
+  if (!currentUser) { showPage('login'); return; }
+  window.location.href = 'https://replygoogle-backend-production.up.railway.app/auth/google?userId=' + encodeURIComponent(currentUser.id);
+}
 
 async function doForgot() {
   const email = document.getElementById('forgot-email').value.trim();
@@ -1227,6 +1230,25 @@ async function loadNotifPrefs() {
 }
 async function saveNotifPrefs() {
   await sb.from('user_preferences').upsert({ user_id: currentUser.id, notification_prefs: { new_review: document.getElementById('notif-new-review').checked, validation: document.getElementById('notif-validation').checked, weekly: document.getElementById('notif-weekly').checked } }, { onConflict: 'user_id' });
+}
+
+// Gestion du callback Google OAuth
+const urlParams = new URLSearchParams(window.location.search);
+const googleCode = urlParams.get('code');
+const googleState = urlParams.get('state');
+if (googleCode && googleState) {
+  fetch('https://replygoogle-backend-production.up.railway.app/auth/google/callback', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ code: googleCode, userId: googleState })
+  }).then(r => r.json()).then(data => {
+    if (data.success) {
+      window.history.replaceState({}, document.title, '/app.html');
+      alert('✅ Compte Google connecté avec succès !');
+    } else {
+      alert('Erreur lors de la connexion Google : ' + (data.error || 'Erreur inconnue'));
+    }
+  });
 }
 
 sb.auth.getSession().then(({ data: { session } }) => { if (session) { currentUser = session.user; loadDashboard(); } });
